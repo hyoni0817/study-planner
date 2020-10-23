@@ -14,9 +14,11 @@
     "antd": "^4.7.2",
     "next": "^9.5.5",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "styled-components": "^5.2.0"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-react": "^7.21.5",
