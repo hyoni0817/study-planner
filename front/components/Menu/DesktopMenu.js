@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Menu, Switch, Avatar } from 'antd';
 import {
@@ -48,13 +49,13 @@ const DesktopMenu = ({ children }) => {
                     <p>"잘 할거야, 잘 할거 알아"</p>
                 </Profile>
                 <Menu.Item key="1" icon={<HomeOutlined />}>
-                홈
+                    <Link href="/"><a>홈</a></Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<DatabaseOutlined />}>
-                모아 보기
+                    <Link href="/todolist"><a>모아 보기</a></Link>
                 </Menu.Item>
                 <Menu.Item key="3" icon={<BarChartOutlined />}>
-                주간/월간 분석
+                    <Link href="/analysis"><a>주간/월간 분석</a></Link>
                 </Menu.Item>
                 <Switch onChange={onChangeTheme} /> 다크 모드
             </PcWebMenu>
