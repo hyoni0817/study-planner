@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch } from 'antd';
 import {
@@ -94,7 +95,7 @@ const MobileMenu = () => {
                         </a>
                     </NavCol>
                     <NavCol span={21}>
-                        <a href="#news">Study Planner</a>
+                        <Link href="/"><a>Study Planner</a></Link>
                     </NavCol>
                 </Row>
                 {/* <li>
@@ -121,9 +122,24 @@ const MobileMenu = () => {
                     <p>"잘 할거야, 잘 할거 알아"</p>
                 </Profile>
                 <MobileWebMenu>
-                    <li><a class="active" href="#home"><HomeOutlined /> 홈</a></li>
-                    <li><a href="#news"><DatabaseOutlined /> 모아 보기</a></li>
-                    <li><a href="#contact"><BarChartOutlined /> 주간/월간 분석</a></li>
+                    <li>
+                        <Link href="/">
+                            <a class="active"><HomeOutlined /> 홈</a>
+                        </Link>
+                        
+                    </li>
+                    <li>
+                        <Link href="/todolist">
+                            <a><DatabaseOutlined /> 모아 보기</a>
+                        </Link>
+                        
+                    </li>
+                    <li>
+                        <Link href="/analysis">
+                            <a><BarChartOutlined /> 주간/월간 분석</a>
+                        </Link>
+                        
+                    </li>
                 </MobileWebMenu>
                 <Switch onChange={onChangeTheme} /> 다크 모드
             </Drawer>
