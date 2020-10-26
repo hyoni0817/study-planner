@@ -25,7 +25,6 @@ const SiteLayout = styled(Layout)`
     }
 `;
 const AppLayout = ({ children }) => {
-
     return (
         <>
             <MobileMenu />
@@ -35,9 +34,7 @@ const AppLayout = ({ children }) => {
                 </DesktopSider>
                 <SiteLayout>
                     <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                        <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
-                        content
-                        </div>
+                        {children} 
                     </Content>
                 </SiteLayout>
             </Layout>
