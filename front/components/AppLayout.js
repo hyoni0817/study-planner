@@ -12,7 +12,7 @@ const DesktopSider = styled(Sider)`
     position: fixed;
     left: 0;
 
-    @media(max-width: 768px) {
+    @media(max-width: 767px) {
         visibility: hidden;
     }
 `;
@@ -20,7 +20,7 @@ const DesktopSider = styled(Sider)`
 const SiteLayout = styled(Layout)`
     margin-Left: 256px;
 
-    @media(max-width: 768px) {
+    @media(max-width: 767px) {
         margin-left: 0px;
     }
 `;
