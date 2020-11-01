@@ -124,19 +124,19 @@ const MobileMenu = () => {
                 <MobileWebMenu>
                     <li>
                         <Link href="/">
-                            <a class="active"><HomeOutlined /> 홈</a>
+                            <a class="active" onClick={onClose}><HomeOutlined /> 홈</a>
                         </Link>
                         
                     </li>
                     <li>
                         <Link href="/todolist">
-                            <a><DatabaseOutlined /> 모아 보기</a>
+                            <a onClick={onClose}><DatabaseOutlined /> 모아 보기</a>
                         </Link>
                         
                     </li>
                     <li>
                         <Link href="/analysis">
-                            <a><BarChartOutlined /> 주간/월간 분석</a>
+                            <a onClick={onClose}><BarChartOutlined /> 주간/월간 분석</a>
                         </Link>
                         
                     </li>
