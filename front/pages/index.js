@@ -10,10 +10,6 @@ const Home = () => {
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const [ size, setSize ] = useState('large');
-    
-    const handleSizeChange = e => {
-        setSize(e.target.value);
-    };
 
     return (
         <>
