@@ -7,6 +7,13 @@
         display: none;
     }   
 }
+
+@media(min-width: 768px) {
+    #mobile-form {
+        display: none;
+    }   
+}
+
 /* aside {
     max-width: 256px;
 } */
