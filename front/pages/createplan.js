@@ -20,7 +20,6 @@ const MobileFormWrapper = styled(MobileForm)`
 
 const CreatePlan = ({state}) => {
     const router = useRouter()
-    const [ visible, setVisible ] = useState(true);
 
     useEffect(() => {
       router.prefetch('/')
@@ -31,8 +30,7 @@ const CreatePlan = ({state}) => {
     };
 
     const handleCancel = (e) => {
-        window.history.pushState(null, null, '/');
-        setVisible(false);
+        router.push('/');
         console.log(e);
     };
 
@@ -43,7 +41,7 @@ const CreatePlan = ({state}) => {
             </MobileFormPortal>
             <ModalWrapper
                 title="작성 하기"
-                visible={visible}
+                visible={true}
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
