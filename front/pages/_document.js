@@ -36,7 +36,7 @@ class MyDocument extends Document {
                     {/* Main이 app.js가 될 것이다. */}
                     <Main /> 
 
-                    {/* Portal을 사용해서 모바일 폼을 보여주기 위해 div 추가  */}
+                    {/* Portal을 사용한 모바일 폼을 Main 컴포넌트 위에 겹쳐서 보여주기 위해 div 추가  */}
                     <div id="mobile-form"></div>
 
                     {/* ie 에서의 실행을 위해 폴리필 사용 */}
