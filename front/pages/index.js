@@ -4,17 +4,13 @@ import TodayList from '../components/TodayList';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
 import { FormOutlined } from '@ant-design/icons';
+import {useRouter} from 'next/router';
 
 const Home = (props) => {
+    const router = useRouter();
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const [ size, setSize ] = useState('large');
-    const [ visible, setVisible ] = useState(false);
-
-    const showModal = () => {
-        window.history.pushState(null, null, '/createplan');
-        setVisible(true);
-    };
 
     return (
         <>
@@ -31,7 +27,7 @@ const Home = (props) => {
             />
             <SelectForms />
             <TodayList />
-            <Button type="primary" shape="circle" size={size} onClick={showModal}>
+            <Button type="primary" shape="circle" size={size} onClick={()=>router.push('/createplan')}>
                 <a><FormOutlined /></a>
             </Button>
         </> 
