@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import React from 'react';
+import { Modal } from 'antd';
 import SelectForms from '../components/SelectForms';
 import styled from 'styled-components';
-import Home from '../pages/index';
+import { useRouter } from 'next/router';
 
 const ModalWrapper = styled(Modal)`
     @media(max-width: 767px) {
@@ -11,28 +11,21 @@ const ModalWrapper = styled(Modal)`
 `;
 
 const DesktopForm = () => {
-    const [ visible, setVisible ] = useState(true);
-
-    const showModal = () => {
-        setVisible(true);
-    };
+    const router = useRouter();
 
     const handleOk = (e) => {
         console.log(e);
-        setVisible(false);
     };
 
     const handleCancel = (e) => {
-        window.history.back();
-        setVisible(false);
+        router.push('/');
         console.log(e);
     };
-      
     return (
         <>
             <ModalWrapper
                 title="작성 하기"
-                visible={visible}
+                visible={true}
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
