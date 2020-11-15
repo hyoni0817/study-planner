@@ -30,7 +30,7 @@ const menu = (
     </Menu>
 );
 
-const TodayList = () => {
+const Todo = () => {
     return (
         <>
             <Card 
@@ -62,4 +62,4 @@ const TodayList = () => {
     );
 };
 
-export default TodayList;
+export default Todo;
