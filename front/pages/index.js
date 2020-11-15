@@ -10,7 +10,6 @@ const Home = (props) => {
     const router = useRouter();
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
-    const [ size, setSize ] = useState('large');
 
     return (
         <>
@@ -27,7 +26,7 @@ const Home = (props) => {
             />
             <SelectForms />
             <TodayList />
-            <Button type="primary" shape="circle" size={size} onClick={()=>router.push('/createplan')}>
+            <Button type="primary" shape="circle" size="large" onClick={()=>router.push('/createplan')}>
                 <a><FormOutlined /></a>
             </Button>
         </> 
