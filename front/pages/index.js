@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress, Button } from 'antd';
-import TodayList from '../components/TodayList';
+import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
 import { FormOutlined } from '@ant-design/icons';
@@ -25,7 +25,7 @@ const Home = (props) => {
                 status="active"
             />
             <SelectForms />
-            <TodayList />
+            <Todo />
             <Button type="primary" shape="circle" size="large" onClick={()=>router.push('/createplan')}>
                 <a><FormOutlined /></a>
             </Button>
