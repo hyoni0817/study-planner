@@ -7,7 +7,7 @@ const { Option } = Select;
 let index = 0;
 
 const TodoForm = () => {
-    const [ items, setItems ] = useState(['수학', '영어']);
+    const [ subjects, setSubjects ] = useState(['수학', '영어']);
     const [ name, setName ] = useState('');
     const [componentSize, setComponentSize] = useState('default');
 
@@ -15,9 +15,9 @@ const TodoForm = () => {
         setName(event.target.value);
     };
 
-    const addItem = () => {
-        console.log('addItem');
-        setItems([...items, name || `New item ${index++}`]);
+    const addSubject = () => {
+        console.log('addSubject');
+        setSubjects([...subjects, name || `New item ${index++}`]);
         setName('');
     };
 
@@ -50,7 +50,7 @@ const TodoForm = () => {
                 size: componentSize,
                 }}
                 size={componentSize}
-                  onFinish={onFinish}
+                onFinish={onFinish}
             >
                 <Form.Item label="계획명" colon={false}>
                     <Form.Item
@@ -78,7 +78,7 @@ const TodoForm = () => {
                                 <Input style={{ flex: 'auto' }} value={name} onChange={onNameChange} />
                                 <a
                                     style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
-                                    onClick={addItem}
+                                    onClick={addSubject}
                                 >
                                     <PlusOutlined /> 과목 추가
                                 </a>
@@ -86,7 +86,7 @@ const TodoForm = () => {
                             </div>
                             )}
                         >
-                            {items.map(item => (
+                            {subjects.map(item => (
                             <Option key={item}>{item}</Option>
                             ))}
                         </Select>
