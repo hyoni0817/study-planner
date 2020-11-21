@@ -9,7 +9,6 @@ let index = 0;
 const TodoForm = () => {
     const [ subjects, setSubjects ] = useState(['수학', '영어']);
     const [ name, setName ] = useState('');
-    const [componentSize, setComponentSize] = useState('default');
 
     const onNameChange = (event) => {
         setName(event.target.value);
@@ -34,9 +33,6 @@ const TodoForm = () => {
         console.log('Received values of form: ', values);
     };
 
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-    };
 
     return (
         <>
@@ -45,11 +41,10 @@ const TodoForm = () => {
                     span: 4,
                 }}
                 layout="horizontal"
-                onValuesChange={onFormLayoutChange}
                 initialValues={{
-                size: componentSize,
+                size: 'default',
                 }}
-                size={componentSize}
+                size="default"
                 onFinish={onFinish}
             >
                 <Form.Item label="계획명" colon={false}>
