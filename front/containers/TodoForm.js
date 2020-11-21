@@ -9,6 +9,7 @@ let index = 0;
 const TodoForm = () => {
     const [ subjects, setSubjects ] = useState(['수학', '영어']);
     const [ name, setName ] = useState('');
+    const [ unit, setUnit ] = useState('개');
 
     const onNameChange = (event) => {
         setName(event.target.value);
@@ -22,7 +23,7 @@ const TodoForm = () => {
 
     
     const handleChange = (value) => {
-        console.log(`selected ${value}`);
+        setUnit(value);
     }
 
     const onChangeCheckbox = (e) => {
