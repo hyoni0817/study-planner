@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Select, Divider, Input, Checkbox, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 const { Option } = Select;
 
 let index = 0;
 
 const TodoForm = () => {
+    const router = useRouter();
+
     const [ subjects, setSubjects ] = useState(['수학', '영어']);
     const [ name, setName ] = useState('');
     const [ unit, setUnit ] = useState('개');
@@ -32,6 +35,7 @@ const TodoForm = () => {
 
     const onFinish = values => {
         console.log('Received values of form: ', values);
+        router.push('/')
     };
 
 
