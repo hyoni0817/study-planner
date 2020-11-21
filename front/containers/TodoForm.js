@@ -95,7 +95,7 @@ const TodoForm = () => {
                 <Form.Item label="분량" colon={false} style={{ marginBottom: 0 }}>
                     <Form.Item
                     name="quantity"
-                    rules={[{ required: true }]}
+                    rules={[{ required: true, message: '분량을 입력해주세요' }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                     >
                         <Input placeholder="분량을 입력해주세요" />
