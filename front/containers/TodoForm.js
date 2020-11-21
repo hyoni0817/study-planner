@@ -97,7 +97,7 @@ const TodoForm = () => {
                     </Form.Item>
                     <Form.Item
                     name="unit"
-                    rules={[{ required: true }]}
+                    rules={[{ required: false }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
                     >
                         <Select defaultValue="개" style={{ width: 120 }} onChange={handleChange}>
