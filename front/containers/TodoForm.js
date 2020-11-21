@@ -100,7 +100,11 @@ const TodoForm = () => {
                     rules={[{ required: false }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
                     >
-                        <Select defaultValue="개" style={{ width: 120 }} onChange={handleChange}>
+                        <Select
+                            defaultValue="개"
+                            style={{ width: 120 }} 
+                            onChange={handleChange}
+                        >
                             <Option value="개">개</Option>
                             <Option value="문제">문제</Option>
                             <Option value="쪽">쪽</Option>
