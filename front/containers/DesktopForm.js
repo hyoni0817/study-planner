@@ -28,6 +28,8 @@ const DesktopForm = () => {
                 visible={true}
                 onOk={handleOk}
                 onCancel={handleCancel}
+                okButtonProps={{ disabled: true }}
+                cancelButtonProps={{ disabled: true }}
             >
                 <SelectForms />
             </ModalWrapper>
