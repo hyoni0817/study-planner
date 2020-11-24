@@ -5,9 +5,12 @@ import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
 import { FormOutlined } from '@ant-design/icons';
 import {useRouter} from 'next/router';
+import { useSelector } from 'react-redux';
 
 const Home = (props) => {
     const router = useRouter();
+    const { todoList } = useSelector( state => state.todo )
+    
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -25,7 +28,12 @@ const Home = (props) => {
                 status="active"
             />
             <SelectForms />
-            <Todo />
+            { todoList.map((c) => {
+                return (
+                    <Todo post={c} />
+                )
+            }) }
+            
             <Button type="primary" shape="circle" size="large" onClick={()=>router.push('/createplan')}>
                 <a><FormOutlined /></a>
             </Button>
