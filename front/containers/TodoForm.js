@@ -3,12 +3,17 @@ import { Form, Select, Divider, Input, Checkbox, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
+//redux
+import { useDispatch } from 'react-redux';
+import { ADD_TODO } from '../reducers/todo';
+
 const { Option } = Select;
 
 let index = 0;
 
 const TodoForm = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const [ title, setTitle ] = useState('');
     const [ subjects, setSubjects ] = useState([]);
@@ -43,8 +48,18 @@ const TodoForm = () => {
     }
 
     const onFinish = values => {
-        console.log('Received values of form: ', values);
-        router.push('/')
+        dispatch({
+            type: ADD_TODO,
+            data: {
+                title,
+                subjects,
+                quantity,
+                unit,
+                checked,
+            },
+        });
+
+        return router.push('/')
     };
 
 
