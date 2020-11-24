@@ -10,27 +10,36 @@ let index = 0;
 const TodoForm = () => {
     const router = useRouter();
 
-    const [ subjects, setSubjects ] = useState(['수학', '영어']);
-    const [ name, setName ] = useState('');
+    const [ title, setTitle ] = useState('');
+    const [ subjects, setSubjects ] = useState([]);
+    const [ subjectName, setSubjectName ] = useState('');
+    const [ quantity, setQuantity ] = useState('');
     const [ unit, setUnit ] = useState('개');
+    const [ checked, setChecked ] = useState('false');
 
-    const onNameChange = (event) => {
-        setName(event.target.value);
+    const onChangeTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const onChangeSubjectName = (e) => {
+        setSubjectName(e.target.value);
     };
 
     const addSubject = () => {
-        console.log('addSubject');
-        setSubjects([...subjects, name || `New item ${index++}`]);
-        setName('');
+        setSubjects([...subjects, subjectName || `New item ${index++}`]);
+        setSubjectName('');
     };
 
+    const onChangeQuantity = (e) => {
+        setQuantity(e.target.value);
+    }
     
-    const handleChange = (value) => {
+    const onChangeUnit = (value) => {
         setUnit(value);
     }
 
     const onChangeCheckbox = (e) => {
-        console.log(`checked = ${e.target.checked}`);
+        setChecked(e.target.checked);
     }
 
     const onFinish = values => {
@@ -58,7 +67,7 @@ const TodoForm = () => {
                     noStyle
                     rules={[{ required: true, message: '내용을 입력해주세요' }]}
                     >
-                        <Input style={{ width: 160 }} placeholder="계획명을 입력해주세요" />
+                        <Input style={{ width: 160 }} placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="과목" colon={false}>
@@ -75,7 +84,7 @@ const TodoForm = () => {
                                 {menu}
                                 <Divider style={{ margin: '4px 0' }} />
                                 <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-                                <Input style={{ flex: 'auto' }} value={name} onChange={onNameChange} />
+                                <Input style={{ flex: 'auto' }} value={subjectName} onChange={onChangeSubjectName} />
                                 <a
                                     style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
                                     onClick={addSubject}
@@ -98,7 +107,7 @@ const TodoForm = () => {
                     rules={[{ required: true, message: '분량을 입력해주세요' }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                     >
-                        <Input placeholder="분량을 입력해주세요" />
+                        <Input value={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" />
                     </Form.Item>
                     <Form.Item
                     name="unit"
@@ -108,7 +117,7 @@ const TodoForm = () => {
                         <Select
                             defaultValue="개"
                             style={{ width: 120 }} 
-                            onChange={handleChange}
+                            onChange={onChangeUnit}
                         >
                             <Option value="개">개</Option>
                             <Option value="문제">문제</Option>
