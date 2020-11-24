@@ -4,6 +4,9 @@ import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import '../public/css/style.css';
 
+//redex
+import wrapper from '../store/configureStore';
+
 const StudyPlanner = ({ Component, pageProps }) => {
     return (
         <>
@@ -23,4 +26,4 @@ StudyPlanner.propTypes = {
     pageProps: PropTypes.object.isRequired,
 }
 
-export default StudyPlanner;
+export default wrapper.withRedux(StudyPlanner);
