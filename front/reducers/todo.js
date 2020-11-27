@@ -1,5 +1,6 @@
 export const initialState = {
     todoList : [],
+    id: 0,
 };
 
 //TODO 추가하는 액션
@@ -17,7 +18,6 @@ export const LOAD_TODO_LIST = 'LOAD_TODO_LIST';
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_TODO:
-            console.log("action.data:", action.data);
             return {
                 ...state,
                 todoList : [ action.data, ...state.todoList ],

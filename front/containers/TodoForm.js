@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
 //redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TODO } from '../reducers/todo';
 
 const { Option } = Select;
@@ -14,7 +14,9 @@ let index = 0;
 const TodoForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const { id } = useSelector(state => state.todo);
 
+    const [ todoId, setTodoId ] = useState(id);
     const [ title, setTitle ] = useState('');
     const [ subjects, setSubjects ] = useState([]);
     const [ subjectName, setSubjectName ] = useState('');
@@ -48,9 +50,11 @@ const TodoForm = () => {
     }
 
     const onFinish = values => {
+        setTodoId( todoId => todoId + 1);
         dispatch({
             type: ADD_TODO,
             data: {
+                id: todoId,
                 title,
                 subjects,
                 quantity,
