@@ -39,6 +39,7 @@ const Todo = ({post}) => {
               extra={
                   <Dropdown.Button onClick={handleButtonClick} overlay={menu} />
               }
+              headStyle={post.important ? {backgroundColor: 'pink'} : {}}
           >
               <b>학습 분량</b> 0 / {post.quantity} {post.unit}
               <Checkbox onChange={onChange}>Checkbox</Checkbox>
