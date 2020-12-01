@@ -22,7 +22,7 @@ const TodoForm = () => {
     const [ subjectName, setSubjectName ] = useState('');
     const [ quantity, setQuantity ] = useState('');
     const [ unit, setUnit ] = useState('개');
-    const [ checked, setChecked ] = useState('false');
+    const [ important, setImporant ] = useState('false');
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -46,7 +46,7 @@ const TodoForm = () => {
     }
 
     const onChangeCheckbox = (e) => {
-        setChecked(e.target.checked);
+        setImporant(e.target.checked);
     }
 
     const onFinish = values => {
@@ -59,7 +59,7 @@ const TodoForm = () => {
                 subjects,
                 quantity,
                 unit,
-                checked,
+                important,
             },
         });
 
