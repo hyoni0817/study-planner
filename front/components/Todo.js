@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Menu, Dropdown, Button, message, Tooltip, Checkbox, Tag } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { DownOutlined, UserOutlined, StarFilled } from '@ant-design/icons';
 
 const handleButtonClick = (e) => {
     message.info('Click on left button.');
