@@ -35,7 +35,7 @@ const Todo = ({post}) => {
         <>
           <Card 
               type="inner" 
-              title={post.title} 
+              title={post.important ? <div><StarFilled style={{color: 'yellow'}} /> {post.title}</div> : post.title} 
               extra={
                   <Dropdown.Button onClick={handleButtonClick} overlay={menu} />
               }
