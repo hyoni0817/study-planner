@@ -1,7 +1,7 @@
 export const initialState = {
     todoList : [],
     DdayList : [],
-    id: 0,
+    todoPostId: 0,
 };
 
 //TODO 추가하는 액션
