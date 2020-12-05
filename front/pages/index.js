@@ -28,11 +28,13 @@ const Home = (props) => {
                 status="active"
             />
             <SelectForms />
-            { todoList.map((c) => {
-                return (
-                    <Todo post={c} />
-                )
-            }) }
+            { 
+                todoList.map((c) => {
+                    return (
+                        <Todo post={c} />
+                    )
+                }) 
+            }
             
             <Button type="primary" shape="circle" size="large" onClick={()=>router.push('/createplan')}>
                 <a><FormOutlined /></a>
