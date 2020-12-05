@@ -8,7 +8,6 @@ import { ADD_DDAY } from '../reducers/todo';
 
 
 const DdayForm = () => {
-    const [componentSize, setComponentSize] = useState('default');
     const router = useRouter();
     const dispatch = useDispatch();
     const { DdayPostId } = useSelector(state => state.todo);
@@ -17,10 +16,6 @@ const DdayForm = () => {
     const [ title, setTitle ] = useState('');
     const [ contents, setContents ] = useState('');
     const [ dueDate, setDueDate ] = useState('');
-
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-    };
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -35,7 +30,6 @@ const DdayForm = () => {
     };
 
     const onFinish = values => {
-        console.log('Received values of form: ', values);
         setDdayId( DdayId => DdayId + 1);
         dispatch({
             type: ADD_DDAY,
@@ -57,11 +51,10 @@ const DdayForm = () => {
                     span: 4,
                 }}
                 layout="horizontal"
-                onValuesChange={onFormLayoutChange}
                 initialValues={{
-                size: componentSize,
+                    size: 'default',
                 }}
-                size={componentSize}
+                size="default"
                 onFinish={onFinish}
             >
                 <Form.Item label="제목" colon={false}>
