@@ -36,7 +36,7 @@ const DdayForm = () => {
 
     const onFinish = values => {
         console.log('Received values of form: ', values);
-        setDdaysId( DdayId => DdayId + 1);
+        setDdayId( DdayId => DdayId + 1);
         dispatch({
             type: ADD_DDAY,
             data: {
