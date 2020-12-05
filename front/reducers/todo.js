@@ -1,5 +1,6 @@
 export const initialState = {
     todoList : [],
+    DdayList : [],
     id: 0,
 };
 
@@ -15,6 +16,18 @@ export const DELETE_TODO = 'DELETE_TODO';
 //TODO 로드하는 액션
 export const LOAD_TODO_LIST = 'LOAD_TODO_LIST';
 
+//Dday 추가하는 액션
+export const ADD_DDAY = 'ADD_DDAY';
+
+//Dday 편집하는 액션
+export const EDIT_DDAY = 'EDIT_DDAY';
+
+//Dday 삭제하는 액션
+export const DELETE_DDAY = 'DELETE_DDAY';
+
+//Dday 로드하는 액션
+export const LOAD_DDAY_LIST = 'LOAD_DDAY_LIST';
+
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_TODO:
@@ -22,6 +35,12 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 todoList : [ action.data, ...state.todoList ],
             }; 
+        case ADD_DDAY: {
+            return {
+                ...state,
+                DdayList : [ action.data, ...state.DdayList ],
+            }
+        }
         default: {
             return {
                 ...state,
