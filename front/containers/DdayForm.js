@@ -66,7 +66,7 @@ const DdayForm = () => {
             >
                 <Form.Item label="제목" colon={false}>
                     <Form.Item
-                    name="todocontents"
+                    name="ddaytitle"
                     noStyle
                     rules={[{ required: true, message: '제목을 입력해주세요' }]}
                     >
@@ -75,7 +75,7 @@ const DdayForm = () => {
                 </Form.Item>
                 <Form.Item label="내용" colon={false}>
                     <Form.Item
-                    name="todocontents"
+                    name="ddaycontents"
                     noStyle
                     >
                         <Input style={{ width: 160 }} placeholder="추가하고 싶은 내용이 있다면 입력해주세요" value={contents} onChange={onChangeContent} />
@@ -83,7 +83,7 @@ const DdayForm = () => {
                 </Form.Item>
                 <Form.Item label="날짜" colon={false}>
                     <Form.Item
-                    name="todocontents"
+                    name="ddaydate"
                     noStyle
                     rules={[{ required: true, message: '날짜를 입력해주세요' }]}
                     >
