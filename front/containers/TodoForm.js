@@ -14,9 +14,9 @@ let index = 0;
 const TodoForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { id } = useSelector(state => state.todo);
+    const { todoPostId } = useSelector(state => state.todo);
 
-    const [ todoId, setTodoId ] = useState(id);
+    const [ todoId, setTodoId ] = useState(todoPostId);
     const [ title, setTitle ] = useState('');
     const [ subjects, setSubjects ] = useState([]);
     const [ subjectName, setSubjectName ] = useState('');
@@ -54,7 +54,7 @@ const TodoForm = () => {
         dispatch({
             type: ADD_TODO,
             data: {
-                id: todoId,
+                todoPostId: todoId,
                 title,
                 subjects,
                 quantity,
