@@ -1,9 +1,12 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
+import { useSelector } from 'react-redux';
 
-const Dday = ({post}) => {
-    const calculateDday = () => {
-        const dateArr = post.dueDate.split('-');
+const Dday = () => {
+    const { DdayList } = useSelector( state => state.todo )
+
+    const calculateDday = (dueDate) => {
+        const dateArr = dueDate.split('-');
         const now = new Date();
         const Dday = new Date(dateArr[0], dateArr[1]-1, dateArr[2]);
 
@@ -16,15 +19,18 @@ const Dday = ({post}) => {
         <>
             <div style={{ padding: 15, textAlign: 'center' }}>
                 <Row gutter={16} justify="center">
-                    <Col xs={12} sm={6} md={10} lg={6} >
-                        {
-                            post === undefined ? '' : 
-                            <Card bordered={false}>
-                                <p>D{ calculateDday() }</p>
-                                <span>{post.title}</span>
-                            </Card> 
-                        }
-                    </Col>
+                    { 
+                        DdayList.map((c) => {
+                            return (
+                                <Col xs={12} sm={6} md={10} lg={6} >
+                                    <Card bordered={false}>
+                                        <p>D{ calculateDday(c.dueDate) }</p>
+                                        <span>{c.title}</span>
+                                    </Card> 
+                                </Col>
+                            )
+                        })  
+                    }
                 </Row>
             </div> 
         </>

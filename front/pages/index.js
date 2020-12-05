@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 
 const Home = (props) => {
     const router = useRouter();
-    const { todoList, DdayList } = useSelector( state => state.todo )
+    const { todoList } = useSelector( state => state.todo )
     
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -17,13 +17,7 @@ const Home = (props) => {
     return (
         <>
             <div>{date.getFullYear()}년 {date.getMonth()}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
-            { 
-                DdayList.map((c) => {
-                    return (
-                        <Dday post={c} />
-                    )
-                })  
-            }
+            <Dday />
             오늘의 성취율
             <Progress
                 strokeColor={{
