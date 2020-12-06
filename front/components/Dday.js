@@ -17,7 +17,7 @@ const Dday = () => {
 
     return (
         <>
-            <div style={{ padding: 15, textAlign: 'center' }}>
+            <div style={{ padding: 15, textAlign: 'center', overflowX: 'auto', }}>
                 <Row gutter={16} justify="center">
                     { 
                         DdayList.map((c) => {
@@ -30,7 +30,7 @@ const Dday = () => {
                                 </Col>
                             )
                         })  
-                    }
+                    }                    
                 </Row>
             </div> 
         </>

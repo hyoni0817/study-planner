@@ -18,6 +18,11 @@
     position: absolute;
 }
 
+.ant-row {
+    flex-flow: unset;
+    display: -webkit-box;
+}
+
 /* aside {
     max-width: 256px;
 } */
