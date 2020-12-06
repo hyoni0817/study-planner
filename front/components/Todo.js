@@ -33,19 +33,22 @@ const menu = (
 const Todo = ({post}) => {
     return (
         <>
-          <Card 
+          {
+            post === undefined ? '' :
+            <Card 
               type="inner" 
               title={post.important ? <div><StarFilled style={{color: 'yellow'}} /> {post.title}</div> : post.title} 
               extra={
                   <Dropdown.Button onClick={handleButtonClick} overlay={menu} />
               }
               headStyle={post.important ? {backgroundColor: 'pink'} : {}}
-          >
-              <b>학습 분량</b> 0 / {post.quantity} {post.unit}
-              <Checkbox onChange={onChange}>Checkbox</Checkbox>
-              <br />
-              <Tag color="magenta">{post.subjects}</Tag>
-          </Card>
+            >
+                <b>학습 분량</b> 0 / {post.quantity} {post.unit}
+                <Checkbox onChange={onChange}>Checkbox</Checkbox>
+                <br />
+                <Tag color="magenta">{post.subjects}</Tag>
+            </Card> 
+          }
         </>
     );
 };
