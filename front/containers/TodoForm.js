@@ -23,6 +23,7 @@ const TodoForm = () => {
     const [ quantity, setQuantity ] = useState('');
     const [ unit, setUnit ] = useState('개');
     const [ important, setImporant ] = useState('false');
+    const [ selectSubject, setSelectSubject ] = useState('');
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -49,6 +50,11 @@ const TodoForm = () => {
         setImporant(e.target.checked);
     }
 
+    const onChangeSelectValue = value => {
+        console.log("selectValue:", value);
+        setSelectSubject(value);
+    }
+
     const onFinish = values => {
         setTodoId( todoId => todoId + 1);
         dispatch({
@@ -56,7 +62,7 @@ const TodoForm = () => {
             data: {
                 todoPostId: todoId,
                 title,
-                subjects,
+                selectSubject,
                 quantity,
                 unit,
                 important,
@@ -65,7 +71,6 @@ const TodoForm = () => {
 
         return router.push('/')
     };
-
 
     return (
         <>
@@ -99,24 +104,27 @@ const TodoForm = () => {
                             style={{ width: 240 }}
                             placeholder="과목 선택"
                             dropdownRender={menu => (
-                            <div>
-                                {menu}
-                                <Divider style={{ margin: '4px 0' }} />
-                                <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-                                <Input style={{ flex: 'auto' }} value={subjectName} onChange={onChangeSubjectName} />
-                                <a
-                                    style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
-                                    onClick={addSubject}
-                                >
-                                    <PlusOutlined /> 과목 추가
-                                </a>
+                                <div>
+                                    {menu}
+                                    <Divider style={{ margin: '4px 0' }} />
+                                    <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
+                                        <Input style={{ flex: 'auto' }} value={subjectName} onChange={onChangeSubjectName} />
+                                        <a
+                                            style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
+                                            onClick={addSubject}
+                                        >
+                                            <PlusOutlined /> 과목 추가
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
                             )}
+                            onChange={onChangeSelectValue}
                         >
-                            {subjects.map(item => (
-                            <Option key={item}>{item}</Option>
-                            ))}
+                            {
+                                subjects.map(item => (
+                                    <Option key={item}>{item}</Option> // 코드 정렬 git에 올리기, 여기서 value값 추가하기
+                                ))
+                            }
                         </Select>
                     </Form.Item>
                 </Form.Item>
