@@ -22,7 +22,7 @@ const TodoForm = () => {
     const [ subjectName, setSubjectName ] = useState('');
     const [ quantity, setQuantity ] = useState('');
     const [ unit, setUnit ] = useState('개');
-    const [ important, setImporant ] = useState('false');
+    const [ important, setImporant ] = useState(false);
     const [ selectSubject, setSelectSubject ] = useState('');
 
     const onChangeTitle = (e) => {
