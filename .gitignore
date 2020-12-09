@@ -2,5 +2,8 @@
 front/node_modules
 front/.next
 
+#back
+back/node_modules
+
 #ect
 ect
