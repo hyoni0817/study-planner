@@ -23,7 +23,7 @@ module.exports = ( sequelize, DataTypes ) => {
             allowNull: false,
         },
         term: {
-            type: DataTypes.STRING(1),
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         birthYear: {
