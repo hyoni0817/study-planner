@@ -1,6 +1,13 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+const DdayBox = styled(Card)`
+    background-image: linear-gradient(76deg, #E050D5, #FFE78F)
+    border-radius: 5px;
+    color: white;
+`;
 
 const Dday = () => {
     const { DdayList } = useSelector( state => state.todo )
@@ -23,10 +30,10 @@ const Dday = () => {
                         DdayList.map((c) => {
                             return (
                                 <Col xs={12} sm={6} md={10} lg={6} >
-                                    <Card bordered={false}>
+                                    <DdayBox bordered={false}>
                                         <p>D{ calculateDday(c.dueDate) }</p>
                                         <span>{c.title}</span>
-                                    </Card> 
+                                    </DdayBox> 
                                 </Col>
                             )
                         })  
