@@ -16,7 +16,7 @@ const Home = (props) => {
 
     return (
         <>
-            <div>{date.getFullYear()}년 {date.getMonth()}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
+            <div>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
             <Dday />
             오늘의 성취율
             <Progress
