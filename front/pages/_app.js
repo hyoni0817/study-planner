@@ -13,6 +13,8 @@ const StudyPlanner = ({ Component, pageProps }) => {
             <Head>
                 <title>Study Planner</title>
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.7.2/antd.min.css" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" />
             </Head>
             <AppLayout>
                 <Component {...pageProps} />
