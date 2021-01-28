@@ -31,6 +31,10 @@
     background:#490a3d;
 }
 
+.ant-layout-content {
+    height: 100vh;
+}
+
 /* aside {
     max-width: 256px;
 } */
