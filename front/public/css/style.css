@@ -23,6 +23,10 @@
     display: -webkit-box;
 }
 
+.ant-card-body {
+    padding: 12px;
+}
+
 /* aside {
     max-width: 256px;
 } */
