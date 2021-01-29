@@ -27,6 +27,7 @@ const SiteLayout = styled(Layout)`
 
     @media(max-width: 767px) {
         margin-left: 0px;
+        border-left: none;
     }
 `;
 

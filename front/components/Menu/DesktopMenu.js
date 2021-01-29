@@ -25,6 +25,10 @@ const PcWebMenu = styled(Menu)`
     position: fixed;
     background: white;
     border-right: 2px solid #ebebeb;
+    
+    @media(max-width: 767px) {
+        border-right: none;
+    }
 `;
 
 const DesktopMenu = ({ children }) => {
