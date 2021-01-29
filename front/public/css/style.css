@@ -29,6 +29,7 @@
 
 .ant-layout {
     background: white;
+    overflow: inherit;
 }
 
 .ant-layout-content {
