@@ -23,8 +23,8 @@ const PcWebMenu = styled(Menu)`
     width: 256px;
     height: 100vh;
     position: fixed;
-    border: none;
     background: white;
+    border-right: 2px solid #ebebeb;
 `;
 
 const DesktopMenu = ({ children }) => {
