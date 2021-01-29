@@ -29,6 +29,10 @@
 
 .ant-layout {
     background: white;
+}
+
+.ant-layout.ant-layout-has-sider>.ant-layout {
+    overflow-x: hidden;
     overflow: inherit;
 }
 
