@@ -26,6 +26,11 @@ const SiteLayout = styled(Layout)`
         margin-left: 0px;
     }
 `;
+
+const SiteContent = styled(Content)`
+    padding: 24px 16px 0;
+    over-flow: initial;
+`
 const AppLayout = ({ children }) => {
     return (
         <>
@@ -35,9 +40,9 @@ const AppLayout = ({ children }) => {
                     <DesktopMenu />
                 </DesktopSider>
                 <SiteLayout>
-                    <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                    <SiteContent>
                         { children.type === Home || children.type === CreatePlan ? <Home /> : children }
-                    </Content>
+                    </SiteContent>
                 </SiteLayout>
             </Layout>
             {children.type === CreatePlan && children}
