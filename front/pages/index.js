@@ -20,12 +20,12 @@ const Home = (props) => {
             <Dday />
             오늘의 성취율
             <Progress
+                type="circle"
                 strokeColor={{
-                    from: '#108ee9',
-                    to: '#87d068',
+                    '0%': '#d76d77',
+                    '100%': '#3a1c71',
                 }}
-                percent={99.9}
-                status="active"
+                percent={90}
             />
             <SelectForms />
             { 
