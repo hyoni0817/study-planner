@@ -21,20 +21,15 @@ const DesktopSider = styled(Sider)`
 
 const SiteLayout = styled(Layout)`
     margin-Left: 256px;
-    border-left: solid;
-    border-color: #f1f1f1;
-    border-width: 6px;
 
     @media(max-width: 767px) {
         margin-left: 0px;
-        border-left: none;
     }
 `;
 
 const SiteContent = styled(Content)`
     padding: 24px 16px 0;
     over-flow: initial;
-    border-left: 1px solid #dbdbdb;
 `
 const AppLayout = ({ children }) => {
     return (
