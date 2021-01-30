@@ -23,7 +23,7 @@ const PcWebMenu = styled(Menu)`
     width: 256px;
     height: 100vh;
     position: fixed;
-    background: white;
+    background: #522872;
     border-right: 2px solid #ebebeb;
     
     @media(max-width: 767px) {
