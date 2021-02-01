@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 const DdayBox = styled(Card)`
-    background-image: linear-gradient(76deg, #E050D5, #FFE78F);
+    background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
     border-radius: 5px;
-    color: white;
+    color: #ffffffe8;
 `;
 
 const Dday = () => {
