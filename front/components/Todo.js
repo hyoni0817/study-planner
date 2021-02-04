@@ -1,6 +1,12 @@
 import React from 'react';
 import { Card, Menu, Dropdown, Button, message, Tooltip, Checkbox, Tag } from 'antd';
 import { DownOutlined, UserOutlined, StarFilled } from '@ant-design/icons';
+import styled from 'styled-components';
+
+const TodoBox = styled(Card)`
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
 
 const Todo = ({post}) => {
     const handleButtonClick = (e) => {
@@ -34,7 +40,7 @@ const Todo = ({post}) => {
         <>
           {
             post === undefined ? '' :
-            <Card 
+            <TodoBox 
               type="inner" 
               title={post.important ? <div><StarFilled style={{color: 'yellow'}} /> {post.title}</div> : post.title} 
               extra={
@@ -46,7 +52,7 @@ const Todo = ({post}) => {
                 <Checkbox onChange={onChange}>Checkbox</Checkbox>
                 <br />
                 <Tag color="magenta">{post.selectSubject}</Tag>
-            </Card> 
+            </TodoBox> 
           }
         </>
     );
