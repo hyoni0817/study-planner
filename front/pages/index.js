@@ -27,15 +27,17 @@ const Home = (props) => {
         <>
             <div>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
             <Dday />
-            오늘의 성취율
-            <Progress
-                type="circle"
-                strokeColor={{
-                    '0%': '#d76d77',
-                    '100%': '#3a1c71',
-                }}
-                percent={90}
-            />
+            <div>
+                <p>오늘의 성취율</p>
+                <Progress
+                    type="circle"
+                    strokeColor={{
+                        '0%': '#d76d77',
+                        '100%': '#3a1c71',
+                    }}
+                    percent={90}
+                />
+            </div>
             <SelectForms />
             <TodoNowWrapper>
                 <p>지금 해야할 일</p>
