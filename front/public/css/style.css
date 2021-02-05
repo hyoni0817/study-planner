@@ -35,6 +35,9 @@
     overflow-x: hidden;
 }
 
+.ant-menu {
+    background: #522872;
+}
 
 /* aside {
     max-width: 256px;
