@@ -8,9 +8,14 @@ import {useRouter} from 'next/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
+const TodoNowWrapper = styled.div`
+    margin-bottom: 30px;
+`
+
 const Home = (props) => {
     const router = useRouter();
     const { todoList } = useSelector( state => state.todo )
+    const tempTodo = {title: "수학문제 풀기", quantity: 11, unit: "개", important: false, selectSubject: "수학"}
     
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -32,6 +37,10 @@ const Home = (props) => {
                 percent={90}
             />
             <SelectForms />
+            <TodoNowWrapper>
+                <p>지금 해야할 일</p>
+                <Todo post={tempTodo}/>
+            </TodoNowWrapper>
             { 
                 todoList.map((c) => {
                     return (
