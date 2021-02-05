@@ -33,12 +33,8 @@
 
 .ant-layout.ant-layout-has-sider>.ant-layout {
     overflow-x: hidden;
-    overflow: inherit;
 }
 
-.ant-layout-content {
-    height: 100vh;
-}
 
 /* aside {
     max-width: 256px;
