@@ -11,13 +11,11 @@ import styled from 'styled-components';
 const Home = (props) => {
     const router = useRouter();
     const { todoList } = useSelector( state => state.todo )
-    const [bottom, setBottom] = useState(10);
     
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
 
-    const onClickWriteBtn = () => { 
-        setBottom(bottom + 10);
+    const onClickWriteBtn = () => {
         router.push('/createplan');
     }
     return (
@@ -41,12 +39,12 @@ const Home = (props) => {
                     )
                 }) 
             }
-            
-            <Affix offsetBottom={bottom}>
+            <Affix offsetBottom={50}>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} style={{float: 'right'}}>
                     <a><FormOutlined /></a>
                 </Button>
             </Affix>
+            
         </> 
     )
 };
