@@ -51,7 +51,8 @@ const Home = (props) => {
             <TodoListWrapper>
                 <p>오늘 해야할 일</p>
                 { 
-                    todoList.map((c) => {
+                    todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
+                    : todoList.map((c) => {
                         return (
                             <Todo post={c} />
                         )
