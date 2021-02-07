@@ -10,7 +10,12 @@ import styled from 'styled-components';
 
 const TodoNowWrapper = styled.div`
     margin-bottom: 30px;
-`
+`;
+
+const TodoListWrapper = styled.div`
+    margin-top: 20px;
+    margin-bottom: 30px
+`;
 
 const Home = (props) => {
     const router = useRouter();
@@ -43,13 +48,16 @@ const Home = (props) => {
                 <p>지금 해야할 일</p>
                 <Todo post={tempTodo}/>
             </TodoNowWrapper>
-            { 
-                todoList.map((c) => {
-                    return (
-                        <Todo post={c} />
-                    )
-                }) 
-            }
+            <TodoListWrapper>
+                <p>오늘 해야할 일</p>
+                { 
+                    todoList.map((c) => {
+                        return (
+                            <Todo post={c} />
+                        )
+                    }) 
+                }
+            </TodoListWrapper>
             <Affix offsetBottom={50}>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} style={{float: 'right'}}>
                     <a><FormOutlined /></a>
