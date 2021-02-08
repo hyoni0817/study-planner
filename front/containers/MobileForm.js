@@ -12,6 +12,7 @@ const PageHeaderWrapper = styled.div`
         height: 100%;
         width: 100%;
         overflow:auto;
+        z-index:99;
 `;
 
 const MobileForm = () => {
