@@ -10,11 +10,21 @@ import styled from 'styled-components';
 
 const TodoNowWrapper = styled.div`
     margin-bottom: 30px;
+    display: table;
+    width: 100%;
+    border-spacing: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: white;
+    border-radius: 5px;
 `;
 
 const TodoListWrapper = styled.div`
     margin-top: 20px;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    display: table;
+    width: 100%;
+    border-spacing: 12px 20px;
 `;
 
 const Home = (props) => {
@@ -44,12 +54,12 @@ const Home = (props) => {
                 />
             </div>
             <SelectForms />
+            <p>지금 해야할 일</p>
             <TodoNowWrapper>
-                <p>지금 해야할 일</p>
                 <Todo post={tempTodo}/>
             </TodoNowWrapper>
+            <p>오늘 해야할 일</p>
             <TodoListWrapper>
-                <p>오늘 해야할 일</p>
                 { 
                     todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
                     : todoList.map((c) => {
