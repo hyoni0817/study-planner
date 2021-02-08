@@ -24,7 +24,7 @@ const TodoDetailCell = styled.div`
 
 const TodoCompletionStatusCell = styled.div`
   display: table-cell;
-  vertical-align: center;
+  vertical-align: middle;
   text-align: right;
 `;
 
