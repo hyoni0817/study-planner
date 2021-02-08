@@ -1,59 +1,64 @@
 import React from 'react';
-import { Card, Menu, Dropdown, Button, message, Tooltip, Checkbox, Tag } from 'antd';
-import { DownOutlined, UserOutlined, StarFilled } from '@ant-design/icons';
+import { Checkbox, Tag } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const TodoBox = styled(Card)`
-  border-radius: 5px;
+const TodoBox = styled.div`
   margin-bottom: 20px;
+  display: table-row;
+  width: 100%;
+`;
+
+const TodoTimeCell = styled.div`
+  display: table-cell;
+  padding-right: 10px;
+  border-right: 2px solid black; 
+  vertical-align: middle;
+  text-align: right;
+`;
+
+const TodoDetailCell = styled.div`
+  display: table-cell;
+  text-align: left;
+`;
+
+const TodoCompletionStatusCell = styled.div`
+  display: table-cell;
+  vertical-align: center;
+  text-align: right;
+`;
+
+const TodoImportantStatus = styled.p`
+  margin-bottom: 0;
+`;
+
+const TodoTitle = styled.p`
+  margin-bottom: 0;
 `;
 
 const Todo = ({post}) => {
-    const handleButtonClick = (e) => {
-      message.info('Click on left button.');
-      console.log('click left button', e);
-    }
-
-    const handleMenuClick = (e) => {
-      message.info('Click on menu item.');
-      console.log('click', e);
-    }
-
     const onChange = (e) => {
       console.log(`checked = ${e.target.checked}`);
     }
 
-    const menu = (
-      <Menu onClick={handleMenuClick}>
-        <Menu.Item key="1" icon={<UserOutlined />}>
-          1st menu item
-        </Menu.Item>
-        <Menu.Item key="2" icon={<UserOutlined />}>
-          2nd menu item
-        </Menu.Item>
-        <Menu.Item key="3" icon={<UserOutlined />}>
-          3rd menu item
-        </Menu.Item>
-      </Menu>
-    );
     return (
         <>
           {
             post === undefined ? '' :
-            <TodoBox 
-              type="inner" 
-              title={post.important ? <div><StarFilled style={{color: 'yellow'}} /> {post.title}</div> : post.title} 
-              extra={
-                  <Dropdown.Button onClick={handleButtonClick} overlay={menu} />
-              }
-              headStyle={post.important ? {backgroundColor: 'pink'} : {}}
-            >
-                <b>학습 분량</b> 0 / {post.quantity} {post.unit}
+            <TodoBox>
+              <TodoTimeCell>
+                {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
+                9:00 - 9:30
+              </TodoTimeCell>
+              <TodoDetailCell>
+                <TodoTitle><Tag color="magenta">{post.selectSubject}</Tag>{post.title}</TodoTitle>
+                0 / {post.quantity} {post.unit}
+              </TodoDetailCell>  
+              <TodoCompletionStatusCell>
                 <Checkbox onChange={onChange}>Checkbox</Checkbox>
-                <br />
-                <Tag color="magenta">{post.selectSubject}</Tag>
-            </TodoBox> 
-          }
+              </TodoCompletionStatusCell>
+            </TodoBox>     
+            }  
         </>
     );
 };
