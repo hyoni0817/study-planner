@@ -30,6 +30,7 @@ const TodoForm = () => {
     const [ selectSubject, setSelectSubject ] = useState('');
     const [ startTime, setStartTime ] = useState('');
     const [ endTime, setEndTime ] = useState('');
+    const [ allDayStatus, setAllDayStatus ] = useState(false);
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     }
@@ -54,7 +55,11 @@ const TodoForm = () => {
     const onChangeTime = (value) => {
         setStartTime(moment(value[0]["_d"]).format(format));
         setEndTime(moment(value[1]["_d"]).format(format));
-    };
+    }
+    function onChangeAllDayCheckBox(e) {
+        console.log(`checked = ${e.target.checked}`);
+        setAllDayStatus(e.target.checked);
+      }
 
     const onChangeCheckbox = (e) => {
         setImporant(e.target.checked);
@@ -167,6 +172,7 @@ const TodoForm = () => {
                 </Form.Item>
                 <Form.Item label="시간" colon={false} style={{ marginBottom: 0 }}>
                     <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
+                    <Checkbox onChange={onChangeAllDayCheckBox}>종일</Checkbox>
                 </Form.Item>
                 <Form.Item label="중요" colon={false} style={{ marginBottom: 0 }}>
                 <Checkbox onChange={onChangeCheckbox} />
