@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Form, Select, Divider, Input, Checkbox, Button } from 'antd';
+import { Form, Select, Divider, Input, Checkbox, Button, TimePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,9 @@ const TodoForm = () => {
     const dispatch = useDispatch();
     const { todoPostId } = useSelector(state => state.todo);
 
+    const { RangePicker } = TimePicker;
+    const format = 'HH:mm';
+
     const [ todoId, setTodoId ] = useState(todoPostId);
     const [ title, setTitle ] = useState('');
     const [ subjects, setSubjects ] = useState([]);
@@ -24,7 +28,8 @@ const TodoForm = () => {
     const [ unit, setUnit ] = useState('개');
     const [ important, setImporant ] = useState(false);
     const [ selectSubject, setSelectSubject ] = useState('');
-
+    const [ startTime, setStartTime ] = useState('');
+    const [ endTime, setEndTime ] = useState('');
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     }
@@ -46,6 +51,11 @@ const TodoForm = () => {
         setUnit(value);
     }
 
+    const onChangeTime = (value) => {
+        setStartTime(moment(value[0]["_d"]).format(format));
+        setEndTime(moment(value[1]["_d"]).format(format));
+    };
+
     const onChangeCheckbox = (e) => {
         setImporant(e.target.checked);
     }
@@ -66,6 +76,8 @@ const TodoForm = () => {
                 quantity,
                 unit,
                 important,
+                startTime,
+                endTime,
             },
         });
 
@@ -152,6 +164,9 @@ const TodoForm = () => {
                             <Option value="없음">없음</Option>
                         </Select>
                     </Form.Item>
+                </Form.Item>
+                <Form.Item label="시간" colon={false} style={{ marginBottom: 0 }}>
+                    <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
                 </Form.Item>
                 <Form.Item label="중요" colon={false} style={{ marginBottom: 0 }}>
                 <Checkbox onChange={onChangeCheckbox} />
