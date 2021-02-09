@@ -104,7 +104,7 @@ const TodoForm = () => {
             >
                 <Form.Item label="계획명" colon={false}>
                     <Form.Item
-                    name="todocontents"
+                    name="todoTitle"
                     noStyle
                     rules={[{ required: true, message: '내용을 입력해주세요' }]}
                     >
@@ -113,7 +113,7 @@ const TodoForm = () => {
                 </Form.Item>
                 <Form.Item label="과목" colon={false}>
                     <Form.Item
-                        name={['address', 'province']}
+                        name="subject"
                         noStyle
                         rules={[{ required: true, message: '과목을 선택해주세요' }]}
                     >
