@@ -83,6 +83,7 @@ const TodoForm = () => {
                 important,
                 startTime,
                 endTime,
+                allDayStatus,
             },
         });
 
