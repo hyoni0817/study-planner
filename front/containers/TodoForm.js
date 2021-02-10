@@ -172,7 +172,7 @@ const TodoForm = () => {
                 </Form.Item>
                 <Form.Item label="시간" colon={false} style={{ marginBottom: 0 }}>
                     <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
-                    <Checkbox onChange={onChangeAllDayCheckBox}>종일</Checkbox>
+                    <Checkbox onChange={onChangeAllDayCheckBox} style={{ marginLeft: '10px', }}>종일</Checkbox>
                 </Form.Item>
                 <Form.Item label="중요" colon={false} style={{ marginBottom: 0 }}>
                 <Checkbox onChange={onChangeCheckbox} />
