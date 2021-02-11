@@ -48,7 +48,7 @@ const Todo = ({post}) => {
             <TodoBox>
               <TodoTimeCell>
                 {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
-                9:00 - 9:30
+                {post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
               </TodoTimeCell>
               <TodoDetailCell>
                 <TodoTitle><Tag color="magenta">{post.selectSubject}</Tag>{post.title}</TodoTitle>
