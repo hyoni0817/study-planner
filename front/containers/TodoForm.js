@@ -31,6 +31,8 @@ const TodoForm = () => {
     const [ startTime, setStartTime ] = useState('');
     const [ endTime, setEndTime ] = useState('');
     const [ allDayStatus, setAllDayStatus ] = useState(false);
+    const [ checkTime, setCheckTime ] = useState(true);
+
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
     }
@@ -53,12 +55,20 @@ const TodoForm = () => {
     }
 
     const onChangeTime = (value) => {
-        setStartTime(moment(value[0]["_d"]).format(format));
-        setEndTime(moment(value[1]["_d"]).format(format));
+        if(value) {
+            const startTimeFormat = moment(value[0]["_d"]).format(format);
+            const endTimeFormat = moment(value[1]["_d"]).format(format); 
+            setStartTime(startTimeFormat);
+            setEndTime(endTimeFormat);
+            startTimeFormat && endTimeFormat ? setCheckTime(false) : setCheckTime(true);    
+        } else {
+            setCheckTime(true);
+        }
     }
     function onChangeAllDayCheckBox(e) {
         console.log(`checked = ${e.target.checked}`);
         setAllDayStatus(e.target.checked);
+        e.target.checked ? setCheckTime(false) : setCheckTime(true);
       }
 
     const onChangeCheckbox = (e) => {
@@ -172,8 +182,13 @@ const TodoForm = () => {
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="시간" colon={false} style={{ marginBottom: 0 }}>
-                    <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
-                    <Checkbox onChange={onChangeAllDayCheckBox} style={{ marginLeft: '10px', }}>종일</Checkbox>
+                    <Form.Item
+                        name="time"
+                        rules={[{ required: checkTime, message: '시간을 선택해주세요' }]}  
+                    >
+                        <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
+                        <Checkbox onChange={onChangeAllDayCheckBox} style={{ marginLeft: '10px', }}>종일</Checkbox>
+                    </Form.Item>
                 </Form.Item>
                 <Form.Item label="중요" colon={false} style={{ marginBottom: 0 }}>
                 <Checkbox onChange={onChangeCheckbox} />
