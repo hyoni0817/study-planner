@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Select, Divider, Input, Checkbox, Button, TimePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -19,6 +19,7 @@ const TodoForm = () => {
 
     const { RangePicker } = TimePicker;
     const format = 'HH:mm';
+    const [ form ] = Form.useForm();
 
     const [ todoId, setTodoId ] = useState(todoPostId);
     const [ title, setTitle ] = useState('');
@@ -31,7 +32,11 @@ const TodoForm = () => {
     const [ startTime, setStartTime ] = useState('');
     const [ endTime, setEndTime ] = useState('');
     const [ allDayStatus, setAllDayStatus ] = useState(false);
-    const [ checkTime, setCheckTime ] = useState(true);
+    const [ checkTime, setCheckTime ] = useState(false);
+
+    useEffect(() => {
+        form.validateFields(['time']);
+    }, [checkTime]);
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -112,6 +117,7 @@ const TodoForm = () => {
                 }}
                 size="default"
                 onFinish={onFinish}
+                form={form}
             >
                 <Form.Item label="계획명" colon={false}>
                     <Form.Item
