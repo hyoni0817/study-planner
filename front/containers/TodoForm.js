@@ -73,7 +73,7 @@ const TodoForm = () => {
     function onChangeAllDayCheckBox(e) {
         console.log(`checked = ${e.target.checked}`);
         setAllDayStatus(e.target.checked);
-        e.target.checked ? setCheckTime(false) : setCheckTime(true);
+        e.target.checked ? setCheckTime(false) : ( startTime && endTime ? setCheckTime(false) : setCheckTime(true));
       }
 
     const onChangeCheckbox = (e) => {
