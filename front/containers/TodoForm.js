@@ -67,6 +67,8 @@ const TodoForm = () => {
             setEndTime(endTimeFormat);
             startTimeFormat && endTimeFormat ? setCheckTime(false) : setCheckTime(true);    
         } else {
+            setStartTime('');
+            setEndTime('');
             setCheckTime(true);
         }
     }
