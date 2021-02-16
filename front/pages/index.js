@@ -27,6 +27,12 @@ const TodoListWrapper = styled.div`
     border-spacing: 12px 20px;
 `;
 
+const AddTodoAffix = styled(Affix)`
+    @media(min-width: 768px) {
+        display: none;
+    }
+`;
+
 const Home = (props) => {
     const router = useRouter();
     const { todoList } = useSelector( state => state.todo )
@@ -69,9 +75,10 @@ const Home = (props) => {
                     }) 
                 }
             </TodoListWrapper>
-            <Affix offsetBottom={50}>
-                <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} style={{float: 'right'}} icon={<FormOutlined />} />
-            </Affix>
+            <AddTodoAffix offsetBottom={50}>
+                <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
+            </AddTodoAffix>
+            
         </> 
     )
 };
