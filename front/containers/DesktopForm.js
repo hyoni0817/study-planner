@@ -26,6 +26,7 @@ const DesktopForm = () => {
             <ModalWrapper
                 title="작성 하기"
                 visible={true}
+                centered
                 onOk={handleOk}
                 onCancel={handleCancel}
                 okButtonProps={{ disabled: true }}
