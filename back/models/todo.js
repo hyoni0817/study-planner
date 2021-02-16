@@ -18,6 +18,20 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.STRING(10),
             allowNull: false,
         },
+        startTime: {
+            type: DataTypes.STRING(5),
+            allowNull: false,
+            defaultValue: 'none',
+        },
+        endTime: {
+            type: DataTypes.STRING(5),
+            allowNull: false,
+            defaultValue: 'none',
+        },
+        allDayStaus: {
+            type: DataTypes.boolean(false),
+            allowNull: false,
+        },
         important: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
