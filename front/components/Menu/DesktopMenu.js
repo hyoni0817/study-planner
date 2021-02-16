@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { Menu, Switch, Avatar } from 'antd';
+import { Menu, Switch, Avatar, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import {useRouter} from 'next/router';
+
 import {
   HomeOutlined,
   DatabaseOutlined,
@@ -24,12 +27,21 @@ const PcWebMenu = styled(Menu)`
     height: 100vh;
     position: fixed;
 `;
+const AddBtnWrapper = styled.div`
+    margin:10px 0;
+`;
 
 const DesktopMenu = ({ children }) => {
+    const router = useRouter();
+
     const [ theme, setTheme ] = useState('light');
     
     const onChangeTheme = (value) => {
         value ? setTheme('dark') : setTheme('light');
+    }
+
+    const onClickWriteBtn = () => {
+        router.push('/createplan');
     }
     
     return (
@@ -57,6 +69,20 @@ const DesktopMenu = ({ children }) => {
                 <Menu.Item key="3" icon={<BarChartOutlined />}>
                     <Link href="/analysis"><a>주간/월간 분석</a></Link>
                 </Menu.Item>
+                <Menu.Item>
+                    <Button 
+                        type="primary" 
+                        shape="round" 
+                        icon={<PlusOutlined />} 
+                        size={'large'} 
+                        onClick={onClickWriteBtn}
+                        style={{width: '100%',}}
+                    >
+                        계획 / D-day 추가
+                    </Button>
+                </Menu.Item>
+                <AddBtnWrapper>
+                </AddBtnWrapper>                
                 <Switch onChange={onChangeTheme} /> 다크 모드
             </PcWebMenu>
         </>
