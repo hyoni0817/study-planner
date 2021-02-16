@@ -30,7 +30,7 @@ const TodoListWrapper = styled.div`
 const Home = (props) => {
     const router = useRouter();
     const { todoList } = useSelector( state => state.todo )
-    const tempTodo = {title: "수학문제 풀기", quantity: 11, unit: "개", important: false, selectSubject: "수학"}
+    const tempTodo = {title: "수학문제 풀기", quantity: 11, unit: "개", important: false, selectSubject: "수학", startTime: "9:00", endTime: "10:00", allDayStatus: false, }
     
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
