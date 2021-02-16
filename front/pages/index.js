@@ -70,11 +70,8 @@ const Home = (props) => {
                 }
             </TodoListWrapper>
             <Affix offsetBottom={50}>
-                <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} style={{float: 'right'}}>
-                    <a><FormOutlined /></a>
-                </Button>
+                <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} style={{float: 'right'}} icon={<FormOutlined />} />
             </Affix>
-            
         </> 
     )
 };
