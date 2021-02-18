@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
+import withReduxSaga from 'next-redux-saga';
 import '../public/css/style.css';
 
 //redex
@@ -28,4 +29,4 @@ StudyPlanner.propTypes = {
     pageProps: PropTypes.object.isRequired,
 }
 
-export default wrapper.withRedux(StudyPlanner);
+export default wrapper.withRedux(withReduxSaga(StudyPlanner));
