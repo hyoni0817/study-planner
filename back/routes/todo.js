@@ -12,6 +12,9 @@ router.post('/', async (req, res, next) => {
             quantity: req.body.quantity,
             unit: req.body.unit,
             important: req.body.important,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime,
+            allDayStatus: req.body.allDayStatus,
         });
         console.log(newTodo);
         return res.status(200).json(newTodo);
