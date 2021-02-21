@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
     try {
         const newTodo = await db.Todo.create({
             title: req.body.title,
-            subject: req.body.subject,
+            subject: req.body.selectSubject,
             quantity: req.body.quantity,
             unit: req.body.unit,
             important: req.body.important,
