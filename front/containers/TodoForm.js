@@ -103,8 +103,8 @@ const TodoForm = () => {
                 quantity,
                 unit,
                 important,
-                startTime,
-                endTime,
+                startTime: allDayStatus ? 'none' : startTime,
+                endTime: allDayStatus ? 'none' : endTime,
                 allDayStatus,
             },
         });
