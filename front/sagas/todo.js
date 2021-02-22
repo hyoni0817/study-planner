@@ -8,12 +8,10 @@ function addTodoAPI(todoData) {
 function* addTodo(action) {
     console.log("action.data:", action.data);
     try {
-        yield call(addTodoAPI, action.data);
+        const result = yield call(addTodoAPI, action.data);
         yield put({
             type: ADD_TODO_SUCCESS, 
-            data: {
-                todoId: action.data.todoId,
-            }
+            data: result.data,
         })
     } catch (e) {
         console.error(e);
