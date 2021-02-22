@@ -3,10 +3,15 @@ export const initialState = {
     DdayList : [],
     todoPostId: 0,
     DdayPostId: 0,
+    isAddingTodo: false,
+    addingTodoErrorReason: '',
+    todoAdded: false,
 };
 
 //TODO 추가하는 액션
-export const ADD_TODO = 'ADD_TODO';
+export const ADD_TODO_REQUEST = 'ADD_TODO_REQUEST';
+export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS';
+export const ADD_TODO_FAILURE = 'ADD_TODO_FAILURE';
 
 //TODO 편집하는 액션
 export const EDIT_TODO = 'EDIT_TODO';
@@ -31,11 +36,26 @@ export const LOAD_DDAY_LIST = 'LOAD_DDAY_LIST';
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
-        case ADD_TODO:
+        case ADD_TODO_REQUEST:
             return {
                 ...state,
-                todoList : [ action.data, ...state.todoList ],
+                isAddingTodo: true,
+                addingTodoErrorReason: '',
+                todoAdded: false,
             }; 
+            case ADD_TODO_SUCCESS:
+                return {
+                ...state,
+                isAddingTodo: false,
+                todoList : [ action.data, ...state.todoList ],
+                todoAdded: true,
+            }
+        case ADD_TODO_FAILURE: 
+            return {
+                ...state,
+                isAddingTodo: false,
+                addingTodoErrorReason: action.error,
+            };
         case ADD_DDAY: {
             return {
                 ...state,
