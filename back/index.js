@@ -25,5 +25,5 @@ app.use('/api/todo', todoAPIRouter);
 app.use('/api/todolist', todoListAPIRouter);
 
 app.listen(3065, () => {
-    console.log('server is running on http://localhost:8080');
+    console.log('server is running on http://localhost:3065');
 });
