@@ -6,7 +6,7 @@ import moment from 'moment';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_TODO } from '../reducers/todo';
+import { ADD_TODO_REQUEST } from '../reducers/todo';
 
 const { Option } = Select;
 
@@ -95,7 +95,7 @@ const TodoForm = () => {
     const onFinish = values => {
         setTodoId( todoId => todoId + 1);
         dispatch({
-            type: ADD_TODO,
+            type: ADD_TODO_REQUEST,
             data: {
                 todoId,
                 title,
