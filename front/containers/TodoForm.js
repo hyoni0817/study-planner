@@ -32,11 +32,14 @@ const TodoForm = () => {
     const [ startTime, setStartTime ] = useState('');
     const [ endTime, setEndTime ] = useState('');
     const [ allDayStatus, setAllDayStatus ] = useState(false);
-    const [ checkTime, setCheckTime ] = useState(false);
+    const [ checkTime, setCheckTime ] = useState(true);
+    const [ timeOrAllDayClickStatus, setTimeOrAllDayClickStatus ] = useState(false);
 
     useEffect(() => {
-        form.validateFields(['time']);
-    }, [checkTime]);
+        if(timeOrAllDayClickStatus) { 
+            form.validateFields(['time']);
+        }
+    }, [checkTime, timeOrAllDayClickStatus]);
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -60,6 +63,7 @@ const TodoForm = () => {
     }
 
     const onChangeTime = (value) => {
+        setTimeOrAllDayClickStatus(true);
         if(value) {
             const startTimeFormat = moment(value[0]["_d"]).format(format);
             const endTimeFormat = moment(value[1]["_d"]).format(format); 
@@ -70,13 +74,14 @@ const TodoForm = () => {
             setStartTime('');
             setEndTime('');
             setCheckTime(true);
-        }
+        }    
     }
     function onChangeAllDayCheckBox(e) {
+        setTimeOrAllDayClickStatus(true);
         console.log(`checked = ${e.target.checked}`);
         setAllDayStatus(e.target.checked);
         e.target.checked ? setCheckTime(false) : ( startTime && endTime ? setCheckTime(false) : setCheckTime(true));
-      }
+    }
 
     const onChangeCheckbox = (e) => {
         setImporant(e.target.checked);
