@@ -97,7 +97,7 @@ const TodoForm = () => {
         dispatch({
             type: ADD_TODO,
             data: {
-                todoPostId: todoId,
+                todoId,
                 title,
                 selectSubject,
                 quantity,
