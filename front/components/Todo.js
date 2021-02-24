@@ -51,7 +51,7 @@ const Todo = ({post}) => {
                 {post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
               </TodoTimeCell>
               <TodoDetailCell>
-                <TodoTitle><Tag color="magenta">{post.selectSubject}</Tag>{post.title}</TodoTitle>
+                <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
                 0 / {post.quantity} {post.unit}
               </TodoDetailCell>  
               <TodoCompletionStatusCell>
