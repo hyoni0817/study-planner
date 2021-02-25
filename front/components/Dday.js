@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Row } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+import { LOAD_DDAY_LIST_REQUEST } from '../reducers/dday';
 const DdayBox = styled.div`
     background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
     border-radius: 5px;
@@ -30,8 +31,14 @@ const DdayDate = styled.p`
     margin-bottom: 7px;
 `
 const Dday = () => {
-    const { DdayList } = useSelector( state => state.todo )
+    const dispatch = useDispatch();
+    const { DdayList } = useSelector( state => state.dday )
 
+    useEffect(() => {
+        dispatch({
+            type: LOAD_DDAY_LIST_REQUEST,
+        });
+    }, []);
     const calculateDday = (dueDate) => {
         const dateArr = dueDate.split('-');
         const now = new Date();
@@ -47,7 +54,8 @@ const Dday = () => {
             <div style={{ padding: '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', }}>
                 <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
                     { 
-                        DdayList.map((c) => {
+                        DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                        : DdayList.map((c) => {
                             return (
                                 <Col xs={12} sm={6} md={10} lg={6} >
                                     <DdayBox bordered={false}>
