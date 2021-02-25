@@ -40,6 +40,11 @@ module.exports = class Todo extends Model {
                 allowNull: false,
                 defaultValue: false,
             },
+            completion: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            }
         }, {
             modelName: 'Todo',
             tableName: 'todos',
