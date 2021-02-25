@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_DDAY } from '../reducers/todo';
+import { ADD_DDAY_REQUEST } from '../reducers/dday';
 
 
 const DdayForm = () => {
@@ -32,7 +32,7 @@ const DdayForm = () => {
     const onFinish = values => {
         setDdayId( DdayId => DdayId + 1);
         dispatch({
-            type: ADD_DDAY,
+            type: ADD_DDAY_REQUEST,
             data: {
                 DdayPostId: DdayId,
                 title,
