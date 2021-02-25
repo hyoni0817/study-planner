@@ -17,6 +17,9 @@ module.exports = class Dday extends Model {
             dueDate: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    return moment(this.getDataValue('dueDate')).format('YYYY-MM-DD')
+                }
             },
             viewState: {
                 type: DataTypes.BOOLEAN,
