@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Progress, Button, Affix } from 'antd';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
 import { FormOutlined } from '@ant-design/icons';
 import {useRouter} from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
+import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
 
 const TodoNowWrapper = styled.div`
     margin-bottom: 30px;
@@ -35,12 +37,18 @@ const AddTodoAffix = styled(Affix)`
 
 const Home = (props) => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { todoList } = useSelector( state => state.todo )
     const tempTodo = {title: "수학문제 풀기", quantity: 11, unit: "개", important: false, selectSubject: "수학", startTime: "9:00", endTime: "10:00", allDayStatus: false, }
     
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
 
+    useEffect(() => {
+        dispatch({
+            type: LOAD_TODO_LIST_REQUEST,
+        })
+    }, []);
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
