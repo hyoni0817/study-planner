@@ -5,6 +5,8 @@ const cors = require('cors');
 const db = require('./models');
 const todoAPIRouter = require('./routes/todo');
 const todoListAPIRouter = require('./routes/todoList');
+const DdayAPIRouter = require('./routes/dday');
+const DdayListAPIRouter = require('./routes/ddayList');
 
 const app = express(); //express를 불러와서 실행을 해주면 app이라는 객체가 생김.
 db.sequelize.sync();
@@ -23,6 +25,8 @@ app.get('/', (req, res) => { //프론트에서 / 서버에 요청을 하면 res.
 
 app.use('/api/todo', todoAPIRouter);
 app.use('/api/todolist', todoListAPIRouter);
+app.use('/api/dday', DdayAPIRouter);
+app.use('/api/ddaylist', DdayListAPIRouter);
 
 app.listen(3065, () => {
     console.log('server is running on http://localhost:3065');
