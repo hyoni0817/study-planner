@@ -1,28 +1,32 @@
-const { sequelize } = require(".");
+const DataTypes = require('sequelize');
+const { Model } = DataTypes;
 
-module.exports = ( sequelize, DataTypes ) => {
-    const Dday = sequelize.define( 'Dday', {
-        title: {
-            type: DataTypes.STRING(30),
-            allowNull: false,
-        },
-        contents: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            defaultValue: 'N',
-        },
-        dueDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        }
-    }, {
-        charset: 'utf8mb64',
-        collate: 'utf8mb64_general_ci',
-    });
-
-    Dday.associate = (db) => {
-        db.Dday.belongsTo(db.User);
-    };
-
-    return Dday;
-}
+const moment = require('moment');
+module.exports = class Dday extends Model {
+    static init(sequelize) {
+        return super.init({
+            title: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            },
+            contents: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+                defaultValue: 'N',
+            },
+            dueDate: {
+                type: DataTypes.DATE,
+                allowNull: false,
+            },
+        }, {
+            modelName: 'Dday',
+            tableName: 'ddays',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
+            sequelize,
+        });
+    }
+    static associate(db){
+        // db.Dday.belongsTo(db.User);
+    }
+};
