@@ -10,7 +10,7 @@ import { ADD_DDAY } from '../reducers/todo';
 const DdayForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { DdayPostId } = useSelector(state => state.todo);
+    const { DdayPostId } = useSelector(state => state.dday);
 
     const [ DdayId, setDdayId ] = useState(DdayPostId);
     const [ title, setTitle ] = useState('');
