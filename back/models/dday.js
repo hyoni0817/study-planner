@@ -18,6 +18,11 @@ module.exports = class Dday extends Model {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
+            viewState: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+            }
         }, {
             modelName: 'Dday',
             tableName: 'ddays',
