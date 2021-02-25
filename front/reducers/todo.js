@@ -18,7 +18,9 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 
 //TODO 로드하는 액션
-export const LOAD_TODO_LIST = 'LOAD_TODO_LIST';
+export const LOAD_TODO_LIST_REQUEST = 'LOAD_TODO_LIST_REQUEST';
+export const LOAD_TODO_LIST_SUCCESS = 'LOAD_TODO_LIST_SUCCESS';
+export const LOAD_TODO_LIST_FAILURE = 'LOAD_TODO_LIST_FAILURE';
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
@@ -42,6 +44,20 @@ const reducer = ( state = initialState, action ) => {
                 isAddingTodo: false,
                 addingTodoErrorReason: action.error,
             };
+        case LOAD_TODO_LIST_REQUEST:
+            return {
+                ...state,
+                todoList: [],
+            }
+        case LOAD_TODO_LIST_SUCCESS:
+            return {
+                ...state,
+                todoList: action.data,
+            }
+        case LOAD_TODO_LIST_FAILURE:
+            return {
+                ...state,
+            }
         default: {
             return {
                 ...state,
