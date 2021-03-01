@@ -42,12 +42,30 @@ router.get('/search', async (req, res, next) => {
             where,
             attributes: ['title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
         });
-        
+
         return res.json(searchCondition);
     } catch (e) {
         console.error(e);
         return next(e);
     } 
+})
+
+router.get('/subjects', async (req, res, next) => {
+    try {
+        const subjectList = await db.Todo.findAll({
+            where: {},
+            attributes: [
+                //Sequelize.fn('DISTINCT', Sequelize.col('subject'))
+                'subject'
+            ],
+            group: ['subject']
+        });
+
+        return res.json(subjectList);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
 })
 
 module.exports = router;
