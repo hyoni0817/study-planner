@@ -1,5 +1,6 @@
 export const initialState = {
     todoList : [],
+    subjectList: [],
     todoPostId: 0,
     isAddingTodo: false,
     addingTodoErrorReason: '',
@@ -26,6 +27,15 @@ export const LOAD_TODO_LIST_FAILURE = 'LOAD_TODO_LIST_FAILURE';
 export const SEARCH_TODO_LIST_REQUEST = 'SEARCH_TODO_LIST_REQUEST';
 export const SEARCH_TODO_LIST_SUCCESS = 'SEARCH_TODO_LIST_SUCCESS';
 export const SEARCH_TODO_LIST_FAILURE = 'SEARCH_TODO_LIST_FAILURE';
+
+//선택할 과목 로드하는 액션
+export const LOAD_SUBJECT_LIST_REQUEST = 'LOAD_SUBJECT_LIST_REQUEST';
+export const LOAD_SUBJECT_LIST_SUCCESS = 'LOAD_SUBJECT_LIST_SUCCESS';
+export const LOAD_SUBJECT_LIST_FAILURE = 'LOAD_SUBJECT_LIST_FAILURE';
+
+//과목 추가하는 액션
+export const ADD_SUBJECT = 'ADD_SUBJECT';
+
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_TODO_REQUEST:
@@ -83,7 +93,26 @@ const reducer = ( state = initialState, action ) => {
                 isAddingTodo: false,
                 addingTodoErrorReason: action.error
             };
-
+        case LOAD_SUBJECT_LIST_REQUEST:
+            return {
+                ...state,
+                subjectList: [],
+            }
+        case LOAD_SUBJECT_LIST_SUCCESS:
+            return {
+                ...state,
+                subjectList: action.data,
+            }
+        case LOAD_SUBJECT_LIST_FAILURE:
+            return {
+                ...state,
+            }    
+        case ADD_SUBJECT:
+            console.log("action.data.subject:", action.data);
+            return {
+                ...state,
+                subjectList: [...state.subjectList, action.data],
+            }
         default: {
             return {
                 ...state,
