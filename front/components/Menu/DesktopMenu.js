@@ -64,7 +64,7 @@ const DesktopMenu = ({ children }) => {
                     <Link href="/"><a>홈</a></Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<DatabaseOutlined />}>
-                    <Link href="/todolist"><a>모아 보기</a></Link>
+                    <Link href="/allplanlist"><a>모아 보기</a></Link>
                 </Menu.Item>
                 <Menu.Item key="3" icon={<BarChartOutlined />}>
                     <Link href="/analysis"><a>주간/월간 분석</a></Link>

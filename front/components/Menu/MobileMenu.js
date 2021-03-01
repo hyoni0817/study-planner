@@ -129,7 +129,7 @@ const MobileMenu = () => {
                         
                     </li>
                     <li>
-                        <Link href="/todolist">
+                        <Link href="/allplanlist">
                             <a onClick={onClose}><DatabaseOutlined /> 모아 보기</a>
                         </Link>
                         

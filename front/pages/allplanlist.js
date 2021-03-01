@@ -6,7 +6,7 @@ import Dday from '../components/Dday';
 
 const { TabPane } = Tabs;
 
-const TodoList = () => {   
+const AllPlanList = () => {   
     return (
         <> 
             <div>
@@ -24,4 +24,4 @@ const TodoList = () => {
     )
 }
 
-export default TodoList
+export default AllPlanList
