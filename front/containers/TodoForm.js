@@ -6,7 +6,7 @@ import moment from 'moment';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_TODO_REQUEST } from '../reducers/todo';
+import { ADD_TODO_REQUEST, LOAD_SUBJECT_LIST_REQUEST, ADD_SUBJECT } from '../reducers/todo';
 
 const { Option } = Select;
 
@@ -15,7 +15,7 @@ let index = 0;
 const TodoForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { todoPostId } = useSelector(state => state.todo);
+    const { todoPostId, subjectList } = useSelector(state => state.todo);
 
     const { RangePicker } = TimePicker;
     const format = 'HH:mm';
@@ -39,6 +39,9 @@ const TodoForm = () => {
         if(timeOrAllDayClickStatus) { 
             form.validateFields(['time']);
         }
+        dispatch({
+            type: LOAD_SUBJECT_LIST_REQUEST,
+        })
     }, [checkTime, timeOrAllDayClickStatus]);
 
     const onChangeTitle = (e) => {
@@ -50,7 +53,10 @@ const TodoForm = () => {
     };
 
     const addSubject = () => {
-        setSubjects([...subjects, subjectName || `New item ${index++}`]);
+        dispatch({
+            type: ADD_SUBJECT,
+            data: {subject: subjectName},
+        })
         setSubjectName('');
     };
 
@@ -162,8 +168,8 @@ const TodoForm = () => {
                             onChange={onChangeSelectValue}
                         >
                             {
-                                subjects.map(item => (
-                                    <Option key={item}>{item}</Option> // 코드 정렬 git에 올리기, 여기서 value값 추가하기
+                                subjectList.map(item => (
+                                    <Option key={item.subject}>{item.subject}</Option> // 코드 정렬 git에 올리기, 여기서 value값 추가하기
                                 ))
                             }
                         </Select>
