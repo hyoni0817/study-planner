@@ -22,6 +22,10 @@ export const LOAD_TODO_LIST_REQUEST = 'LOAD_TODO_LIST_REQUEST';
 export const LOAD_TODO_LIST_SUCCESS = 'LOAD_TODO_LIST_SUCCESS';
 export const LOAD_TODO_LIST_FAILURE = 'LOAD_TODO_LIST_FAILURE';
 
+//TODO 검색하는 액션
+export const SEARCH_TODO_LIST_REQUEST = 'SEARCH_TODO_LIST_REQUEST';
+export const SEARCH_TODO_LIST_SUCCESS = 'SEARCH_TODO_LIST_SUCCESS';
+export const SEARCH_TODO_LIST_FAILURE = 'SEARCH_TODO_LIST_FAILURE';
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_TODO_REQUEST:
@@ -58,6 +62,28 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
             }
+        case SEARCH_TODO_LIST_REQUEST:
+            return {
+                ...state,
+                isSearchingTodo: true,
+                addingTodoErrorReason: '',
+                todoSearched: false,
+            };
+        case SEARCH_TODO_LIST_SUCCESS:
+            console.log("action.data:", action.data);
+            return {
+                ...state,
+                isSearchingTodo: false,
+                todoList : action.data,
+                todoSearched: true,
+            };
+        case SEARCH_TODO_LIST_FAILURE: 
+            return {
+                ...state,
+                isAddingTodo: false,
+                addingTodoErrorReason: action.error
+            };
+
         default: {
             return {
                 ...state,
