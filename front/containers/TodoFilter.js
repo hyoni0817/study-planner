@@ -31,7 +31,7 @@ const TodoFilter = () => {
         }
     }
 
-    const onChangeSearchTodo = (e) => {
+    const onChangeTodoSearch = (e) => {
         setTodoTitle(e.target.value);
     };
 
@@ -86,7 +86,7 @@ const TodoFilter = () => {
                 <Form.Item
                     name="todoTitle"
                 >
-                    <Input placeholder="계획명을 입력해주세요" onChange={onChangeSearchTodo} />
+                    <Input placeholder="계획명을 입력해주세요" onChange={onChangeTodoSearch} />
                 </Form.Item>
                 <Form.Item
                     name="date"
