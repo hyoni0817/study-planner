@@ -80,7 +80,6 @@ const reducer = ( state = initialState, action ) => {
                 todoSearched: false,
             };
         case SEARCH_TODO_LIST_SUCCESS:
-            console.log("action.data:", action.data);
             return {
                 ...state,
                 isSearchingTodo: false,
@@ -108,7 +107,6 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
             }    
         case ADD_SUBJECT:
-            console.log("action.data.subject:", action.data);
             return {
                 ...state,
                 subjectList: [...state.subjectList, action.data],
