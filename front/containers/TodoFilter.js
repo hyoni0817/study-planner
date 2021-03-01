@@ -98,6 +98,7 @@ const TodoFilter = () => {
             >
                 <Form.Item
                     name="todoTitle"
+                    rules={[{ required: true, min:2, message: '검색어를 2글자 이상 입력해주세요'}]}
                 >
                     <Input placeholder="계획명을 입력해주세요" onChange={onChangeTodoSearch} />
                 </Form.Item>
