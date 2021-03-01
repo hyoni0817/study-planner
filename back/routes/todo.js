@@ -1,4 +1,6 @@
 const express = require('express');
+const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 
 const db = require('../models');
 
@@ -23,5 +25,29 @@ router.post('/', async (req, res, next) => {
         return next(e);
     }
 });
+
+router.get('/search', async (req, res, next) => {
+    try {
+        let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`)];
+        const createdAt = req.query.allDateCheckState === true ? '' : where.push({createdAt: {
+            [Op.and]: {
+                [Op.gte] : req.query.startDate,
+                [Op.lte] : req.query.endDate
+            }
+        }});
+        const subject = req.query.subjects.length === 0 ? '' :  where.push({subject:{
+            [Op.in]: [...req.query.subjects]
+        }})
+        const searchCondition = await db.Todo.findAll({
+            where,
+            attributes: ['title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
+        });
+        
+        return res.json(searchCondition);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    } 
+})
 
 module.exports = router;
