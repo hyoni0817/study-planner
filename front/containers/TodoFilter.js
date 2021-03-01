@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Select, Form, Button } from 'antd';
 import moment from 'moment';
 
@@ -15,12 +15,15 @@ const TodoFilter = () => {
     const dateFormat = 'YYYY-MM-DD';
     const date = new Date();
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-    
+    const [ form ] = Form.useForm();
+
     const [ todoTitle, setTodoTitle ] = useState('');
     const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
     const [ endDate, setEndDate ] = useState(moment(todayDate).format(dateFormat));
     const [ subjects, setSubjects ] = useState([]);
     const [ allDateCheckState, setllDateCheckState ] = useState(false);
+    const [ checkDate, setCheckDate ] = useState(false);
+    const [ dateOrAllDateClickState, setDateOrAllDateClickState ] = useState(false);
 
     const layout = {
         labelCol: {
@@ -31,11 +34,18 @@ const TodoFilter = () => {
         }
     }
 
+    useEffect(() => {
+        if(dateOrAllDateClickState) {
+            form.validateFields(['date']);
+        }
+    }, [checkDate, dateOrAllDateClickState]);
+
     const onChangeTodoSearch = (e) => {
         setTodoTitle(e.target.value);
     };
 
     const onChangeDate = (value) => {
+        setDateOrAllDateClickState(true)
         if(value) {
             const startDateFormat = moment(value[0]["_d"]).format(dateFormat);
             const endDateFormat = moment(value[1]["_d"]).format(dateFormat); 
@@ -43,15 +53,17 @@ const TodoFilter = () => {
             setEndDate(endDateFormat);
             startDateFormat && endDateFormat ? setCheckDate(false) : setCheckDate(true);    
         } else {
-            setStartTime('');
-            setEndTime('');
-            setCheckTime(true);
+            setStartDate('');
+            setEndDate('');
+            setCheckDate(true);
         }    
     }
 
     function onChangeAllDateCheckBox(e) {
+        setDateOrAllDateClickState(true);
         console.log(`checked = ${e.target.checked}`);
         setllDateCheckState(e.target.checked);
+        e.target.checked ? setCheckDate(false) : ( startDate && endDate ? setCheckDate(false) : setCheckDate(true));
     }
 
     for (let i = 10; i < 36; i++) {
@@ -82,6 +94,7 @@ const TodoFilter = () => {
                 {...layout}
                 name="searchForm"
                 onFinish={onFinish}
+                form={form}
             >
                 <Form.Item
                     name="todoTitle"
@@ -90,6 +103,7 @@ const TodoFilter = () => {
                 </Form.Item>
                 <Form.Item
                     name="date"
+                    rules={[{ required: checkDate, message: '날짜나 전체를 선택해주세요' }]}
                 >
                     <RangePicker 
                         defaultValue={[moment(todayDate, dateFormat), moment(todayDate, dateFormat)]}
