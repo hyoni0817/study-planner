@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { Input, DatePicker, Checkbox, Select, Form, Button } from 'antd';
 import moment from 'moment';
 
+//redux
+import { useDispatch } from 'react-redux';
+import { SEARCH_TODO_LIST_REQUEST } from '../reducers/todo';
+
 const TodoFilter = () => {
+    const dispatch = useDispatch();
     const { Search } = Input;
     const { RangePicker } = DatePicker;
     const { Option } = Select;
@@ -10,7 +15,7 @@ const TodoFilter = () => {
     const dateFormat = 'YYYY-MM-DD';
     const date = new Date();
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-
+    
     const [ todoTitle, setTodoTitle ] = useState('');
     const [ startDate, setStartDate ] = useState('');
     const [ endDate, setEndDate ] = useState('');
@@ -59,7 +64,16 @@ const TodoFilter = () => {
     }
 
     const onFinish = (values) => {
-
+        dispatch({
+            type: SEARCH_TODO_LIST_REQUEST,
+            data: {
+                todoTitle,
+                startDate,
+                endDate,
+                allDateCheckState,
+                subjects,
+            }
+        })
     };
 
     return (
