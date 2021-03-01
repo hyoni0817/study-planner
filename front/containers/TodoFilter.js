@@ -17,8 +17,8 @@ const TodoFilter = () => {
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     
     const [ todoTitle, setTodoTitle ] = useState('');
-    const [ startDate, setStartDate ] = useState('');
-    const [ endDate, setEndDate ] = useState('');
+    const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
+    const [ endDate, setEndDate ] = useState(moment(todayDate).format(dateFormat));
     const [ subjects, setSubjects ] = useState([]);
     const [ allDateCheckState, setllDateCheckState ] = useState(false);
 
