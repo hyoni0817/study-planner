@@ -109,7 +109,7 @@ const reducer = ( state = initialState, action ) => {
         case ADD_SUBJECT:
             return {
                 ...state,
-                subjectList: [...new Set([...state.subjectList, action.data].map(JSON.stringify))].map(JSON.parse)
+                subjectList: [...new Set([action.data, ...state.subjectList].map(JSON.stringify))].map(JSON.parse)
             }
         default: {
             return {
