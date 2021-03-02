@@ -3,19 +3,20 @@ import { Input, DatePicker, Checkbox, Select, Form, Button } from 'antd';
 import moment from 'moment';
 
 //redux
-import { useDispatch } from 'react-redux';
-import { SEARCH_TODO_LIST_REQUEST } from '../reducers/todo';
+import { useDispatch, useSelector } from 'react-redux';
+import { SEARCH_TODO_LIST_REQUEST, LOAD_SUBJECT_LIST_REQUEST } from '../reducers/todo';
 
 const TodoFilter = () => {
     const dispatch = useDispatch();
     const { Search } = Input;
     const { RangePicker } = DatePicker;
     const { Option } = Select;
-    const children = [];
     const dateFormat = 'YYYY-MM-DD';
     const date = new Date();
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     const [ form ] = Form.useForm();
+    const { subjectList } = useSelector(state => state.todo);
+
 
     const [ todoTitle, setTodoTitle ] = useState('');
     const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
@@ -38,6 +39,9 @@ const TodoFilter = () => {
         if(dateOrAllDateClickState) {
             form.validateFields(['date']);
         }
+        dispatch({
+            type: LOAD_SUBJECT_LIST_REQUEST,
+        })
     }, [checkDate, dateOrAllDateClickState]);
 
     const onChangeTodoSearch = (e) => {
@@ -64,10 +68,6 @@ const TodoFilter = () => {
         console.log(`checked = ${e.target.checked}`);
         setllDateCheckState(e.target.checked);
         e.target.checked ? setCheckDate(false) : ( startDate && endDate ? setCheckDate(false) : setCheckDate(true));
-    }
-
-    for (let i = 10; i < 36; i++) {
-        children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
     }
 
     const onChangeSubjects = (value) => {
@@ -124,7 +124,7 @@ const TodoFilter = () => {
                         placeholder="검색할 과목을 입력해주세요"
                         onChange={onChangeSubjects}
                     >
-                        {children}
+                        {subjectList.map(item => <Option key={item.subject}>{item.subject}</Option>)}
                     </Select>
                 </Form.Item>
                 <Form.Item>
