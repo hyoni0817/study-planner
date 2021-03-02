@@ -36,7 +36,7 @@ router.get('/search', async (req, res, next) => {
             }
         }});
         const subject = req.query.subjects.length === 0 ? '' :  where.push({subject:{
-            [Op.in]: [...req.query.subjects]
+            [Op.in]: [req.query.subjects]
         }})
         const searchCondition = await db.Todo.findAll({
             where,
