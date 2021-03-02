@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Checkbox, Tag } from 'antd';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const TodoBox = styled.div`
@@ -37,8 +37,27 @@ const TodoTitle = styled.p`
 `;
 
 const Todo = ({post}) => {
-    const onChange = (e) => {
-      console.log(`checked = ${e.target.checked}`);
+    let [ checkBtnColor, setCheckBtnColor ] = useState('#bbb');
+    let [ checkBtnState, setCheckBtnState ] = useState(false);
+
+    const CircleCheckBtn = styled.button`
+      height: 25px;
+      width: 25px;
+      background-color: ${checkBtnColor};
+      border-radius: 50%;
+      display: inline-block;
+      cursor:pointer;
+      border: none;
+    `;
+
+    const onClickCheckBtn = () => {
+      if(!checkBtnState) {
+        setCheckBtnColor('red');
+        setCheckBtnState(true);
+      } else {
+        setCheckBtnColor('#bbb');
+        setCheckBtnState(false);
+      }
     }
 
     return (
@@ -55,7 +74,7 @@ const Todo = ({post}) => {
                 0 / {post.quantity} {post.unit}
               </TodoDetailCell>  
               <TodoCompletionStatusCell>
-                <Checkbox onChange={onChange}>Checkbox</Checkbox>
+              <CircleCheckBtn className="dot" onClick={onClickCheckBtn}>{ checkBtnState ? <CheckOutlined /> : '' }</CircleCheckBtn>
               </TodoCompletionStatusCell>
             </TodoBox>     
             }  
