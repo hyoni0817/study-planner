@@ -15,6 +15,7 @@ const TodoTimeCell = styled.div`
   border-right: 2px solid black; 
   vertical-align: middle;
   text-align: right;
+  width: 100px;
 `;
 
 const TodoDetailCell = styled.div`
@@ -25,7 +26,8 @@ const TodoDetailCell = styled.div`
 const TodoCompletionStatusCell = styled.div`
   display: table-cell;
   vertical-align: middle;
-  text-align: right;
+  text-align: left;
+  width: 35px;
 `;
 
 const TodoImportantStatus = styled.p`
@@ -65,6 +67,9 @@ const Todo = ({post}) => {
           {
             post === undefined ? '' :
             <TodoBox>
+              <TodoCompletionStatusCell>
+                <CircleCheckBtn onClick={onClickCheckBtn}>{ checkBtnState ? <CheckOutlined /> : '' }</CircleCheckBtn>
+              </TodoCompletionStatusCell>
               <TodoTimeCell>
                 {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
                 {post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
@@ -73,9 +78,6 @@ const Todo = ({post}) => {
                 <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
                 0 / {post.quantity} {post.unit}
               </TodoDetailCell>  
-              <TodoCompletionStatusCell>
-              <CircleCheckBtn className="dot" onClick={onClickCheckBtn}>{ checkBtnState ? <CheckOutlined /> : '' }</CircleCheckBtn>
-              </TodoCompletionStatusCell>
             </TodoBox>     
             }  
         </>
