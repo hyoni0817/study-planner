@@ -1,4 +1,4 @@
-import { all, fork, takeLatest, call, put } from 'redux-saga/effects';
+import { all, fork, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, } from '../reducers/todo';
 
@@ -30,6 +30,11 @@ function loadTodoAPI() {
 }
 
 function* loadTodo() {
+    const isLoading = yield select(state => Boolean(state.todo.todoList.length));
+    if (isLoading) {
+        return ;
+    }
+
     try {
         const result = yield call(loadTodoAPI);
         yield put({
@@ -103,6 +108,7 @@ function* loadSubject() {
 function* watchLoadSubject() {
     yield takeLatest(LOAD_SUBJECT_LIST_REQUEST, loadSubject);
 }
+
 export default function* todoSaga() {
     yield all([
         fork(watchAddTodo),

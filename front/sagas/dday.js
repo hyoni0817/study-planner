@@ -31,6 +31,11 @@ function loadDdayAPI() {
 }
 
 function* loadDday() {
+    const isLoading = yield select(state => Boolean(state.dday.DdayList.length));
+    if (isLoading) {
+        return ;
+    }
+    
     try {
         const result = yield call(loadDdayAPI);
         yield put({
