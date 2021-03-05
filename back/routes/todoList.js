@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const todoList = await db.Todo.findAll({
             where: {},
-            attributes: ['title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
+            attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
         });
         res.json(todoList);
     } catch (e) {

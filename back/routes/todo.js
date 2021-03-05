@@ -40,7 +40,7 @@ router.get('/search', async (req, res, next) => {
         }})
         const searchCondition = await db.Todo.findAll({
             where,
-            attributes: ['title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
+            attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
         });
 
         return res.json(searchCondition);
@@ -56,6 +56,7 @@ router.get('/subjects', async (req, res, next) => {
             where: {},
             attributes: [
                 //Sequelize.fn('DISTINCT', Sequelize.col('subject'))
+                'id',
                 'subject'
             ],
             group: ['subject']
