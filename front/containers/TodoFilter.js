@@ -63,7 +63,7 @@ const TodoFilter = () => {
         }    
     }
 
-    function onChangeAllDateCheckBox(e) {
+    const onChangeAllDateCheckBox = (e) => {
         setDateOrAllDateClickState(true);
         console.log(`checked = ${e.target.checked}`);
         setllDateCheckState(e.target.checked);
