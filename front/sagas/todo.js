@@ -1,6 +1,6 @@
 import { all, fork, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, } from '../reducers/todo';
+import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, COMPLETE_TODO_REQUEST, COMPLETE_TODO_SUCCESS, COMPLETE_TODO_FAILURE } from '../reducers/todo';
 
 function addTodoAPI(todoData) {
     return axios.post('/todo', todoData);
@@ -109,11 +109,35 @@ function* watchLoadSubject() {
     yield takeLatest(LOAD_SUBJECT_LIST_REQUEST, loadSubject);
 }
 
+function completeTodoAPI(todoData) {
+    return axios.put('/todo/complete', todoData);
+}
+function* completeTodo(action) {
+    console.log("action.data:", action.data);
+    try {
+        const result = yield call(completeTodoAPI, action.data);
+        yield put({
+            type: COMPLETE_TODO_SUCCESS, 
+            data: result.data,
+        })
+    } catch (e) {
+        console.error(e);
+        yield put({
+            type: COMPLETE_TODO_FAILURE,
+            error: e,
+        })
+    }
+}
+function* watchCompleteTodo() {
+    yield takeLatest(COMPLETE_TODO_REQUEST, completeTodo);
+}
+
 export default function* todoSaga() {
     yield all([
         fork(watchAddTodo),
         fork(watchLoadTodo),
         fork(watchSearchTodo),
         fork(watchLoadSubject),
+        fork(watchCompleteTodo),
     ]);
 }
