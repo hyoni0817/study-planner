@@ -129,19 +129,6 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
             }
-        case INCOMPLETE_TODO_REQUEST:
-            return {
-                ...state,
-            }
-        case INCOMPLETE_TODO_SUCCESS: 
-            return {
-                ...state,
-                todoList,
-            }
-        case INCOMPLETE_TODO_FAILURE:
-            return {
-                ...state,
-            }
         case ADD_SUBJECT:
             return {
                 ...state,
