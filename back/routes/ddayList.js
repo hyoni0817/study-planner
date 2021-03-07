@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
     try {
         const ddayList = await db.Dday.findAll({
             where: {},
-            attributes: ['id', 'title', 'contents', 'dueDate', 'viewState'],
+            attributes: ['id', 'title', 'memo', 'dueDate', 'viewState'],
         });
         res.json(ddayList);
     } catch (e) {

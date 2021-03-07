@@ -9,7 +9,7 @@ module.exports = class Dday extends Model {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
-            contents: {
+            memo: {
                 type: DataTypes.TEXT,
                 allowNull: false,
                 defaultValue: 'N',

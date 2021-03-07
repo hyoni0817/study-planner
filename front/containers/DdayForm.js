@@ -14,7 +14,7 @@ const DdayForm = () => {
 
     const [ DdayId, setDdayId ] = useState(DdayPostId);
     const [ title, setTitle ] = useState('');
-    const [ contents, setContents ] = useState('');
+    const [ memo, setMemo ] = useState('');
     const [ dueDate, setDueDate ] = useState('');
 
     const onChangeTitle = (e) => {
@@ -22,7 +22,7 @@ const DdayForm = () => {
     };
 
     const onChangeContent = (e) => {
-        setContents(e.target.value);
+        setMemo(e.target.value);
     };
 
     const onChangeDueDate = (date, dateString) => {
@@ -36,7 +36,7 @@ const DdayForm = () => {
             data: {
                 DdayPostId: DdayId,
                 title,
-                contents,
+                memo,
                 dueDate,
             }
         });
@@ -66,12 +66,12 @@ const DdayForm = () => {
                         <Input style={{ width: 160 }} placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
                 </Form.Item>
-                <Form.Item label="내용" colon={false}>
+                <Form.Item label="메모" colon={false}>
                     <Form.Item
-                    name="ddaycontents"
+                    name="ddaymemo"
                     noStyle
                     >
-                        <Input style={{ width: 160 }} placeholder="추가하고 싶은 내용이 있다면 입력해주세요" value={contents} onChange={onChangeContent} />
+                        <Input style={{ width: 160 }} placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="날짜" colon={false}>

@@ -7,7 +7,7 @@ router.post('/', async (req, res, next) => {
     try{
         const newDday = await db.Dday.create({
             title: req.body.title,
-            contents: req.body.contents,
+            memo: req.body.memo,
             dueDate: req.body.dueDate,
         });
         return res.status(200).json(newDday);
