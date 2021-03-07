@@ -33,6 +33,11 @@ export const LOAD_SUBJECT_LIST_REQUEST = 'LOAD_SUBJECT_LIST_REQUEST';
 export const LOAD_SUBJECT_LIST_SUCCESS = 'LOAD_SUBJECT_LIST_SUCCESS';
 export const LOAD_SUBJECT_LIST_FAILURE = 'LOAD_SUBJECT_LIST_FAILURE';
 
+//TODO 완료 버튼 누르는 액션
+export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST';
+export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS';
+export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE';
+
 //과목 추가하는 액션
 export const ADD_SUBJECT = 'ADD_SUBJECT';
 
@@ -106,6 +111,37 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
             }    
+        case COMPLETE_TODO_REQUEST:
+            return {
+                ...state,
+            }
+        case COMPLETE_TODO_SUCCESS: 
+            const todoIndex = state.todoList.findIndex(v => v.id === action.data.id);
+            const todo = state.todoList[todoIndex];            
+            const todoList = [...state.todoList];
+            todoList[todoIndex] = {...todo, completion: action.data.completion};
+
+            return {
+                ...state,
+                todoList : [ ...todoList ],
+            }
+        case COMPLETE_TODO_FAILURE:
+            return {
+                ...state,
+            }
+        case INCOMPLETE_TODO_REQUEST:
+            return {
+                ...state,
+            }
+        case INCOMPLETE_TODO_SUCCESS: 
+            return {
+                ...state,
+                todoList,
+            }
+        case INCOMPLETE_TODO_FAILURE:
+            return {
+                ...state,
+            }
         case ADD_SUBJECT:
             return {
                 ...state,
