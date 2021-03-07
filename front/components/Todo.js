@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { Checkbox, Tag } from 'antd';
 import { ExclamationCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+
+//redux
+import { useDispatch } from 'react-redux'
+import { COMPLETE_TODO_REQUEST } from '../reducers/todo';
 
 const TodoBox = styled.div`
   margin-bottom: 20px;
@@ -39,28 +43,40 @@ const TodoTitle = styled.p`
 `;
 
 const Todo = ({post}) => {
-    let [ checkBtnColor, setCheckBtnColor ] = useState('#bbb');
-    let [ checkBtnState, setCheckBtnState ] = useState(false);
+    const dispatch = useDispatch();
+    const completed = post.completion;
 
     const CircleCheckBtn = styled.button`
       height: 25px;
       width: 25px;
-      background-color: ${checkBtnColor};
+      background-color: ${completed ? 'red' : '#bbb'};
       border-radius: 50%;
       display: inline-block;
       cursor:pointer;
       border: none;
     `;
 
-    const onClickCheckBtn = () => {
-      if(!checkBtnState) {
-        setCheckBtnColor('red');
-        setCheckBtnState(true);
+    const onClickCheckBtn = useCallback(() => {
+      if(!completed) {
+        //완료
+        dispatch({
+          type: COMPLETE_TODO_REQUEST,
+          data: {
+            id: post.id,
+            checkBtnState: true,
+          }
+        })
       } else {
-        setCheckBtnColor('#bbb');
-        setCheckBtnState(false);
+        //완료 취소
+        dispatch({
+          type: COMPLETE_TODO_REQUEST,
+          data: {
+            id: post.id,
+            checkBtnState: false,
+          }
+        })
       }
-    }
+    }, [post && post.id, completed])
 
     return (
         <>
@@ -68,7 +84,7 @@ const Todo = ({post}) => {
             post === undefined ? '' :
             <TodoBox>
               <TodoCompletionStatusCell>
-                <CircleCheckBtn onClick={onClickCheckBtn}>{ checkBtnState ? <CheckOutlined /> : '' }</CircleCheckBtn>
+                <CircleCheckBtn onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
               </TodoCompletionStatusCell>
               <TodoTimeCell>
                 {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
