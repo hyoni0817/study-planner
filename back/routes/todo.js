@@ -69,4 +69,19 @@ router.get('/subjects', async (req, res, next) => {
     }
 })
 
+router.put('/complete', async (req, res, next) => {
+    try {
+        const updateCompletion = await db.Todo.update({
+            completion: req.body.checkBtnState,
+        }, {
+            where: {id : req.body.id}
+        });
+
+        return res.json({id: req.body.id, completion: req.body.checkBtnState});
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;
