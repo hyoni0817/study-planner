@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Tabs } from 'antd';
 import TodoFilter from '../containers/TodoFilter';
+import DdayFilter from '../containers/DdayFilter';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 
@@ -38,9 +39,9 @@ const AllPlanList = () => {
     return (
         <> 
             <div>
-                <TodoFilter />
                 <Tabs defaultActiveKey="1">
                     <TabPane tab="공부 계획" key="1">
+                    <TodoFilter />
                     <TodoListWrapper>
                         { 
                             todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
@@ -53,6 +54,7 @@ const AllPlanList = () => {
                     </TodoListWrapper>
                     </TabPane>
                     <TabPane tab="D-day" key="2">
+                        <DdayFilter />
                         { 
                             DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
                             : DdayList.map((c) => {
