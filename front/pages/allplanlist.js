@@ -11,12 +11,12 @@ import styled from 'styled-components';
 import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_DDAY_LIST_REQUEST } from '../reducers/dday';
 
-const TodoListWrapper = styled.div`
+const TodoListWrapper = styled.table`
     margin-top: 20px;
     margin-bottom: 30px;
-    display: table;
     width: 100%;
     border-spacing: 12px 20px;
+    border-collapse: initial;
 `;
 
 const { TabPane } = Tabs;
@@ -25,7 +25,7 @@ const AllPlanList = () => {
     const dispatch = useDispatch();
 
     const { todoList } = useSelector( state => state.todo );
-    const { DdayList } = useSelector( state => state.dday )
+    const { DdayList } = useSelector( state => state.dday );
 
     useEffect(() => {
         dispatch({
@@ -39,7 +39,7 @@ const AllPlanList = () => {
     const separateDate = (id, createdAt, list) => {
         const prevCreatedAt = list[list.findIndex(v => v.id == id) - 1].createdAt || '';
 
-        return prevCreatedAt == createdAt ? '' : <p>{createdAt}</p>;
+        return prevCreatedAt == createdAt ? '' : <tr><th colSpan="3">{createdAt}</th></tr>;
     };
 
     return (
@@ -54,7 +54,7 @@ const AllPlanList = () => {
                             : todoList.map((c) => {
                                 return (
                                     <>
-                                        {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <p>{c.createdAt}</p>}
+                                        {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <tr><th colSpan="3">{c.createdAt}</th></tr>}
                                         <Todo key={c.id} post={c} />
                                     </>
                                 )
@@ -69,7 +69,7 @@ const AllPlanList = () => {
                             : DdayList.map((c) => {
                                 return (
                                     <>
-                                        {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <p>{c.dueDate}</p>}
+                                        {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <tr><th colSpan="3">{c.dueDate}</th></tr>}
                                         <Dday key={c.id} data={c} />    
                                     </>
                                 )

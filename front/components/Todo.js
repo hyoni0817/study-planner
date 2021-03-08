@@ -7,14 +7,12 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux'
 import { COMPLETE_TODO_REQUEST } from '../reducers/todo';
 
-const TodoBox = styled.div`
+const TodoBox = styled.tr`
   margin-bottom: 20px;
-  display: table-row;
   width: 100%;
 `;
 
-const TodoTimeCell = styled.div`
-  display: table-cell;
+const TodoTimeCell = styled.td`
   padding-right: 10px;
   border-right: 2px solid black; 
   vertical-align: middle;
@@ -22,13 +20,11 @@ const TodoTimeCell = styled.div`
   width: 100px;
 `;
 
-const TodoDetailCell = styled.div`
-  display: table-cell;
+const TodoDetailCell = styled.td`
   text-align: left;
 `;
 
-const TodoCompletionStatusCell = styled.div`
-  display: table-cell;
+const TodoCompletionStatusCell = styled.td`
   vertical-align: middle;
   text-align: left;
   width: 35px;
