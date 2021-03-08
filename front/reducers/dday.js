@@ -4,6 +4,9 @@ export const initialState = {
     isAddingDday: false,
     addingDdayErrorReason: '',
     DdayAdded: false,
+    isSearchingDday: false,
+    addingDdayErrorReason: '',
+    DdaySearched: false,
 };
 
 //Dday 추가하는 액션
@@ -21,6 +24,11 @@ export const DELETE_DDAY = 'DELETE_DDAY';
 export const LOAD_DDAY_LIST_REQUEST = 'LOAD_DDAY_LIST_REQUEST';
 export const LOAD_DDAY_LIST_SUCCESS = 'LOAD_DDAY_LIST_SUCCESS';
 export const LOAD_DDAY_LIST_FAILURE = 'LOAD_DDAY_LIST_FAILURE';
+
+//DDAY 검색하는 액션
+export const SEARCH_DDAY_LIST_REQUEST = 'SEARCH_DDAY_LIST_REQUEST';
+export const SEARCH_DDAY_LIST_SUCCESS = 'SEARCH_DDAY_LIST_SUCCESS';
+export const SEARCH_DDAY_LIST_FAILURE = 'SEARCH_DDAY_LIST_FAILURE';
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
@@ -57,6 +65,26 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_DDAY_LIST_FAILURE: 
             return {
                 ...state,
+            };
+        case SEARCH_DDAY_LIST_REQUEST:
+            return {
+                ...state,
+                isSearchingDday: true,
+                addingDdayErrorReason: '',
+                DdaySearched: false,
+            };
+        case SEARCH_DDAY_LIST_SUCCESS:
+            return {
+                ...state,
+                isSearchingDday: false,
+                DdayList : action.data,
+                DdaySearched: true,
+            };
+        case SEARCH_DDAY_LIST_FAILURE: 
+            return {
+                ...state,
+                isAddingDday: false,
+                addingDdayErrorReason: action.error
             };
         default: {
             return {
