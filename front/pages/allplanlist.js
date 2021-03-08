@@ -36,6 +36,12 @@ const AllPlanList = () => {
         })
     }, []);
 
+    const separateDate = (id, createdAt, list) => {
+        const prevCreatedAt = list[list.findIndex(v => v.id == id) - 1].createdAt || '';
+
+        return prevCreatedAt == createdAt ? '' : <p>{createdAt}</p>;
+    };
+
     return (
         <> 
             <div>
@@ -47,7 +53,10 @@ const AllPlanList = () => {
                             todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
                             : todoList.map((c) => {
                                 return (
-                                    <Todo key={c.id} post={c} />
+                                    <>
+                                        {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <p>{c.createdAt}</p>}
+                                        <Todo key={c.id} post={c} />
+                                    </>
                                 )
                             }) 
                         }
@@ -59,7 +68,10 @@ const AllPlanList = () => {
                             DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
                             : DdayList.map((c) => {
                                 return (
-                                    <Dday key={c.id} data={c} />    
+                                    <>
+                                        {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <p>{c.dueDate}</p>}
+                                        <Dday key={c.id} data={c} />    
+                                    </>
                                 )
                             })  
                         }
