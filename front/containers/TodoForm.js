@@ -15,13 +15,12 @@ let index = 0;
 const TodoForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { todoPostId, subjectList } = useSelector(state => state.todo);
+    const { subjectList } = useSelector(state => state.todo);
 
     const { RangePicker } = TimePicker;
     const format = 'HH:mm';
     const [ form ] = Form.useForm();
 
-    const [ todoId, setTodoId ] = useState(todoPostId);
     const [ title, setTitle ] = useState('');
     const [ subjects, setSubjects ] = useState([]);
     const [ subjectName, setSubjectName ] = useState('');
@@ -99,11 +98,9 @@ const TodoForm = () => {
     }
 
     const onFinish = values => {
-        setTodoId( todoId => todoId + 1);
         dispatch({
             type: ADD_TODO_REQUEST,
             data: {
-                todoId,
                 title,
                 selectSubject,
                 quantity,
