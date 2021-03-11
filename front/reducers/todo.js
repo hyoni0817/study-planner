@@ -5,6 +5,8 @@ export const initialState = {
     isAddingTodo: false,
     addingTodoErrorReason: '',
     todoAdded: false,
+    isEditingTodo: false,
+    editTodoErrorReason: '',
 };
 
 //TODO 추가하는 액션
@@ -37,6 +39,11 @@ export const LOAD_SUBJECT_LIST_FAILURE = 'LOAD_SUBJECT_LIST_FAILURE';
 export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST';
 export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS';
 export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE';
+
+//TODO 수정하는 액션
+export const EDIT_TODO_REQUEST = 'EDIT_TODO_REQUEST';
+export const EDIT_TODO_SUCCESS = 'EDIT_TODO_SUCCESS';
+export const EDIT_TODO_FAILURE = 'EDIT_TODO_FAILURE';
 
 //과목 추가하는 액션
 export const ADD_SUBJECT = 'ADD_SUBJECT';
@@ -129,6 +136,29 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
             }
+        case EDIT_TODO_REQUEST: 
+            return {
+                ...state,
+                isEditingTodo: true, 
+                editTodoErrorReason: '',
+            }
+        case EDIT_TODO_SUCCESS: 
+            const editTodoIndex = state.todoList.findIndex(v => v.id === action.data.id);
+            const editTodo = state.todoList[editTodoIndex]; 
+            const editTodoList = [...state.todoList];
+            editTodoList[editTodoIndex] = {...editTodo, ...action.data};
+        
+        return {
+            ...state,
+            isEditingTodo: false,
+            todoList: [...editTodoList], 
+        }
+        case EDIT_TODO_FAILURE: 
+        return {
+            ...state,
+            isEditingTodo: false,
+            editTodoErrorReason: action.error,
+        }
         case ADD_SUBJECT:
             return {
                 ...state,
