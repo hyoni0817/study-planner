@@ -84,4 +84,46 @@ router.put('/complete', async (req, res, next) => {
     }
 });
 
+router.put('/edit', async (req, res, next) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const subject = req.body.selectSubject;
+    const quantity = req.body.quantity;
+    const unit = req.body.unit;
+    const important = req.body.important;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+    const allDayStatus = req.body.allDayStatus;
+
+    try {
+        const updateTodo = await db.Todo.update({
+            title,
+            subject,
+            quantity,
+            unit,
+            important,
+            startTime,
+            endTime,
+            allDayStatus,
+        }, {
+            where: { id }
+        });
+
+        return res.json({
+            id,
+            title,
+            subject,
+            quantity,
+            unit,
+            important,
+            startTime,
+            endTime,
+            allDayStatus,
+        });
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;
