@@ -55,7 +55,7 @@ const AllPlanList = () => {
                                 return (
                                     <>
                                         {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <tr><th colSpan="3">{c.createdAt}</th></tr>}
-                                        <Todo key={c.id} post={c} />
+                                        <Todo key={c.id} post={c} view="search"/>
                                     </>
                                 )
                             }) 
@@ -70,7 +70,7 @@ const AllPlanList = () => {
                                 return (
                                     <>
                                         {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <tr><th colSpan="3">{c.dueDate}</th></tr>}
-                                        <Dday key={c.id} data={c} />    
+                                        <Dday key={c.id} data={c} view="search" />    
                                     </>
                                 )
                             })  

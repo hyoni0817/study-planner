@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { Checkbox, Tag } from 'antd';
+import { Tag } from 'antd';
 import { ExclamationCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 //redux
 import { useDispatch } from 'react-redux'
 import { COMPLETE_TODO_REQUEST } from '../reducers/todo';
+import EditTodoForm from './EditTodoForm';
 
 const TodoBox = styled.tr`
   margin-bottom: 20px;
@@ -30,6 +31,10 @@ const TodoCompletionStatusCell = styled.td`
   width: 35px;
 `;
 
+const TodoEditAndDeleteCell = styled.td`
+
+`;
+
 const TodoImportantStatus = styled.p`
   margin-bottom: 0;
 `;
@@ -38,7 +43,7 @@ const TodoTitle = styled.p`
   margin-bottom: 0;
 `;
 
-const Todo = ({post}) => {
+const Todo = ({post, view}) => {
     const dispatch = useDispatch();
     const completed = post.completion;
 
@@ -89,7 +94,12 @@ const Todo = ({post}) => {
               <TodoDetailCell>
                 <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
                 0 / {post.quantity} {post.unit}
-              </TodoDetailCell>  
+              </TodoDetailCell>
+              { view == 'search' ? 
+              <TodoEditAndDeleteCell>
+                <EditTodoForm data={post}/>
+              </TodoEditAndDeleteCell>
+              : '' }
             </TodoBox>     
             }  
         </>

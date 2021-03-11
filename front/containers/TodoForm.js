@@ -6,13 +6,13 @@ import moment from 'moment';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_TODO_REQUEST, LOAD_SUBJECT_LIST_REQUEST, ADD_SUBJECT } from '../reducers/todo';
+import { ADD_TODO_REQUEST, LOAD_SUBJECT_LIST_REQUEST, ADD_SUBJECT, EDIT_TODO_REQUEST } from '../reducers/todo';
 
 const { Option } = Select;
 
 let index = 0;
 
-const TodoForm = () => {
+const TodoForm = ({mode, data, onSubmit}) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { subjectList } = useSelector(state => state.todo);
@@ -20,17 +20,18 @@ const TodoForm = () => {
     const { RangePicker } = TimePicker;
     const format = 'HH:mm';
     const [ form ] = Form.useForm();
-
-    const [ title, setTitle ] = useState('');
+    const subjectDefaultValue = mode == 'edit' ? {defaultValue: data.subject} : {} ;
+    const timeDefaultValue = mode == 'edit' ? {defaultValue : [moment(data.startTime, format), moment(data.endTime, format)]} : {};
+    const [ title, setTitle ] = useState(mode == 'edit' ? data.title : '');
     const [ subjects, setSubjects ] = useState([]);
-    const [ subjectName, setSubjectName ] = useState('');
-    const [ quantity, setQuantity ] = useState('');
-    const [ unit, setUnit ] = useState('개');
-    const [ important, setImporant ] = useState(false);
+    const [ subjectName, setSubjectName ] = useState(mode == 'edit' ? data.subject : '');
+    const [ quantity, setQuantity ] = useState(mode == 'edit' ? data.quantity : '');
+    const [ unit, setUnit ] = useState(mode == 'edit' ? data.unit : '개');
+    const [ important, setImporant ] = useState(mode == 'edit' ? data.important : false);
     const [ selectSubject, setSelectSubject ] = useState('');
-    const [ startTime, setStartTime ] = useState('');
-    const [ endTime, setEndTime ] = useState('');
-    const [ allDayStatus, setAllDayStatus ] = useState(false);
+    const [ startTime, setStartTime ] = useState(mode == 'edit' ? data.startTime : '');
+    const [ endTime, setEndTime ] = useState(mode == 'edit' ? data.endTime : '');
+    const [ allDayStatus, setAllDayStatus ] = useState(mode == 'edit' ? data.allDayStatus : false);
     const [ checkTime, setCheckTime ] = useState(true);
     const [ timeOrAllDayClickStatus, setTimeOrAllDayClickStatus ] = useState(false);
 
@@ -115,6 +116,24 @@ const TodoForm = () => {
         return router.push('/')
     };
 
+    const onEditFinish = values => {
+        dispatch({
+            type: EDIT_TODO_REQUEST,
+            data: {
+                id: data.id,
+                title,
+                selectSubject,
+                quantity,
+                unit,
+                important,
+                startTime: allDayStatus ? 'none' : startTime,
+                endTime: allDayStatus ? 'none' : endTime,
+                allDayStatus,
+            },
+        });
+        onSubmit(false);
+    };
+
     return (
         <>
             <Form 
@@ -126,7 +145,7 @@ const TodoForm = () => {
                 size: 'default',
                 }}
                 size="default"
-                onFinish={onFinish}
+                onFinish={ mode == 'edit' ? onEditFinish : onFinish }
                 form={form}
             >
                 <Form.Item label="계획명" colon={false}>
@@ -135,7 +154,7 @@ const TodoForm = () => {
                     noStyle
                     rules={[{ required: true, message: '내용을 입력해주세요' }]}
                     >
-                        <Input style={{ width: 160 }} placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
+                        <Input style={{ width: 160 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="과목" colon={false}>
@@ -147,6 +166,7 @@ const TodoForm = () => {
                         <Select
                             style={{ width: 240 }}
                             placeholder="과목 선택"
+                            {...subjectDefaultValue}
                             dropdownRender={menu => (
                                 <div>
                                     {menu}
@@ -166,7 +186,7 @@ const TodoForm = () => {
                         >
                             {
                                 subjectList.map(item => (
-                                    <Option key={item.subject}>{item.subject}</Option> // 코드 정렬 git에 올리기, 여기서 value값 추가하기
+                                    <Option key={item.subject} value={item.subject}>{item.subject}</Option> // 코드 정렬 git에 올리기, 여기서 value값 추가하기
                                 ))
                             }
                         </Select>
@@ -178,7 +198,7 @@ const TodoForm = () => {
                     rules={[{ required: true, message: '분량을 입력해주세요' }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                     >
-                        <Input value={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" />
+                        <Input value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" />
                     </Form.Item>
                     <Form.Item
                     name="unit"
@@ -187,6 +207,7 @@ const TodoForm = () => {
                     >
                         <Select
                             defaultValue="개"
+                            defaultValue={ unit }
                             style={{ width: 120 }} 
                             onChange={onChangeUnit}
                         >
@@ -202,12 +223,12 @@ const TodoForm = () => {
                         name="time"
                         rules={[{ required: checkTime, message: '시간을 선택해주세요' }]}  
                     >
-                        <RangePicker placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
-                        <Checkbox onChange={onChangeAllDayCheckBox} style={{ marginLeft: '10px', }}>종일</Checkbox>
+                        <RangePicker {...timeDefaultValue} placeholder={['시작', '마감']} format={format} onChange={onChangeTime} disabled={allDayStatus} />
+                        <Checkbox onChange={onChangeAllDayCheckBox} checked={ allDayStatus } style={{ marginLeft: '10px', }}>종일</Checkbox>
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="중요" colon={false} style={{ marginBottom: 0 }}>
-                <Checkbox onChange={onChangeCheckbox} />
+                    <Checkbox onChange={onChangeCheckbox} checked={ important } />
                 </Form.Item>
                 <Form.Item label=" " colon={false}>
                     <Button type="primary" htmlType="submit">
