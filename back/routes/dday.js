@@ -43,4 +43,31 @@ router.get('/search', async (req, res, next) => {
     } 
 });
 
+router.put('/edit', async (req, res, next) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const memo = req.body.memo;
+    const dueDate = req.body.dueDate;
+
+    try {
+        const updateTodo = await db.Dday.update({
+            title,
+            memo,
+            dueDate,
+        }, {
+            where: { id }
+        });
+
+        return res.json({
+            id,
+            title,
+            memo,
+            dueDate,
+        });
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;
