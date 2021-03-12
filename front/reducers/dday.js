@@ -36,6 +36,11 @@ export const EDIT_DDAY_REQUEST = 'EDIT_DDAY_REQUEST';
 export const EDIT_DDAY_SUCCESS = 'EDIT_DDAY_SUCCESS';
 export const EDIT_DDAY_FAILURE = 'EDIT_DDAY_FAILURE';
 
+//Dday 삭제하는 액션
+export const DELETE_DDAY_REQUEST = 'DELETE_DDAY_REQUEST'; 
+export const DELETE_DDAY_SUCCESS = 'DELETE_DDAY_SUCCESS'; 
+export const DELETE_DDAY_FAILURE = 'DELETE_DDAY_FAILURE'; 
+
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_DDAY_REQUEST:
@@ -114,6 +119,22 @@ const reducer = ( state = initialState, action ) => {
             ...state,
             isEditingDday: false,
             editDdayErrorReason: action.error,
+        }
+        case DELETE_DDAY_REQUEST: {
+            return {
+                ...state,
+            }
+        }
+        case DELETE_DDAY_SUCCESS: {
+            return {
+                ...state,
+                DdayList: state.DdayList.filter( v => v.id !== action.data),
+            }
+        }
+        case DELETE_DDAY_FAILURE: {
+            return {
+                ...state,
+            }
         }
         default: {
             return {
