@@ -1,6 +1,6 @@
 import { all, fork, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_DDAY_REQUEST, ADD_DDAY_SUCCESS, ADD_DDAY_FAILURE, LOAD_DDAY_LIST_REQUEST, LOAD_DDAY_LIST_SUCCESS, LOAD_DDAY_LIST_FAILURE, SEARCH_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_SUCCESS, SEARCH_DDAY_LIST_FAILURE, } from '../reducers/dday';
+import { ADD_DDAY_REQUEST, ADD_DDAY_SUCCESS, ADD_DDAY_FAILURE, LOAD_DDAY_LIST_REQUEST, LOAD_DDAY_LIST_SUCCESS, LOAD_DDAY_LIST_FAILURE, SEARCH_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_SUCCESS, SEARCH_DDAY_LIST_FAILURE, EDIT_DDAY_REQUEST, EDIT_DDAY_SUCCESS, EDIT_DDAY_FAILURE } from '../reducers/dday';
 
 function addDdayAPI(DdayData) {
     return axios.post('/dday', DdayData);
@@ -81,10 +81,32 @@ function* watchSearchDday() {
     yield takeLatest(SEARCH_DDAY_LIST_REQUEST, searchDday);
 }
 
+function editDdayAPI(DdayData) {
+    return axios.put('/dday/edit', DdayData);
+}
+function* editDday(action) {
+    try {
+        const result = yield call(editDdayAPI, action.data);
+        yield put({
+            type: EDIT_DDAY_SUCCESS, 
+            data: result.data,
+        })
+    } catch (e) {
+        console.error(e);
+        yield put({
+            type: EDIT_DDAY_FAILURE,
+            error: e,
+        })
+    }
+}
+function* watchEditDday() {
+    yield takeLatest(EDIT_DDAY_REQUEST, editDday);
+}
 export default function* DdaySaga() {
     yield all([
         fork(watchAddDday),
         fork(watchLoadDday),
         fork(watchSearchDday),
+        fork(watchEditDday),
     ])
 }
