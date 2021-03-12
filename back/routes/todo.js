@@ -126,4 +126,17 @@ router.put('/edit', async (req, res, next) => {
     }
 });
 
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const deleteTodo = await db.Todo.destroy({
+            where : { id: req.params.id }
+        })
+
+        return res.send(req.params.id);
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;
