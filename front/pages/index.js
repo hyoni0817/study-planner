@@ -7,6 +7,7 @@ import { FormOutlined } from '@ant-design/icons';
 import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_DDAY_LIST_REQUEST } from '../reducers/dday';
@@ -42,10 +43,12 @@ const Home = (props) => {
     const { todoList } = useSelector( state => state.todo )
     const { DdayList } = useSelector( state => state.dday )
 
-    const tempTodo = {title: "수학문제 풀기", quantity: 11, unit: "개", important: false, selectSubject: "수학", startTime: "9:00", endTime: "10:00", allDayStatus: false, }
-    
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const timeFormat = 'HH:mm'; 
+    const nowTime = moment(moment().format(timeFormat), timeFormat);
+    const nowTodoList = todoList.filter( v => 
+        nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
 
     useEffect(() => {
         dispatch({
@@ -90,7 +93,15 @@ const Home = (props) => {
             <SelectForms />
             <p>지금 해야할 일</p>
             <TodoNowWrapper>
-                <Todo post={tempTodo}/>
+                {
+                    nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
+                    : nowTodoList.map((c) => {
+                        return (
+
+                            <Todo post={c} />
+                        )
+                    })
+                }
             </TodoNowWrapper>
             <p>오늘 해야할 일</p>
             <TodoListWrapper>
