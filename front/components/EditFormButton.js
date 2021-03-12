@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import MobileForm from '../containers/MobileForm';
-import MobileFormPortal from '../components/MobileFormPortal';
+import MobileFormPortal from './MobileFormPortal';
 import DesktopForm from '../containers/DesktopForm';
 
 const MobileFormWrapper = styled(MobileForm)`
@@ -12,7 +12,7 @@ const MobileFormWrapper = styled(MobileForm)`
     }
 `;
 
-const EditTodoForm = ({data}) => {
+const EditFormButton = ({data, type}) => {
     const [ editForm, setEditForm ] = useState(false);
 
     const onHandleOpen = (value) => {
@@ -23,10 +23,10 @@ const EditTodoForm = ({data}) => {
             <Button type="primary" onClick={() => setEditForm(true)}>
                 <EditOutlined />
             </Button>
-            { editForm && <DesktopForm mode="edit" type="todo" data={data} isOpen={onHandleOpen} /> }
+            { editForm && <DesktopForm mode="edit" type={type} data={data} isOpen={onHandleOpen} /> }
             { editForm &&  
                 <MobileFormPortal selector="#mobile-form">
-                    <MobileFormWrapper mode="edit" type="todo" data={data} isOpen={onHandleOpen} />
+                    <MobileFormWrapper mode="edit" type={type} data={data} isOpen={onHandleOpen} />
                 </MobileFormPortal> 
             }
 
@@ -34,4 +34,4 @@ const EditTodoForm = ({data}) => {
     );
 };
 
-export default EditTodoForm;
+export default EditFormButton;
