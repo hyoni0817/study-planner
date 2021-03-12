@@ -45,6 +45,10 @@ export const EDIT_TODO_REQUEST = 'EDIT_TODO_REQUEST';
 export const EDIT_TODO_SUCCESS = 'EDIT_TODO_SUCCESS';
 export const EDIT_TODO_FAILURE = 'EDIT_TODO_FAILURE';
 
+//TODO 삭제하는 액션
+export const DELETE_TODO_REQUEST = 'DELETE_TODO_REQUEST'; 
+export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS'; 
+export const DELETE_TODO_FAILURE = 'DELETE_TODO_FAILURE'; 
 //과목 추가하는 액션
 export const ADD_SUBJECT = 'ADD_SUBJECT';
 
@@ -158,6 +162,22 @@ const reducer = ( state = initialState, action ) => {
             ...state,
             isEditingTodo: false,
             editTodoErrorReason: action.error,
+        }
+        case DELETE_TODO_REQUEST: {
+            return {
+                ...state,
+            }
+        }
+        case DELETE_TODO_SUCCESS: {
+            return {
+                ...state,
+                todoList: state.todoList.filter( v => v.id !== action.data),
+            }
+        }
+        case DELETE_TODO_FAILURE: {
+            return {
+                ...state,
+            }
         }
         case ADD_SUBJECT:
             return {
