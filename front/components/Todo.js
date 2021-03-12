@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux'
 import { COMPLETE_TODO_REQUEST } from '../reducers/todo';
 import EditFormButton from './EditFormButton';
+import DeleteButton from '../containers/DeleteButton';
 
 const TodoBox = styled.tr`
   margin-bottom: 20px;
@@ -98,6 +99,7 @@ const Todo = ({post, view}) => {
               { view == 'search' ? 
               <TodoEditAndDeleteCell>
                 <EditFormButton data={post} type="todo" />
+                <DeleteButton id={post.id} />
               </TodoEditAndDeleteCell>
               : '' }
             </TodoBox>     
