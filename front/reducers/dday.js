@@ -6,6 +6,8 @@ export const initialState = {
     isSearchingDday: false,
     addingDdayErrorReason: '',
     DdaySearched: false,
+    isEditingDday: false,
+    editDdayErrorReason: '',
 };
 
 //Dday 추가하는 액션
@@ -28,6 +30,11 @@ export const LOAD_DDAY_LIST_FAILURE = 'LOAD_DDAY_LIST_FAILURE';
 export const SEARCH_DDAY_LIST_REQUEST = 'SEARCH_DDAY_LIST_REQUEST';
 export const SEARCH_DDAY_LIST_SUCCESS = 'SEARCH_DDAY_LIST_SUCCESS';
 export const SEARCH_DDAY_LIST_FAILURE = 'SEARCH_DDAY_LIST_FAILURE';
+
+//Dday 수정하는 액션
+export const EDIT_DDAY_REQUEST = 'EDIT_DDAY_REQUEST';
+export const EDIT_DDAY_SUCCESS = 'EDIT_DDAY_SUCCESS';
+export const EDIT_DDAY_FAILURE = 'EDIT_DDAY_FAILURE';
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
@@ -85,6 +92,29 @@ const reducer = ( state = initialState, action ) => {
                 isAddingDday: false,
                 addingDdayErrorReason: action.error
             };
+        case EDIT_DDAY_REQUEST: 
+            return {
+                ...state,
+                isEditingDday: true, 
+                editDdayErrorReason: '',
+            }
+        case EDIT_DDAY_SUCCESS: 
+            const editDdayIndex = state.DdayList.findIndex(v => v.id === action.data.id);
+            const editDday = state.DdayList[editDdayIndex]; 
+            const editDdayList = [...state.DdayList];
+            editDdayList[editDdayIndex] = {...editDday, ...action.data};
+        
+        return {
+            ...state,
+            isEditingDday: false,
+            DdayList: [...editDdayList], 
+        }
+        case EDIT_DDAY_FAILURE: 
+        return {
+            ...state,
+            isEditingDday: false,
+            editDdayErrorReason: action.error,
+        }
         default: {
             return {
                 ...state,
