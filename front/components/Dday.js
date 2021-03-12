@@ -1,8 +1,7 @@
 import React from 'react';
-import { Col } from 'antd';
-import { useSelector } from 'react-redux';
+import { FileTextOutlined } from '@ant-design/icons'
 import styled from 'styled-components';
-import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
+import EditFormButton from  './EditFormButton';
 
 const DdayBox = styled.div`
     background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
@@ -30,7 +29,16 @@ const DdayDate = styled.p`
     text-align: right;
     margin-bottom: 7px;
 `
-const Dday = ({data}) => {
+
+const DdayMemo = styled.div`
+
+`;
+
+const DdayEditAndDeleteCell = styled.span`
+    float: right;
+`;
+
+const Dday = ({data, view}) => {
 
     const calculateDday = (dueDate) => {
         const dateArr = dueDate.split('-');
@@ -47,7 +55,15 @@ const Dday = ({data}) => {
             <DdayBox bordered={false}>
                 <DdayDate>{data.dueDate} 까지</DdayDate>
                 <DdayTitle>{data.title}</DdayTitle>
-                <DdayContent>D{ calculateDday(data.dueDate) }</DdayContent>
+                { view === 'search' ? <DdayMemo><FileTextOutlined style={{fontSize: '15px', marginRight: '5px', marginTop: '5px'}}/>{data.memo}</DdayMemo> : ''}
+                <DdayContent>
+                    D{ calculateDday(data.dueDate) }
+                    { view == 'search' ? 
+                    <DdayEditAndDeleteCell>
+                        <EditFormButton data={data} type="Dday" />
+                    </DdayEditAndDeleteCell>
+                    : '' }
+                </DdayContent>
             </DdayBox> 
         </>
     )

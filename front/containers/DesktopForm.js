@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Modal } from 'antd';
 import SelectForms from '../components/SelectForms';
 import TodoForm from '../containers/TodoForm';
+import DdayForm from '../containers/DdayForm';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -42,7 +43,7 @@ const DesktopForm = ({mode, type, data, isOpen}) => {
                 cancelButtonProps={{ disabled: true }}
                 destroyOnClose={true}
             >
-                {type == 'todo' ? <TodoForm mode="edit" data={data} onSubmit={handleOk} /> : <SelectForms />}
+                {type == 'todo' ? <TodoForm mode="edit" data={data} onSubmit={handleOk} /> : type == 'Dday' ? <DdayForm mode="edit" data={data} onSubmit={handleOk} /> : <SelectForms />}
             </ModalWrapper>
         </>
     );
