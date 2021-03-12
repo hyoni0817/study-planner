@@ -99,7 +99,7 @@ const Todo = ({post, view}) => {
               { view == 'search' ? 
               <TodoEditAndDeleteCell>
                 <EditFormButton data={post} type="todo" />
-                <DeleteButton id={post.id} />
+                <DeleteButton id={post.id} type="todo" />
               </TodoEditAndDeleteCell>
               : '' }
             </TodoBox>     

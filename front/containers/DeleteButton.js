@@ -6,16 +6,18 @@ import { DELETE_TODO_REQUEST } from '../reducers/todo';
 //redux
 import { useDispatch } from 'react-redux';
 
-const DeleteButton = ({id}) => {
+const DeleteButton = ({id, type}) => {
     const dispatch = useDispatch();
 
     const onHandleDelete = () => {
-        dispatch({
-            type: DELETE_TODO_REQUEST,
-            data: {
-                id: id,
-            } 
-        })
+        if(type == 'todo') {
+            dispatch({
+                type: DELETE_TODO_REQUEST,
+                data: {
+                    id: id,
+                } 
+            })
+        }
     }
     return (
         <>
