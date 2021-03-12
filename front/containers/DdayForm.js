@@ -10,9 +10,7 @@ import { ADD_DDAY_REQUEST } from '../reducers/dday';
 const DdayForm = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { DdayPostId } = useSelector(state => state.dday);
 
-    const [ DdayId, setDdayId ] = useState(DdayPostId);
     const [ title, setTitle ] = useState('');
     const [ memo, setMemo ] = useState('');
     const [ dueDate, setDueDate ] = useState('');
@@ -30,11 +28,9 @@ const DdayForm = () => {
     };
 
     const onFinish = values => {
-        setDdayId( DdayId => DdayId + 1);
         dispatch({
             type: ADD_DDAY_REQUEST,
             data: {
-                DdayPostId: DdayId,
                 title,
                 memo,
                 dueDate,

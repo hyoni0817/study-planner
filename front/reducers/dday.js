@@ -1,6 +1,5 @@
 export const initialState = {
     DdayList : [],
-    DdayPostId: 0,
     isAddingDday: false,
     addingDdayErrorReason: '',
     DdayAdded: false,
