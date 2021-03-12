@@ -1,23 +1,22 @@
 import React from 'react';
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { DELETE_TODO_REQUEST } from '../reducers/todo';
 
 //redux
 import { useDispatch } from 'react-redux';
+import { DELETE_TODO_REQUEST } from '../reducers/todo';
+import { DELETE_DDAY_REQUEST } from '../reducers/dday';
 
 const DeleteButton = ({id, type}) => {
     const dispatch = useDispatch();
 
     const onHandleDelete = () => {
-        if(type == 'todo') {
-            dispatch({
-                type: DELETE_TODO_REQUEST,
-                data: {
-                    id: id,
-                } 
-            })
-        }
+        dispatch({
+            type: type == "todo" ? DELETE_TODO_REQUEST : DELETE_DDAY_REQUEST,
+            data: {
+                id: id,
+            } 
+        })
     }
     return (
         <>

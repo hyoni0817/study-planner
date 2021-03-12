@@ -2,6 +2,7 @@ import React from 'react';
 import { FileTextOutlined } from '@ant-design/icons'
 import styled from 'styled-components';
 import EditFormButton from  './EditFormButton';
+import DeleteButton from '../containers/DeleteButton';
 
 const DdayBox = styled.div`
     background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
@@ -61,6 +62,7 @@ const Dday = ({data, view}) => {
                     { view == 'search' ? 
                     <DdayEditAndDeleteCell>
                         <EditFormButton data={data} type="Dday" />
+                        <DeleteButton id={data.id} type="Dday" />
                     </DdayEditAndDeleteCell>
                     : '' }
                 </DdayContent>
