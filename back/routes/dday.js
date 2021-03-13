@@ -83,4 +83,19 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+router.put('/show', async (req, res, next) => {
+    try {
+        const updateViewState = await db.Dday.update({
+            viewState: req.body.viewState,
+        }, {
+            where: {id : req.body.id}
+        });
+
+        return res.json({id: req.body.id, viewState: req.body.viewState});
+    } catch (e) {
+        console.error(e);
+        return next(e);
+    }
+});
+
 module.exports = router;
