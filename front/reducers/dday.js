@@ -1,5 +1,6 @@
 export const initialState = {
     DdayList : [],
+    isLoadingDday: false,
     isAddingDday: false,
     addingDdayErrorReason: '',
     DdayAdded: false,
@@ -8,6 +9,7 @@ export const initialState = {
     DdaySearched: false,
     isEditingDday: false,
     editDdayErrorReason: '',
+    useSearch: 'no',
 };
 
 //Dday 추가하는 액션
@@ -71,16 +73,19 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_DDAY_LIST_REQUEST:
             return {
                 ...state,
+                isLoadingDday: true,
                 DdayList: [],
             };
         case LOAD_DDAY_LIST_SUCCESS:
             return {
                 ...state,
+                isLoadingDday: false,
                 DdayList: action.data,
             };
         case LOAD_DDAY_LIST_FAILURE: 
             return {
                 ...state,
+                isLoadingDday: false,
             };
         case SEARCH_DDAY_LIST_REQUEST:
             return {
@@ -88,6 +93,7 @@ const reducer = ( state = initialState, action ) => {
                 isSearchingDday: true,
                 addingDdayErrorReason: '',
                 DdaySearched: false,
+                useSearch: 'request',
             };
         case SEARCH_DDAY_LIST_SUCCESS:
             return {
@@ -95,12 +101,14 @@ const reducer = ( state = initialState, action ) => {
                 isSearchingDday: false,
                 DdayList : action.data,
                 DdaySearched: true,
+                useSearch: 'success',
             };
         case SEARCH_DDAY_LIST_FAILURE: 
             return {
                 ...state,
                 isAddingDday: false,
-                addingDdayErrorReason: action.error
+                addingDdayErrorReason: action.error,
+                useSearch: 'fail',
             };
         case EDIT_DDAY_REQUEST: 
             return {

@@ -2,11 +2,14 @@ export const initialState = {
     todoList : [],
     subjectList: [],
     todoPostId: 0,
+    isLoadingTodo: false,
     isAddingTodo: false,
     addingTodoErrorReason: '',
     todoAdded: false,
     isEditingTodo: false,
     editTodoErrorReason: '',
+    todoSearched: false,
+    useSearch: 'no',
 };
 
 //TODO 추가하는 액션
@@ -77,36 +80,41 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_TODO_LIST_REQUEST:
             return {
                 ...state,
+                isLoadingTodo: true,
                 todoList: [],
             }
         case LOAD_TODO_LIST_SUCCESS:
             return {
                 ...state,
+                isLoadingTodo: false,
                 todoList: action.data,
             }
         case LOAD_TODO_LIST_FAILURE:
             return {
                 ...state,
+                isLoadingTodo: false,
             }
         case SEARCH_TODO_LIST_REQUEST:
             return {
                 ...state,
-                isSearchingTodo: true,
+                todoList: [],
                 addingTodoErrorReason: '',
                 todoSearched: false,
+                useSearch: 'request',
             };
         case SEARCH_TODO_LIST_SUCCESS:
             return {
                 ...state,
-                isSearchingTodo: false,
                 todoList : action.data,
                 todoSearched: true,
+                useSearch: 'success',
             };
         case SEARCH_TODO_LIST_FAILURE: 
             return {
                 ...state,
                 isAddingTodo: false,
-                addingTodoErrorReason: action.error
+                addingTodoErrorReason: action.error,
+                useSearch: 'fail'
             };
         case LOAD_SUBJECT_LIST_REQUEST:
             return {
