@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Affix, Row, Col } from 'antd';
+import { Button, Affix, Row, Col, Spin } from 'antd';
+import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
-import { FormOutlined } from '@ant-design/icons';
 import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -41,14 +41,16 @@ const AddTodoAffix = styled(Affix)`
 const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { todoList } = useSelector( state => state.todo )
-    const { DdayList } = useSelector( state => state.dday )
+    const { todoList, isLoadingTodo } = useSelector( state => state.todo )
+    const { DdayList, isLoadingDday } = useSelector( state => state.dday )
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
     const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
     const timeFormat = 'HH:mm'; 
     const nowTime = moment(moment().format(timeFormat), timeFormat);
+    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+
     const todayTodoList = todoList.filter(v => todayDate.isSame(moment(v.createdAt, 'YYYY-MM-DD')));
     const nowTodoList = todayTodoList.filter( v => 
         nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
@@ -67,23 +69,26 @@ const Home = (props) => {
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
+
     return (
         <>
             <div>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
             <div style={{ padding: '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', }}>
-                <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
-                    { 
-                        showDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                        : showDdayList.map((c) => {
-                            console.log("c:", c)
-                            return (
-                                <Col xs={12} sm={6} md={10} lg={6}>
-                                    <Dday key={c.id} data={c} />    
-                                </Col>
-                            )
-                        })  
-                    }                    
-                </Row>
+                <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
+                    <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
+                        { 
+                            showDdayList.length == 0 && !isLoadingDday ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                            : showDdayList.map((c) => {
+                                console.log("c:", c)
+                                return (
+                                    <Col xs={12} sm={6} md={10} lg={6}>
+                                        <Dday key={c.id} data={c} />    
+                                    </Col>
+                                )
+                            })  
+                        }       
+                    </Row>
+                </Spin>             
             </div> 
             <div>
                 <p>오늘의 성취율</p>
@@ -92,18 +97,21 @@ const Home = (props) => {
             <SelectForms />
             <p>지금 해야할 일</p>
             <TodoNowWrapper>
-                {
-                    nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
-                    : nowTodoList.map((c) => {
-                        return (
+                <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
+                    {
+                        nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
+                        : nowTodoList.map((c) => {
+                            return (
 
-                            <Todo post={c} />
-                        )
-                    })
-                }
+                                <Todo post={c} />
+                            )
+                        })
+                    }
+                </Spin> 
             </TodoNowWrapper>
             <p>오늘 해야할 일</p>
             <TodoListWrapper>
+            <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
                 { 
                     todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
                     : todayTodoList.map((c) => {
@@ -112,6 +120,7 @@ const Home = (props) => {
                         )
                     }) 
                 }
+            </Spin>
             </TodoListWrapper>
             <AddTodoAffix offsetBottom={50}>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
