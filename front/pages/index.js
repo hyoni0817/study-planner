@@ -49,6 +49,7 @@ const Home = (props) => {
     const nowTime = moment(moment().format(timeFormat), timeFormat);
     const nowTodoList = todoList.filter( v => 
         nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
+    const showDdayList = DdayList.filter( v => v.viewState);
 
     useEffect(() => {
         dispatch({
@@ -67,8 +68,8 @@ const Home = (props) => {
             <div style={{ padding: '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', }}>
                 <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
                     { 
-                        DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                        : DdayList.map((c) => {
+                        showDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                        : showDdayList.map((c) => {
                             console.log("c:", c)
                             return (
                                 <Col xs={12} sm={6} md={10} lg={6}>

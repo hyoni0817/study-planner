@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { Switch } from 'antd';
 import { FileTextOutlined } from '@ant-design/icons'
 import styled from 'styled-components';
 import EditFormButton from  './EditFormButton';
 import DeleteButton from '../containers/DeleteButton';
+
+import { useDispatch } from 'react-redux';
+import { SHOW_DDAY_REQUEST } from '../reducers/dday';
 
 const DdayBox = styled.div`
     background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
@@ -40,6 +44,9 @@ const DdayEditAndDeleteCell = styled.span`
 `;
 
 const Dday = ({data, view}) => {
+    const viewState = data.viewState;
+
+    const dispatch = useDispatch();
 
     const calculateDday = (dueDate) => {
         const dateArr = dueDate.split('-');
@@ -51,10 +58,35 @@ const Dday = ({data, view}) => {
         return remainDay === 0 ? ' - day' : ( remainDay < 0 ? `+${remainDay * -1}` : ` - ${remainDay}` );
     };
 
+    const onChangeView = useCallback((checked) => {
+      if(!viewState) {
+        //완료
+        dispatch({
+          type: SHOW_DDAY_REQUEST,
+          data: {
+            id: data.id,
+            viewState: true,
+          }
+        })
+      } else {
+        //완료 취소
+        dispatch({
+          type: SHOW_DDAY_REQUEST,
+          data: {
+            id: data.id,
+            viewState: false,
+          }
+        })
+      }
+    }, [data && data.id, viewState])
+
     return (
         <>
             <DdayBox bordered={false}>
-                <DdayDate>{data.dueDate} 까지</DdayDate>
+                <DdayDate>
+                    { view == 'search' ? <span style={{float: 'left'}}>홈 화면에 나타내기 <Switch defaultChecked={data.viewState} onChange={onChangeView} /></span> : ''}
+                    {data.dueDate} 까지
+                </DdayDate>
                 <DdayTitle>{data.title}</DdayTitle>
                 { view === 'search' ? <DdayMemo><FileTextOutlined style={{fontSize: '15px', marginRight: '5px', marginTop: '5px'}}/>{data.memo}</DdayMemo> : ''}
                 <DdayContent>
