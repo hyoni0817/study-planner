@@ -45,9 +45,11 @@ const Home = (props) => {
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
     const timeFormat = 'HH:mm'; 
     const nowTime = moment(moment().format(timeFormat), timeFormat);
-    const nowTodoList = todoList.filter( v => 
+    const todayTodoList = todoList.filter(v => todayDate.isSame(moment(v.createdAt, 'YYYY-MM-DD')));
+    const nowTodoList = todayTodoList.filter( v => 
         nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
     const showDdayList = DdayList.filter( v => v.viewState);
 
@@ -107,8 +109,8 @@ const Home = (props) => {
             <p>오늘 해야할 일</p>
             <TodoListWrapper>
                 { 
-                    todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
-                    : todoList.map((c) => {
+                    todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
+                    : todayTodoList.map((c) => {
                         return (
                             <Todo key={c.id} post={c} />
                         )
