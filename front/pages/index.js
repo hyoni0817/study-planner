@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Progress, Button, Affix, Row, Col } from 'antd';
+import { Button, Affix, Row, Col } from 'antd';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
@@ -11,6 +11,7 @@ import moment from 'moment';
 
 import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_DDAY_LIST_REQUEST } from '../reducers/dday';
+import TodayAchivementRate from '../components/TodayAchivementRate';
 
 const TodoNowWrapper = styled.div`
     margin-bottom: 30px;
@@ -52,6 +53,8 @@ const Home = (props) => {
     const nowTodoList = todayTodoList.filter( v => 
         nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
     const showDdayList = DdayList.filter( v => v.viewState);
+    const completionCount = todayTodoList.filter(v => v.completion == true).length;
+    const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
 
     useEffect(() => {
         dispatch({
@@ -84,14 +87,7 @@ const Home = (props) => {
             </div> 
             <div>
                 <p>오늘의 성취율</p>
-                <Progress
-                    type="circle"
-                    strokeColor={{
-                        '0%': '#d76d77',
-                        '100%': '#3a1c71',
-                    }}
-                    percent={90}
-                />
+                <TodayAchivementRate value={progressValue} />
             </div>
             <SelectForms />
             <p>지금 해야할 일</p>
