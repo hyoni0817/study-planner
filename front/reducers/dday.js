@@ -41,6 +41,11 @@ export const DELETE_DDAY_REQUEST = 'DELETE_DDAY_REQUEST';
 export const DELETE_DDAY_SUCCESS = 'DELETE_DDAY_SUCCESS'; 
 export const DELETE_DDAY_FAILURE = 'DELETE_DDAY_FAILURE'; 
 
+//선택한 Dday를 홈 화면에 보이게 할지 말지 결정하는 액션
+export const SHOW_DDAY_REQUEST = 'SHOW_DDAY_REQUEST'; 
+export const SHOW_DDAY_SUCCESS = 'SHOW_DDAY_SUCCESS'; 
+export const SHOW_DDAY_FAILURE = 'SHOW_DDAY_FAILURE'; 
+
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case ADD_DDAY_REQUEST:
@@ -136,6 +141,24 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
             }
         }
+        case SHOW_DDAY_REQUEST:
+            return {
+                ...state,
+            }
+        case SHOW_DDAY_SUCCESS: 
+            const DdayIndex = state.DdayList.findIndex(v => v.id === action.data.id);
+            const Dday = state.DdayList[DdayIndex];            
+            const DdayList = [...state.DdayList];
+            DdayList[DdayIndex] = {...Dday, viewState: action.data.viewState};
+
+            return {
+                ...state,
+                DdayList : [ ...DdayList ],
+            }
+        case SHOW_DDAY_FAILURE:
+            return {
+                ...state,
+            }
         default: {
             return {
                 ...state,
