@@ -1,6 +1,6 @@
 import { all, fork, takeLatest, call, put, select } from 'redux-saga/effects';
 import axios from 'axios';
-import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, COMPLETE_TODO_REQUEST, COMPLETE_TODO_SUCCESS, COMPLETE_TODO_FAILURE, EDIT_TODO_REQUEST, EDIT_TODO_SUCCESS, EDIT_TODO_FAILURE, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS, DELETE_TODO_FAILURE,} from '../reducers/todo';
+import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, COMPLETE_TODO_REQUEST, COMPLETE_TODO_SUCCESS, COMPLETE_TODO_FAILURE, EDIT_TODO_REQUEST, EDIT_TODO_SUCCESS, EDIT_TODO_FAILURE, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS, DELETE_TODO_FAILURE, LOAD_TODAY_TODO_LIST_REQUEST, LOAD_TODAY_TODO_LIST_SUCCESS, LOAD_TODAY_TODO_LIST_FAILURE} from '../reducers/todo';
 
 function addTodoAPI(todoData) {
     return axios.post('/todo', todoData);
@@ -53,6 +53,36 @@ function* loadTodo() {
 
 function* watchLoadTodo() {
     yield takeLatest(LOAD_TODO_LIST_REQUEST, loadTodo);
+}
+
+function loadTodayTodoAPI() {
+    return axios.get('/todolist/today');
+}
+
+function* loadTodayTodo() {
+    const isLoading = yield select(state => Boolean(state.todo.todoList.length));
+    if (isLoading) {
+        return ;
+    }
+
+    try {
+        const result = yield call(loadTodayTodoAPI);
+        yield put({
+            type: LOAD_TODAY_TODO_LIST_SUCCESS,
+            data: result.data,
+        })
+
+    } catch(e) {
+        console.error(e)
+        yield put({
+            type: LOAD_TODAY_TODO_LIST_FAILURE,
+            error: e,
+        })
+    }
+}
+
+function* watchLoadTodayTodo() {
+    yield takeLatest(LOAD_TODAY_TODO_LIST_REQUEST, loadTodayTodo);
 }
 
 function searchTodoAPI(conditionData) {
@@ -180,6 +210,7 @@ export default function* todoSaga() {
     yield all([
         fork(watchAddTodo),
         fork(watchLoadTodo),
+        fork(watchLoadTodayTodo),
         fork(watchSearchTodo),
         fork(watchLoadSubject),
         fork(watchCompleteTodo),
