@@ -1,8 +1,11 @@
 export const initialState = {
     todoList : [],
+    todayTodoList: [],
     subjectList: [],
     todoPostId: 0,
+    hasMoreTodo: false,
     isLoadingTodo: false,
+    isLoadingMoreTodo: false,
     isAddingTodo: false,
     addingTodoErrorReason: '',
     todoAdded: false,
@@ -27,6 +30,11 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const LOAD_TODO_LIST_REQUEST = 'LOAD_TODO_LIST_REQUEST';
 export const LOAD_TODO_LIST_SUCCESS = 'LOAD_TODO_LIST_SUCCESS';
 export const LOAD_TODO_LIST_FAILURE = 'LOAD_TODO_LIST_FAILURE';
+
+//오늘의 TODO 로드하는 액션
+export const LOAD_TODAY_TODO_LIST_REQUEST = 'LOAD_TODAY_TODO_LIST_REQUEST';
+export const LOAD_TODAY_TODO_LIST_SUCCESS = 'LOAD_TODAY_TODO_LIST_SUCCESS';
+export const LOAD_TODAY_TODO_LIST_FAILURE = 'LOAD_TODAY_TODO_LIST_FAILURE';
 
 //TODO 검색하는 액션
 export const SEARCH_TODO_LIST_REQUEST = 'SEARCH_TODO_LIST_REQUEST';
@@ -69,6 +77,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 isAddingTodo: false,
                 todoList : [ action.data, ...state.todoList ],
+                todayTodoList: [action.data, ...state.todayTodoList],
                 todoAdded: true,
             }
         case ADD_TODO_FAILURE: 
@@ -90,6 +99,23 @@ const reducer = ( state = initialState, action ) => {
                 todoList: action.data,
             }
         case LOAD_TODO_LIST_FAILURE:
+            return {
+                ...state,
+                isLoadingTodo: false,
+            }
+        case LOAD_TODAY_TODO_LIST_REQUEST:
+            return {
+                ...state,
+                isLoadingTodo: true, 
+                todayTodoList: [],
+            }
+        case LOAD_TODAY_TODO_LIST_SUCCESS:
+            return {
+                ...state,
+                isLoadingTodo: false,
+                todayTodoList: action.data,
+            }
+        case LOAD_TODAY_TODO_LIST_FAILURE:
             return {
                 ...state,
                 isLoadingTodo: false,
