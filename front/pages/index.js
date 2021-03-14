@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Button, Affix, Row, Col, Spin } from 'antd';
 import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import { LOAD_TODO_LIST_REQUEST } from '../reducers/todo';
+import { LOAD_TODAY_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_DDAY_LIST_REQUEST } from '../reducers/dday';
 import TodayAchivementRate from '../components/TodayAchivementRate';
 
@@ -41,7 +41,8 @@ const AddTodoAffix = styled(Affix)`
 const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { todoList, isLoadingTodo } = useSelector( state => state.todo )
+    const countRef = useRef([]);
+    const { todayTodoList, isLoadingTodo } = useSelector( state => state.todo )
     const { DdayList, isLoadingDday } = useSelector( state => state.dday )
 
     const date = new Date();
@@ -51,16 +52,15 @@ const Home = (props) => {
     const nowTime = moment(moment().format(timeFormat), timeFormat);
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
-    const todayTodoList = todoList.filter(v => todayDate.isSame(moment(v.createdAt, 'YYYY-MM-DD')));
     const nowTodoList = todayTodoList.filter( v => 
         nowTime.isSameOrAfter(moment(v.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(v.endTime, timeFormat)) || v.allDayStatus);
     const showDdayList = DdayList.filter( v => v.viewState);
     const completionCount = todayTodoList.filter(v => v.completion == true).length;
     const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
 
-    useEffect(() => {
+    useEffect(() =>{
         dispatch({
-            type: LOAD_TODO_LIST_REQUEST,
+            type: LOAD_TODAY_TODO_LIST_REQUEST,
         });
         dispatch({
             type: LOAD_DDAY_LIST_REQUEST,
