@@ -33,7 +33,7 @@ router.get('/today', async (req, res, next) => {
         if (parseInt(req.query.lastId)) {
             where.push({
                 id: {
-                    [Op.lt]: parseInt(req.query.lastId, 10),
+                    [Op.gt]: parseInt(req.query.lastId, 10),
                 },
             })
         }
