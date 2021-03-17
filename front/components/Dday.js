@@ -13,6 +13,7 @@ const DdayBox = styled.div`
     border-radius: 5px;
     color: #ffffffe8;
     padding: 12px;
+    margin-bottom: 20px;
 `;
 
 const DdayContent = styled.p`
