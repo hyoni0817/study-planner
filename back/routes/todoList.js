@@ -29,6 +29,44 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/now', async (req, res, next) => {
+    try {  
+        const timeFormat = 'HH:mm'; 
+        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const nowTime = moment().format(timeFormat);
+
+        let where = [{
+            createdAt: { 
+                    [Op.gte]: todayDate,
+                    [Op.lt]: addOneDay,
+                }
+            }, {[Op.or]: [
+                {
+                    startTime: {
+                        [Op.lte]: nowTime,
+                    },
+                    endTime: {
+                        [Op.gte]: nowTime,
+                    }
+                }, {
+                    allDayStatus: 1
+                }
+            ]}
+        ];
+
+        const todoList = await db.Todo.findAll({
+            where,
+            attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
+        });
+
+        res.json(todoList);
+    } catch (e) {
+        console.error(e);
+        next(e);
+    }
+})
+
 router.get('/today', async (req, res, next) => {
     try {
         const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
