@@ -89,58 +89,74 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_TODO_LIST_REQUEST:
             return {
                 ...state,
-                isLoadingTodo: true,
-                todoList: [],
+                isLoadingTodo: !action.lastId ? true : false, 
+                isLoadingMoreTodo: action.lastId ? true : false, 
+                todoList: !action.lastId ? [] : state.todoList,
+                hasMoreTodo: action.lastId ? state.hasMoreTodo : true, 
             }
         case LOAD_TODO_LIST_SUCCESS:
             return {
                 ...state,
                 isLoadingTodo: false,
-                todoList: action.data,
+                isLoadingMoreTodo: false,
+                todoList: state.todoList.concat(action.data),
+                hasMoreTodo: action.data.length === 10,
             }
         case LOAD_TODO_LIST_FAILURE:
             return {
                 ...state,
                 isLoadingTodo: false,
+                isLoadingMoreTodo: false,
             }
         case LOAD_TODAY_TODO_LIST_REQUEST:
             return {
                 ...state,
-                isLoadingTodo: true, 
-                todayTodoList: [],
+                isLoadingTodo: !action.lastId ? true : false, 
+                isLoadingMoreTodo: action.lastId ? true : false, 
+                todayTodoList: !action.lastId ? [] : state.todayTodoList,
+                hasMoreTodo: action.lastId ? state.hasMoreTodo : true, 
             }
         case LOAD_TODAY_TODO_LIST_SUCCESS:
             return {
                 ...state,
                 isLoadingTodo: false,
-                todayTodoList: action.data,
+                isLoadingMoreTodo: false,
+                todayTodoList: state.todayTodoList.concat(action.data),
+                hasMoreTodo: action.data.length === 10,
             }
         case LOAD_TODAY_TODO_LIST_FAILURE:
             return {
                 ...state,
                 isLoadingTodo: false,
+                isLoadingMoreTodo: false,
             }
         case SEARCH_TODO_LIST_REQUEST:
             return {
                 ...state,
-                todoList: [],
-                addingTodoErrorReason: '',
                 todoSearched: false,
                 useSearch: 'request',
+                isLoadingTodo: !action.lastId ? true : false, 
+                isLoadingMoreTodo: action.lastId ? true : false, 
+                todoList: !action.lastId ? [] : state.todoList,
+                hasMoreTodo: action.lastId ? state.hasMoreTodo : true,      
             };
         case SEARCH_TODO_LIST_SUCCESS:
             return {
                 ...state,
-                todoList : action.data,
                 todoSearched: true,
                 useSearch: 'success',
+                isLoadingTodo: false,
+                isLoadingMoreTodo: false,
+                todoList: state.todoList.concat(action.data),
+                hasMoreTodo: action.data.length === 10,
             };
         case SEARCH_TODO_LIST_FAILURE: 
             return {
                 ...state,
                 isAddingTodo: false,
-                addingTodoErrorReason: action.error,
-                useSearch: 'fail'
+                useSearch: 'fail',
+                isLoadingTodo: false,
+                isLoadingMoreTodo: false,
             };
         case LOAD_SUBJECT_LIST_REQUEST:
             return {
