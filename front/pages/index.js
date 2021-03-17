@@ -51,7 +51,7 @@ const Home = (props) => {
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const { todayTodoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, nowTodoList } = useSelector( state => state.todo )
-    const { DdayList, isLoadingDday } = useSelector( state => state.dday )
+    const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -60,7 +60,6 @@ const Home = (props) => {
     const nowTime = moment(moment().format(timeFormat), timeFormat);
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
-    const showDdayList = DdayList.filter( v => v.viewState);
     const completionCount = todayTodoList.filter(v => v.completion == true).length;
     const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
     
@@ -79,12 +78,28 @@ const Home = (props) => {
         }
     }, [hasMoreTodo, todayTodoList.length])
 
+    const onScrollDday = useCallback((value) => {
+        if(document.querySelector('.DdayListView').scrollLeft + document.querySelector('.DdayListView').clientWidth > document.querySelector('.DdayListView').scrollWidth - 50) {
+            const lastId = viewableDdayList[viewableDdayList.length - 1] && viewableDdayList[viewableDdayList.length - 1].id;
+            if(!countRef.current.includes(lastId)) {
+                console.log("hasMoreDday:", hasMoreDday);
+                if(hasMoreDday) {    
+                    dispatch({
+                        type: LOAD_VIEWABLE_DDAY_LIST_REQUEST,
+                        lastId,
+                    });
+                }
+                countRef.current.push(lastId);
+            }
+        }
+    }, [hasMoreDday, viewableDdayList.length])
+
     useEffect(() =>{
         dispatch({
             type: LOAD_TODAY_TODO_LIST_REQUEST,
         });
         dispatch({
-            type: LOAD_DDAY_LIST_REQUEST,
+            type: LOAD_VIEWABLE_DDAY_LIST_REQUEST,
         });
         dispatch({
             type: LOAD_NOW_TODO_LIST_REQUEST,
@@ -99,6 +114,16 @@ const Home = (props) => {
         
     }, [hasMoreTodo, todayTodoList.length]);
 
+    useEffect(() => {
+        let DdayListView = document.querySelector('.DdayListView');
+        DdayListView.addEventListener('scroll', onScrollDday);
+        return () => {
+            DdayListView.removeEventListener('scroll', onScrollDday);
+            DdayListView = null;
+        }
+        
+    }, [hasMoreDday, viewableDdayList.length]);
+    
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
@@ -106,20 +131,21 @@ const Home = (props) => {
     return (
         <>
             <div>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
-            <div style={{ padding: '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', }}>
+            <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
                 <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
                     <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
                         { 
-                            showDdayList.length == 0 && !isLoadingDday ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                            : showDdayList.map((c) => {
+                            viewableDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                            : viewableDdayList.map((c) => {
                                 console.log("c:", c)
                                 return (
                                     <Col xs={12} sm={6} md={10} lg={6}>
-                                        <Dday key={c.id} data={c} />    
+                                        <Dday key={c.id} data={c} view="home"/>    
                                     </Col>
                                 )
                             })  
-                        }       
+                        }   
+                        {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
                     </Row>
                 </Spin>             
             </div> 
