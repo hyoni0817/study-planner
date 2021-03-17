@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 const db = require('../models');
 
@@ -29,20 +30,29 @@ router.post('/', async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`)];
+        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         const createdAt = req.query.allDateCheckState === true ? '' : where.push({createdAt: {
             [Op.and]: {
                 [Op.gte] : req.query.startDate,
-                [Op.lte] : req.query.endDate
+                [Op.lt] : endDate
             }
         }});
         const subject = req.query.subjects.length === 0 ? '' :  where.push({subject:{
             [Op.in]: [req.query.subjects]
         }})
+        if (parseInt(req.query.lastId)) {
+            where.push({
+                id: {
+                    [Op.gt]: parseInt(req.query.lastId),
+                }
+            })
+        }
+        
         const searchCondition = await db.Todo.findAll({
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
+            limit: parseInt(req.query.limit),
         });
-
         return res.json(searchCondition);
     } catch (e) {
         console.error(e);

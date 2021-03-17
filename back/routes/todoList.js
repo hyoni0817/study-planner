@@ -8,9 +8,19 @@ const db = require('../models');
 
 router.get('/', async (req, res, next) => {
     try {
+        let where = {};
+        if (parseInt(req.query.lastId)) {
+            where = {
+                id: {
+                    [Op.gt]: parseInt(req.query.lastId),
+                }
+            }
+        }
+
         const todoList = await db.Todo.findAll({
-            where: {},
+            where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
+            limit: parseInt(req.query.limit),
         });
         res.json(todoList);
     } catch (e) {
