@@ -166,8 +166,14 @@ const reducer = ( state = initialState, action ) => {
             const todoList = [...state.todoList];
             todoList[todoIndex] = {...todo, completion: action.data.completion};
 
+            const todayTodoIndex = state.todayTodoList.findIndex(v => v.id === action.data.id);
+            const todayTodo = state.todayTodoList[todayTodoIndex];            
+            const todayTodoList = [...state.todayTodoList];
+            todayTodoList[todayTodoIndex] = {...todayTodo, completion: action.data.completion};
+
             return {
                 ...state,
+                todayTodoList: [...todayTodoList],
                 todoList : [ ...todoList ],
             }
         case COMPLETE_TODO_FAILURE:
@@ -185,10 +191,16 @@ const reducer = ( state = initialState, action ) => {
             const editTodo = state.todoList[editTodoIndex]; 
             const editTodoList = [...state.todoList];
             editTodoList[editTodoIndex] = {...editTodo, ...action.data};
-        
+
+            const editTodayTodoIndex = state.todayTodoList.findIndex(v => v.id === action.data.id);
+            const editTodayTodo = state.todayTodoList[editTodayTodoIndex];            
+            const editTodayTodoList = [...state.todayTodoList];
+            editTodayTodoList[editTodayTodoIndex] = {...editTodayTodo, completion: action.data.completion};
+
         return {
             ...state,
             isEditingTodo: false,
+            todayTodoList: [...editTodayTodoList],
             todoList: [...editTodoList], 
         }
         case EDIT_TODO_FAILURE: 
@@ -206,6 +218,7 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 todoList: state.todoList.filter( v => v.id !== action.data),
+                todayTodoList: state.todayTodoList.filter( v => v.id !== action.data),
             }
         }
         case DELETE_TODO_FAILURE: {
