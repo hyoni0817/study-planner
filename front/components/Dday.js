@@ -23,10 +23,19 @@ const DdayContent = styled.p`
     font-family: 'Fredoka One', cursive;
 `;
 
-const DdayTitle = styled.p`
+const SearchModeDdayTitle = styled.p`
     font-size: 13px;
     text-align: left;
     margin-bottom: 0;
+`;
+
+const HomeModeDdayTitle = styled.p`
+    font-size: 13px;
+    text-align: left;
+    margin-bottom: 0;
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
 `;
 
 const DdayDate = styled.p`
@@ -87,7 +96,7 @@ const Dday = ({data, view}) => {
                     { view == 'search' ? <span style={{float: 'left'}}>홈 화면에 나타내기 <Switch defaultChecked={data.viewState} onChange={onChangeView} /></span> : ''}
                     {data.dueDate} 까지
                 </DdayDate>
-                <DdayTitle>{data.title}</DdayTitle>
+                { view == 'search' ? <SearchModeDdayTitle>{data.title}</SearchModeDdayTitle> : <HomeModeDdayTitle>{data.title}</HomeModeDdayTitle> }
                 { view === 'search' ? <DdayMemo><FileTextOutlined style={{fontSize: '15px', marginRight: '5px', marginTop: '5px'}}/>{data.memo}</DdayMemo> : ''}
                 <DdayContent>
                     D{ calculateDday(data.dueDate) }
