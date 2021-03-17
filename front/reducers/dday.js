@@ -70,6 +70,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 isAddingDday: false,
                 DdayList: [ action.data, ...state.DdayList ],
+                viewableDdayList: [action.data, ...state.viewableDdayList],
                 DdayAdded: true,
             };
         case ADD_DDAY_FAILURE:
@@ -152,10 +153,16 @@ const reducer = ( state = initialState, action ) => {
             const editDdayList = [...state.DdayList];
             editDdayList[editDdayIndex] = {...editDday, ...action.data};
         
+            const editViewableDdayIndex = state.viewableDdayList.findIndex(v => v.id === action.data.id);
+            const editViewableDday = state.viewableDdayList[editViewableDdayIndex]; 
+            const editViewableDdayList = [...state.viewableDdayList];
+            editViewableDdayList[editViewableDdayIndex] = {...editViewableDday, ...action.data};
+
         return {
             ...state,
             isEditingDday: false,
             DdayList: [...editDdayList], 
+            viewableDdayList: [...editViewableDdayList],
         }
         case EDIT_DDAY_FAILURE: 
         return {
@@ -172,6 +179,7 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 DdayList: state.DdayList.filter( v => v.id !== action.data),
+                viewableDdayList: state.viewableDdayList.filter( v => v.id !== action.data),
             }
         }
         case DELETE_DDAY_FAILURE: {
