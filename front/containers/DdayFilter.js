@@ -5,7 +5,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
 
-const DdayFilter = () => {
+const DdayFilter = ({onResult}) => {
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat = 'YYYY-MM-DD';
@@ -67,15 +67,18 @@ const DdayFilter = () => {
     };
 
     const onFinish = (values) => {
+        const data = {
+            DdayTitle,
+            startDate,
+            endDate,
+            allDateCheckState,
+            memo,
+        }
+        onResult(data);
+        
         dispatch({
             type: SEARCH_DDAY_LIST_REQUEST,
-            data: {
-                DdayTitle,
-                startDate,
-                endDate,
-                allDateCheckState,
-                memo,
-            }
+            data,
         })
     }
     
