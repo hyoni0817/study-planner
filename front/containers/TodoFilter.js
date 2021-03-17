@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_TODO_LIST_REQUEST, LOAD_SUBJECT_LIST_REQUEST } from '../reducers/todo';
 
-const TodoFilter = () => {
+const TodoFilter = ({onResult}) => {
     const dispatch = useDispatch();
     const { Search } = Input;
     const { RangePicker } = DatePicker;
@@ -76,15 +76,18 @@ const TodoFilter = () => {
     }
 
     const onFinish = (values) => {
+        const data = {
+            todoTitle,
+            startDate,
+            endDate,
+            allDateCheckState,
+            subjects,
+        }
+
+        onResult(data);
         dispatch({
             type: SEARCH_TODO_LIST_REQUEST,
-            data: {
-                todoTitle,
-                startDate,
-                endDate,
-                allDateCheckState,
-                subjects,
-            }
+            data,
         })
     };
 

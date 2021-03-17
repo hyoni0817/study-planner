@@ -38,11 +38,19 @@ const AddTodoAffix = styled(Affix)`
     }
 `;
 
+const SpinWrapper = styled.div`
+    margin: 20px 0;
+    margin-bottom: 20px;
+    padding: 15px 50px;
+    text-align: center;
+    border-radius: 4px;
+`;
+
 const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const countRef = useRef([]);
-    const { todayTodoList, isLoadingTodo } = useSelector( state => state.todo )
+    const { todayTodoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo } = useSelector( state => state.todo )
     const { DdayList, isLoadingDday } = useSelector( state => state.dday )
 
     const date = new Date();
@@ -57,6 +65,21 @@ const Home = (props) => {
     const showDdayList = DdayList.filter( v => v.viewState);
     const completionCount = todayTodoList.filter(v => v.completion == true).length;
     const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
+    
+    const onScrollTodo = useCallback(() => {
+        if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
+            const lastId = todayTodoList[todayTodoList.length - 1] && todayTodoList[todayTodoList.length - 1].id;
+            if(!countRef.current.includes(lastId)) {
+                if(hasMoreTodo) {    
+                    dispatch({
+                        type: LOAD_TODAY_TODO_LIST_REQUEST,
+                        lastId,
+                    });
+                }
+                countRef.current.push(lastId);
+            }
+        }
+    }, [hasMoreTodo, todayTodoList.length])
 
     useEffect(() =>{
         dispatch({
@@ -66,6 +89,15 @@ const Home = (props) => {
             type: LOAD_DDAY_LIST_REQUEST,
         });
     }, []);
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScrollTodo);
+        return () => {
+            window.removeEventListener('scroll', onScrollTodo);
+        }
+        
+    }, [hasMoreTodo, todayTodoList.length]);
+
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
@@ -114,12 +146,15 @@ const Home = (props) => {
             <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
                 { 
                     todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
-                    : todayTodoList.map((c) => {
-                        return (
-                            <Todo key={c.id} post={c} />
-                        )
-                    }) 
+                    : 
+                            todayTodoList.map((c) => {
+                                return (
+                                    <Todo key={c.id} post={c} />
+                                )
+                            }) 
+                        
                 }
+                {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
             </Spin>
             </TodoListWrapper>
             <AddTodoAffix offsetBottom={50}>
