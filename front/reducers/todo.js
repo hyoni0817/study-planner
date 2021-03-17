@@ -211,10 +211,16 @@ const reducer = ( state = initialState, action ) => {
             const todayTodoList = [...state.todayTodoList];
             todayTodoList[todayTodoIndex] = {...todayTodo, completion: action.data.completion};
 
+            const nowTodoIndex = state.nowTodoList.findIndex(v => v.id === action.data.id);
+            const nowTodo = state.nowTodoList[nowTodoIndex];
+            const nowTodoList = [...state.nowTodoList];
+            nowTodoList[nowTodoIndex] = {...nowTodo, completion: action.data.completion};
+
             return {
                 ...state,
                 todayTodoList: [...todayTodoList],
                 todoList : [ ...todoList ],
+                nowTodoList: [...nowTodoList],
             }
         case COMPLETE_TODO_FAILURE:
             return {
@@ -236,12 +242,18 @@ const reducer = ( state = initialState, action ) => {
             const editTodayTodo = state.todayTodoList[editTodayTodoIndex];            
             const editTodayTodoList = [...state.todayTodoList];
             editTodayTodoList[editTodayTodoIndex] = {...editTodayTodo, completion: action.data.completion};
+        
+            const editNowTodoIndex = state.nowTodoList.findIndex(v => v.id === action.data.id);
+            const editNowTodo = state.nowTodoList[editNowTodoIndex];
+            const editNowTodoList = [...state.nowTodoList];
+            editNowTodoList[editNowTodoIndex] = {...editNowTodo, completion: action.data.completion};
 
         return {
             ...state,
             isEditingTodo: false,
             todayTodoList: [...editTodayTodoList],
             todoList: [...editTodoList], 
+            nowTodoList: [...editNowTodoList]
         }
         case EDIT_TODO_FAILURE: 
         return {
@@ -259,6 +271,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 todoList: state.todoList.filter( v => v.id !== action.data),
                 todayTodoList: state.todayTodoList.filter( v => v.id !== action.data),
+                nowTodoList: state.nowTodoList.filter( v => v.id !== action.data),
             }
         }
         case DELETE_TODO_FAILURE: {
