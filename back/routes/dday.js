@@ -1,6 +1,7 @@
 const express = require('express');
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
+const moment = require('moment');
 
 const router = express.Router();
 const db = require('../models');
@@ -22,18 +23,28 @@ router.post('/', async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.DdayTitle}*' in boolean mode)`)];
+        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         const dueDate = req.query.allDateCheckState === true ? '' : where.push({dueDate: {
             [Op.and]: {
                 [Op.gte] : req.query.startDate,
-                [Op.lte] : req.query.endDate
+                [Op.lt] : endDate,
             }
         }});
         const memo = req.query.memo.length === 0 ? '' :  where.push(
             Sequelize.literal(`MATCH (memo) AGAINST ('+${req.query.memo}*' in boolean mode)`)
         )
+        if (parseInt(req.query.lastId)) {
+            where.push({
+                id: {
+                    [Op.gt]: parseInt(req.query.lastId),
+                }
+            })
+        }
+
         const searchCondition = await db.Dday.findAll({
             where,
             attributes: ['id', 'title', 'dueDate', 'memo'], 
+            limit: parseInt(req.query.limit),
         });
 
         return res.json(searchCondition);

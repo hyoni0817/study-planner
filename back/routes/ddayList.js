@@ -7,9 +7,20 @@ const db = require('../models');
 
 router.get('/', async (req, res, next) => {
     try {
+        let where = {};
+
+        if (parseInt(req.query.lastId)) {
+            where = {
+                id: {
+                    [Op.gt]: parseInt(req.query.lastId, 10),
+                },
+            }
+        }
+
         const ddayList = await db.Dday.findAll({
-            where: {},
+            where,
             attributes: ['id', 'title', 'memo', 'dueDate', 'viewState'],
+            limit: parseInt(req.query.limit),
         });
         res.json(ddayList);
     } catch (e) {
