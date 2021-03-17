@@ -1,6 +1,9 @@
 export const initialState = {
     DdayList : [],
+    viewableDdayList: [],
     isLoadingDday: false,
+    isLoadingMoreDday: false, 
+    hasMoreDday: false, 
     isAddingDday: false,
     addingDdayErrorReason: '',
     DdayAdded: false,
@@ -27,6 +30,11 @@ export const DELETE_DDAY = 'DELETE_DDAY';
 export const LOAD_DDAY_LIST_REQUEST = 'LOAD_DDAY_LIST_REQUEST';
 export const LOAD_DDAY_LIST_SUCCESS = 'LOAD_DDAY_LIST_SUCCESS';
 export const LOAD_DDAY_LIST_FAILURE = 'LOAD_DDAY_LIST_FAILURE';
+
+//홈화면에서 보이기 선택한 DDAY 로드하는 액션
+export const LOAD_VIEWABLE_DDAY_LIST_REQUEST = 'LOAD_VIEWABLE_DDAY_LIST_REQUEST'
+export const LOAD_VIEWABLE_DDAY_LIST_SUCCESS = 'LOAD_VIEWABLE_DDAY_LIST_SUCCESS'
+export const LOAD_VIEWABLE_DDAY_LIST_FAILURE= 'LOAD_VIEWABLE_DDAY_LIST_FAILURE'
 
 //DDAY 검색하는 액션
 export const SEARCH_DDAY_LIST_REQUEST = 'SEARCH_DDAY_LIST_REQUEST';
@@ -86,6 +94,28 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 isLoadingDday: false,
+            };
+        case LOAD_VIEWABLE_DDAY_LIST_REQUEST:
+            return {
+                ...state,
+                isLoadingDday: !action.lastId ? true : false,
+                isLoadingMoreDday: action.lastId ? true : false,
+                viewableDdayList: !action.lastId ? [] : state.viewableDdayList,
+                hasMoreDday: action.lastId ? state.hasMoreDday : true
+            };
+        case LOAD_VIEWABLE_DDAY_LIST_SUCCESS:
+            return {
+                ...state,
+                isLoadingDday: false,
+                isLoadingMoreDday: false,
+                viewableDdayList: state.viewableDdayList.concat(action.data),
+                hasMoreDday: action.data.length === 10,
+            };
+        case LOAD_VIEWABLE_DDAY_LIST_FAILURE: 
+            return {
+                ...state,
+                isLoadingDday: false,
+                isLoadingMoreDday: false,
             };
         case SEARCH_DDAY_LIST_REQUEST:
             return {
