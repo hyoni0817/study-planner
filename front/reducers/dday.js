@@ -82,19 +82,24 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_DDAY_LIST_REQUEST:
             return {
                 ...state,
-                isLoadingDday: true,
-                DdayList: [],
+                isLoadingDday: !action.lastId ? true : false,
+                isLoadingMoreDday: action.lastId ? true : false,
+                DdayList: !action.lastId ? [] : state.DdayList,
+                hasMoreDday: action.lastId ? state.hasMoreDday : true
             };
         case LOAD_DDAY_LIST_SUCCESS:
             return {
                 ...state,
                 isLoadingDday: false,
-                DdayList: action.data,
+                isLoadingMoreDday: false,
+                DdayList: state.DdayList.concat(action.data),
+                hasMoreDday: action.data.length === 10,
             };
         case LOAD_DDAY_LIST_FAILURE: 
             return {
                 ...state,
                 isLoadingDday: false,
+                isLoadingMoreDday: false,
             };
         case LOAD_VIEWABLE_DDAY_LIST_REQUEST:
             return {
@@ -121,25 +126,31 @@ const reducer = ( state = initialState, action ) => {
         case SEARCH_DDAY_LIST_REQUEST:
             return {
                 ...state,
-                isSearchingDday: true,
                 addingDdayErrorReason: '',
                 DdaySearched: false,
                 useSearch: 'request',
+                isLoadingDday: !action.lastId ? true : false,
+                isLoadingMoreDday: action.lastId ? true : false,
+                DdayList: !action.lastId ? [] : state.DdayList,
+                hasMoreDday: action.lastId ? state.hasMoreDday : true
             };
         case SEARCH_DDAY_LIST_SUCCESS:
             return {
                 ...state,
-                isSearchingDday: false,
-                DdayList : action.data,
                 DdaySearched: true,
                 useSearch: 'success',
+                isLoadingDday: false,
+                isLoadingMoreDday: false,
+                DdayList: state.DdayList.concat(action.data),
+                hasMoreDday: action.data.length === 10,
             };
         case SEARCH_DDAY_LIST_FAILURE: 
             return {
                 ...state,
-                isAddingDday: false,
                 addingDdayErrorReason: action.error,
                 useSearch: 'fail',
+                isLoadingDday: false,
+                isLoadingMoreDday: false,
             };
         case EDIT_DDAY_REQUEST: 
             return {
