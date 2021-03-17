@@ -25,18 +25,13 @@ function* watchAddTodo() {
     yield takeLatest(ADD_TODO_REQUEST, addTodo);
 }
 
-function loadTodoAPI() {
-    return axios.get('/todolist');
+function loadTodoAPI(lastId=0, limit=10) {
+    return axios.get(`/todolist?lastId=${lastId}&limit=${limit}`);
 }
 
-function* loadTodo() {
-    const isLoading = yield select(state => Boolean(state.todo.todoList.length));
-    if (isLoading) {
-        return ;
-    }
-
+function* loadTodo(action) {
     try {
-        const result = yield call(loadTodoAPI);
+        const result = yield call(loadTodoAPI, action.lastId);
         yield put({
             type: LOAD_TODO_LIST_SUCCESS,
             data: result.data,
@@ -55,18 +50,14 @@ function* watchLoadTodo() {
     yield takeLatest(LOAD_TODO_LIST_REQUEST, loadTodo);
 }
 
-function loadTodayTodoAPI() {
-    return axios.get('/todolist/today');
+
+function loadTodayTodoAPI(lastId=0, limit=10) {
+    return axios.get(`/todolist/today?lastId=${lastId}&limit=${limit}`);
 }
 
-function* loadTodayTodo() {
-    const isLoading = yield select(state => Boolean(state.todo.todoList.length));
-    if (isLoading) {
-        return ;
-    }
-
+function* loadTodayTodo(action) {
     try {
-        const result = yield call(loadTodayTodoAPI);
+        const result = yield call(loadTodayTodoAPI, action.lastId);
         yield put({
             type: LOAD_TODAY_TODO_LIST_SUCCESS,
             data: result.data,
@@ -85,16 +76,16 @@ function* watchLoadTodayTodo() {
     yield takeLatest(LOAD_TODAY_TODO_LIST_REQUEST, loadTodayTodo);
 }
 
-function searchTodoAPI(conditionData) {
+function searchTodoAPI(conditionData, lastId=0, limit=10) {
     console.log("conditionData:", conditionData);
-    return axios.get(`/todo/search?todoTitle=${conditionData.todoTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&subjects=${conditionData.subjects}`);
+    return axios.get(`/todo/search?todoTitle=${conditionData.todoTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&subjects=${conditionData.subjects}&lastId=${lastId}&limit=${limit}`);
     //return axios.get('/todolist');
 
 }
 
 function* searchTodo(action) {
     try {
-        const result = yield call(searchTodoAPI, action.data);
+        const result = yield call(searchTodoAPI, action.data, action.lastId);
         console.log("result.data:", result.data);
         yield put({
             type: SEARCH_TODO_LIST_SUCCESS,
