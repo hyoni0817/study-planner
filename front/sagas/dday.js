@@ -26,18 +26,14 @@ function* watchAddDday() {
     yield takeLatest(ADD_DDAY_REQUEST, addDday);
 }
 
-function loadDdayAPI() {
-    return axios.get('/ddaylist');
+function loadDdayAPI(lastId=0, limit=10) {
+    return axios.get(`/ddaylist?lastId=${lastId}&limit=${limit}`);
 }
 
-function* loadDday() {
-    const isLoading = yield select(state => Boolean(state.dday.DdayList.length));
-    if (isLoading) {
-        return ;
-    }
+function* loadDday(action) {
 
     try {
-        const result = yield call(loadDdayAPI);
+        const result = yield call(loadDdayAPI, action.lastId);
         yield put({
             type: LOAD_DDAY_LIST_SUCCESS,
             data: result.data,
@@ -86,7 +82,7 @@ function searchDdayAPI(conditionData, lastId=0, limit=10) {
 
 function* searchDday(action) {
     try {
-        const result = yield call(searchDdayAPI, action.data);
+        const result = yield call(searchDdayAPI, action.data, action.lastId);
         yield put({
             type: SEARCH_DDAY_LIST_SUCCESS,
             data: result.data,
