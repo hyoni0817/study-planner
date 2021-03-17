@@ -1,6 +1,7 @@
 export const initialState = {
     todoList : [],
     todayTodoList: [],
+    nowTodoList: [],
     subjectList: [],
     todoPostId: 0,
     hasMoreTodo: false,
@@ -35,6 +36,11 @@ export const LOAD_TODO_LIST_FAILURE = 'LOAD_TODO_LIST_FAILURE';
 export const LOAD_TODAY_TODO_LIST_REQUEST = 'LOAD_TODAY_TODO_LIST_REQUEST';
 export const LOAD_TODAY_TODO_LIST_SUCCESS = 'LOAD_TODAY_TODO_LIST_SUCCESS';
 export const LOAD_TODAY_TODO_LIST_FAILURE = 'LOAD_TODAY_TODO_LIST_FAILURE';
+
+//지금 해야하는 TODO 로드하는 액션
+export const LOAD_NOW_TODO_LIST_REQUEST = 'LOAD_NOW_TODO_LIST_REQUEST';
+export const LOAD_NOW_TODO_LIST_SUCCESS = 'LOAD_NOW_TODO_LIST_SUCCESS';
+export const LOAD_NOW_TODO_LIST_FAILURE = 'LOAD_NOW_TODO_LIST_FAILURE';
 
 //TODO 검색하는 액션
 export const SEARCH_TODO_LIST_REQUEST = 'SEARCH_TODO_LIST_REQUEST';
@@ -78,6 +84,7 @@ const reducer = ( state = initialState, action ) => {
                 isAddingTodo: false,
                 todoList : [ action.data, ...state.todoList ],
                 todayTodoList: [action.data, ...state.todayTodoList],
+                nowTodoList: [action.data, ...state.nowTodoList],
                 todoAdded: true,
             }
         case ADD_TODO_FAILURE: 
@@ -129,6 +136,23 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 isLoadingTodo: false,
                 isLoadingMoreTodo: false,
+            }
+        case LOAD_NOW_TODO_LIST_REQUEST:
+            return {
+                ...state,
+                isLoadingTodo: true,
+                nowTodoList: [],
+            }
+        case LOAD_NOW_TODO_LIST_SUCCESS:
+            return {
+                ...state,
+                isLoadingTodo: false,
+                nowTodoList: action.data,
+            }
+        case LOAD_NOW_TODO_LIST_FAILURE:
+            return {
+                ...state,
+                isLoadingTodo: false,
             }
         case SEARCH_TODO_LIST_REQUEST:
             return {
