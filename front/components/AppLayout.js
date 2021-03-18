@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Layout } from 'antd';
 import DesktopMenu from './Menu/DesktopMenu';
 import MobileMenu from './Menu/MobileMenu';
-import Home from '../pages/index';
+import Home from '../pages/home';
 import CreatePlan from '../pages/createplan';
 
 const { Header, Content, Footer, Sider } = Layout;
