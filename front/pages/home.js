@@ -32,6 +32,7 @@ const TodayTodoListWrapper = styled.div`
 `;
 
 const AddTodoAffix = styled(Affix)`
+    float: right;
     @media(min-width: 768px) {
         display: none;
     }
