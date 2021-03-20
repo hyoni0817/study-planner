@@ -24,7 +24,7 @@ module.exports = class Dday extends Model {
             viewState: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
-                defaultValue: false,
+                defaultValue: true,
             }
         }, {
             modelName: 'Dday',
