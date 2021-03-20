@@ -200,7 +200,7 @@ const Home = (props) => {
                     {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
                 </Spin>
             </TodayTodoListWrapper>
-            <AddTodoAffix offsetBottom={50}>
+            <AddTodoAffix>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
             </AddTodoAffix>
             
