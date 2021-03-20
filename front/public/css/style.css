@@ -36,7 +36,7 @@
 }
 
 .ant-menu {
-    background: #522872;
+    background: #f0f2f5;
     border: none;
 }
 
@@ -56,3 +56,33 @@
 /* aside {
     max-width: 256px;
 } */
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: white;
+}
+
+.ant-menu-item-selected, .ant-menu-item-selected a {
+    color: #7262fd;
+}
+
+.ant-menu-inline .ant-menu-item:after {
+    border-right: 3px solid #7262fd;
+}
+
+.ant-menu-item-selected a:hover .ant-menu-item-active {
+    color: #7262fd; 
+}
+.ant-menu-submenu-selected {
+    color: #7262fd; 
+}
+
+.ant-menu-item .ant-menu-item-selected {
+    color: #7262fd; 
+}
+
+.ant-menu-item a:hover {
+    color: #7262fd; 
+}
+.ant-menu-submenu-title:hover {
+    color: #7262fd; 
+}
