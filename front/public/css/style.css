@@ -49,6 +49,10 @@
 }
 /* spin밑에 로딩글자의 그림자 지움 */
 
+.ant-menu-inline {
+    width: 256px;
+} 
+/* mode가 inline시 변경되는 메뉴의 크기 임의로 수정 */
 /* aside {
     max-width: 256px;
 } */
