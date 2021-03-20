@@ -59,6 +59,7 @@ router.get('/now', async (req, res, next) => {
         const todoList = await db.Todo.findAll({
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
+            order: [['important', 'DESC'], ['startTime', 'ASC']]
         });
 
         res.json(todoList);
@@ -91,6 +92,7 @@ router.get('/today', async (req, res, next) => {
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
             limit: parseInt(req.query.limit),
+            order: [['important', 'DESC'], ['startTime', 'ASC']]
         });
         res.json(todoList);
     } catch (e) {
