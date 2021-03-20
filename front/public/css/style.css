@@ -40,6 +40,15 @@
     border: none;
 }
 
+.ant-spin-blur {
+    opacity: 0;
+}
+
+.ant-spin-nested-loading>div>.ant-spin .ant-spin-text {
+    text-shadow: none;
+}
+/* spin밑에 로딩글자의 그림자 지움 */
+
 /* aside {
     max-width: 256px;
 } */
