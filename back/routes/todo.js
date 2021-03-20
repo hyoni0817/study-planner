@@ -52,6 +52,7 @@ router.get('/search', async (req, res, next) => {
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
             limit: parseInt(req.query.limit),
+            order: [['createdAt', 'DESC'],['startTime', 'ASC']]
         });
         return res.json(searchCondition);
     } catch (e) {
