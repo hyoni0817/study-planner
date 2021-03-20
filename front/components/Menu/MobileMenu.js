@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch } from 'antd';
 import {
@@ -26,11 +27,13 @@ const MobileHeader = styled.ul`
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #f0f2f5;
+    position: fixed;
+    width:100%;
+    z-index: 200;
 
     @media(min-width: 768px) {
         visibility: hidden;
-        position: fixed;
     }
 `;
 
@@ -60,16 +63,64 @@ const MobileWebMenu = styled.ul`
     }
 
     & li a.active {
-    background: #FFC6D0;
-    color: #FF284E;
+    background: #7262fd;
+    color: #D3CEFD;
     }
 
     & li a:hover:not(.active) {
-        color: #FF284E;
+        color: #7262fd;
+    }
+
+    & li > span {
+        padding: 8px 16px;
+    }
+
+    & li > ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width:100%;
+
+    }
+
+    
+    & li > ul > li {
+        margin: 5px 0;
+    }
+
+    & li > ul > li a {
+    display: block;
+    color: #000;
+    padding: 8px 40px;
+    text-decoration: none;
+    }
+
+    & li > ul > li a.active {
+    background: #7262fd;
+    color: #D3CEFD;
+    }
+
+    & li > ul > li a:hover:not(.active) {
+        color: #7262fd;
+    }
+
+    & li > ul > li > span {
+        padding: 8px 16px;
     }
 `;
 
+const SiteName = styled.a`
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+
+    &: hover {
+        color: black;
+    }
+`
 const MobileMenu = () => {
+    const router = useRouter();
+
     const [visible, setVisible] = useState(false);
     const [ theme, setTheme ] = useState('light');
     
@@ -95,7 +146,7 @@ const MobileMenu = () => {
                         </a>
                     </NavCol>
                     <NavCol span={21}>
-                        <Link href="/"><a>Study Planner</a></Link>
+                        <Link href="/home"><SiteName>Study Planner</SiteName></Link>
                     </NavCol>
                 </Row>
                 {/* <li>
@@ -118,30 +169,38 @@ const MobileMenu = () => {
                         icon={<AntDesignOutlined />}
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                     />
-                    <Nickname>닉네임</Nickname>
-                    <p>"잘 할거야, 잘 할거 알아"</p>
+                    <Nickname>푸름이</Nickname>
+                    <p>"카르페디엠"</p>
                 </Profile>
                 <MobileWebMenu>
                     <li>
-                        <Link href="/">
-                            <a class="active" onClick={onClose}><HomeOutlined /> 홈</a>
+                        <Link href="/home">
+                            <a class={router.pathname == '/home' ? 'active' : ''} onClick={onClose}><HomeOutlined /> 홈</a>
                         </Link>
                         
                     </li>
                     <li>
-                        <Link href="/allplanlist">
-                            <a onClick={onClose}><DatabaseOutlined /> 모아 보기</a>
-                        </Link>
-                        
-                    </li>
-                    <li>
-                        <Link href="/analysis">
-                            <a onClick={onClose}><BarChartOutlined /> 주간/월간 분석</a>
-                        </Link>
-                        
+                        <span><DatabaseOutlined /> 모아 보기</span>
+                        <ul>
+                            <li>
+                                <Link href="/alltodolist">
+                                    <a class={router.pathname == '/alltodolist' ? 'active' : ''} onClick={onClose}> 공부 계획</a>
+                                </Link>
+                            </li>   
+                            <li>
+                                <Link href="/allDdaylist">
+                                    <a class={router.pathname == '/allDdaylist' ? 'active' : ''} onClick={onClose}> D-day</a>
+                                </Link>
+                            </li>
+                            {/* <li>
+                                <Link href="/analysis">
+                                    <a onClick={onClose}><BarChartOutlined /> 주간/월간 분석</a>
+                                </Link>
+                            </li> */}
+                        </ul>
                     </li>
                 </MobileWebMenu>
-                <Switch onChange={onChangeTheme} /> 다크 모드
+                {/* <Switch onChange={onChangeTheme} /> 다크 모드 */}
             </Drawer>
         </>
     )

@@ -29,6 +29,7 @@ const PcWebMenu = styled(Menu)`
 `;
 const AddBtnWrapper = styled.div`
     margin:10px 0;
+    padding:0 24px;
 `;
 
 const DesktopMenu = ({ children }) => {
@@ -47,8 +48,7 @@ const DesktopMenu = ({ children }) => {
     return (
         <>
             <PcWebMenu
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+                mode="inline"
                 theme={theme}
             >
                 <Profile>
@@ -57,33 +57,38 @@ const DesktopMenu = ({ children }) => {
                         icon={<AntDesignOutlined />}
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                     />
-                    <Nickname>닉네임</Nickname>
-                    <p>"잘 할거야, 잘 할거 알아"</p>
+                    <Nickname>푸름이</Nickname>
+                    <p>"카르페디엠"</p>
                 </Profile>
-                <Menu.Item key="1" icon={<HomeOutlined />}>
-                    <Link href="/"><a>홈</a></Link>
+                <Menu.Item key="1" icon={<HomeOutlined />} className={ router.pathname == '/home' ? 'ant-menu-item-selected ant-menu-item' : ''}> 
+                    <Link href="/home"><a>홈</a></Link>
                 </Menu.Item>
-                <Menu.Item key="2" icon={<DatabaseOutlined />}>
-                    <Link href="/allplanlist"><a>모아 보기</a></Link>
-                </Menu.Item>
-                <Menu.Item key="3" icon={<BarChartOutlined />}>
+                <SubMenu key="sub1" icon={<DatabaseOutlined />} title="모아 보기">
+                    <Menu.Item key="2" className={ router.pathname == '/alltodolist' ? 'ant-menu-item-selected ant-menu-item' : ''}>
+                        <Link href="/alltodolist"><a>공부 계획</a></Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" className={ router.pathname == '/allDdaylist' ? 'ant-menu-item-selected ant-menu-item' : ''}>
+                        <Link href="/allDdaylist"><a>D-day</a></Link>
+                    </Menu.Item>
+                </SubMenu>
+                {/* <Menu.Item key="3" icon={<BarChartOutlined />}>
                     <Link href="/analysis"><a>주간/월간 분석</a></Link>
-                </Menu.Item>
-                <Menu.Item>
-                    <Button 
-                        type="primary" 
-                        shape="round" 
-                        icon={<PlusOutlined />} 
-                        size={'large'} 
-                        onClick={onClickWriteBtn}
-                        style={{width: '100%',}}
-                    >
-                        계획 / D-day 추가
-                    </Button>
-                </Menu.Item>
+                </Menu.Item> */}
                 <AddBtnWrapper>
-                </AddBtnWrapper>                
-                <Switch onChange={onChangeTheme} /> 다크 모드
+                    <Menu.Item>
+                        <Button 
+                            type="primary" 
+                            shape="round" 
+                            icon={<PlusOutlined />} 
+                            size={'large'} 
+                            onClick={onClickWriteBtn}
+                            style={{width: '100%',backgroundColor: '#7262fd', color: 'white', border: 'none'}}
+                        >
+                            계획 / D-day 추가
+                        </Button>
+                    </Menu.Item>
+                </AddBtnWrapper>         
+                {/* <Switch onChange={onChangeTheme} /> 다크 모드 */}
             </PcWebMenu>
         </>
     );
