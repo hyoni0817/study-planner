@@ -50,6 +50,7 @@ const DesktopMenu = ({ children }) => {
             <PcWebMenu
                 mode="inline"
                 theme={theme}
+                defaultSelectedKeys={['1']}
             >
                 <Profile>
                     <Avatar
@@ -75,18 +76,16 @@ const DesktopMenu = ({ children }) => {
                     <Link href="/analysis"><a>주간/월간 분석</a></Link>
                 </Menu.Item> */}
                 <AddBtnWrapper>
-                    <Menu.Item>
-                        <Button 
-                            type="primary" 
-                            shape="round" 
-                            icon={<PlusOutlined />} 
-                            size={'large'} 
-                            onClick={onClickWriteBtn}
-                            style={{width: '100%',backgroundColor: '#7262fd', color: 'white', border: 'none'}}
+                    <Button 
+                        type="primary" 
+                        shape="round" 
+                        icon={<PlusOutlined />} 
+                        size={'large'} 
+                        onClick={onClickWriteBtn}
+                        style={{width: '100%',backgroundColor: '#7262fd', color: 'white', border: 'none'}}
                         >
-                            계획 / D-day 추가
-                        </Button>
-                    </Menu.Item>
+                        계획 / D-day 추가
+                    </Button>
                 </AddBtnWrapper>         
                 {/* <Switch onChange={onChangeTheme} /> 다크 모드 */}
             </PcWebMenu>
