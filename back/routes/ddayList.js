@@ -21,6 +21,7 @@ router.get('/', async (req, res, next) => {
             where,
             attributes: ['id', 'title', 'memo', 'dueDate', 'viewState'],
             limit: parseInt(req.query.limit),
+            order: [['dueDate', 'ASC']]
         });
         res.json(ddayList);
     } catch (e) {
@@ -44,6 +45,7 @@ router.get('/viewable', async(req, res, next) => {
             where,
             attributes: ['id', 'title', 'memo', 'dueDate', 'viewState'],
             limit: parseInt(req.query.limit),
+            order: [['dueDate', 'ASC']]
         });
         res.json(viewableList);
     } catch (e) {

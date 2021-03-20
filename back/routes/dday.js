@@ -45,6 +45,7 @@ router.get('/search', async (req, res, next) => {
             where,
             attributes: ['id', 'title', 'dueDate', 'memo'], 
             limit: parseInt(req.query.limit),
+            order: [['dueDate', 'ASC']]
         });
 
         return res.json(searchCondition);
