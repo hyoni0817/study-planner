@@ -24,7 +24,7 @@ const TodoNowWrapper = styled.div`
     border-radius: 5px;
 `;
 
-const TodoListWrapper = styled.div`
+const TodayTodoListWrapper = styled.div`
     margin-top: 20px;
     margin-bottom: 30px;
     width: 100%;
@@ -185,7 +185,7 @@ const Home = (props) => {
                 </Spin> 
             </TodoNowWrapper>
             <Title>오늘 해야할 일</Title>
-            <TodoListWrapper>
+            <TodayTodoListWrapper>
                 <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
                     { 
                         todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
@@ -199,7 +199,7 @@ const Home = (props) => {
                     }
                     {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
                 </Spin>
-            </TodoListWrapper>
+            </TodayTodoListWrapper>
             <AddTodoAffix offsetBottom={50}>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
             </AddTodoAffix>
