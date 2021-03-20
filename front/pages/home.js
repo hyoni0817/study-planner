@@ -27,7 +27,6 @@ const TodoNowWrapper = styled.div`
 const TodoListWrapper = styled.div`
     margin-top: 20px;
     margin-bottom: 30px;
-    display: table;
     width: 100%;
     border-spacing: 12px 20px;
 `;
@@ -46,6 +45,24 @@ const SpinWrapper = styled.div`
     border-radius: 4px;
 `;
 
+const TodayAchivementRateWrapper = styled.div`
+    height: 200px;
+    display: table;
+    width: 100%;
+`
+const TodayDate = styled.div`
+    font-weight: 600;
+    font-size: 1.2em;
+    @media(max-width: 767px) {
+        margin-top: 60px;
+    }   
+`;
+
+const Title = styled.p`
+    margin-top: 20px;
+    font-weight: 600;
+`
+
 const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -58,7 +75,7 @@ const Home = (props) => {
     const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
     const timeFormat = 'HH:mm'; 
     const nowTime = moment(moment().format(timeFormat), timeFormat);
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+    const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
     const completionCount = todayTodoList.filter(v => v.completion == true).length;
     const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
@@ -130,7 +147,7 @@ const Home = (props) => {
 
     return (
         <>
-            <div>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</div>
+            <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
             <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
                 <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
                     <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
@@ -149,12 +166,11 @@ const Home = (props) => {
                     </Row>
                 </Spin>             
             </div> 
-            <div>
-                <p>오늘의 성취율</p>
+            <TodayAchivementRateWrapper>
+                <Title>오늘의 성취율</Title>
                 <TodayAchivementRate value={progressValue} />
-            </div>
-            <SelectForms />
-            <p>지금 해야할 일</p>
+            </TodayAchivementRateWrapper>
+            <Title>지금 해야할 일</Title>
             <TodoNowWrapper>
                 <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
                     {
@@ -162,27 +178,27 @@ const Home = (props) => {
                         : nowTodoList.map((c) => {
                             return (
 
-                                <Todo post={c} />
+                                <Todo post={c} view="now" />
                             )
                         })
                     }
                 </Spin> 
             </TodoNowWrapper>
-            <p>오늘 해야할 일</p>
+            <Title>오늘 해야할 일</Title>
             <TodoListWrapper>
-            <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
-                { 
-                    todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
-                    : 
-                            todayTodoList.map((c) => {
-                                return (
-                                    <Todo key={c.id} post={c} />
-                                )
-                            }) 
-                        
-                }
-                {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-            </Spin>
+                <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
+                    { 
+                        todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
+                        : 
+                                todayTodoList.map((c) => {
+                                    return (
+                                        <Todo key={c.id} post={c} />
+                                    )
+                                }) 
+                            
+                    }
+                    {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                </Spin>
             </TodoListWrapper>
             <AddTodoAffix offsetBottom={50}>
                 <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
