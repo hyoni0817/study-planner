@@ -26,7 +26,7 @@ const DesktopForm = ({mode, type, data, isOpen}) => {
             setEditModal(false); 
             isOpen(false);
         } else {
-            router.push('/');
+            router.push('/home');
         }
         console.log(e);
     };

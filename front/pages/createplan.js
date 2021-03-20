@@ -15,7 +15,7 @@ const CreatePlan = () => {
     const router = useRouter()
 
     useEffect(() => {
-      router.prefetch('/')
+      router.prefetch('/home')
     }, [])
 
     return (

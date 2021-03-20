@@ -39,7 +39,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
             }
         });
 
-        return router.push('/');
+        return router.push('/home');
     };
 
     const onEditFinish = values => {
