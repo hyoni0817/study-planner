@@ -154,7 +154,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     noStyle
                     rules={[{ required: true, message: '내용을 입력해주세요' }]}
                     >
-                        <Input style={{ width: 160 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
+                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="과목" colon={false}>
