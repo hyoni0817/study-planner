@@ -131,7 +131,7 @@ const TodoFilter = ({onResult}) => {
                     </Select>
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
                         검색
                     </Button>
                 </Form.Item>

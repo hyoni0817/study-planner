@@ -20,7 +20,7 @@ const EditFormButton = ({data, type}) => {
     }
     return (
         <>
-            <Button type="primary" onClick={() => setEditForm(true)}>
+            <Button type="primary" onClick={() => setEditForm(true)} style={{backgroundColor: '#F6BD16', color: 'white', border: '1px solid white', borderRadius: '5px', margin: '10px 0',}} >
                 <EditOutlined />
             </Button>
             { editForm && <DesktopForm mode="edit" type={type} data={data} isOpen={onHandleOpen} /> }

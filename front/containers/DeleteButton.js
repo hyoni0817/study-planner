@@ -20,7 +20,7 @@ const DeleteButton = ({id, type}) => {
     }
     return (
         <>
-            <Button type="primary" onClick={onHandleDelete}>
+            <Button type="primary" onClick={onHandleDelete} style={{backgroundColor: '#F6BD16', color: 'white', border: '1px solid white', borderRadius: '5px', margin: '10px',}}>
                 <DeleteOutlined />
             </Button>
         </>

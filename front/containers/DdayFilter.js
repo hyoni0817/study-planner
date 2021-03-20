@@ -115,7 +115,7 @@ const DdayFilter = ({onResult}) => {
                     <Input placeholder="메모한 내용을 입력해주세요" onChange={onChangeMemo} />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
                         검색
                     </Button>
                 </Form.Item>

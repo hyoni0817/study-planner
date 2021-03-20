@@ -231,7 +231,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     <Checkbox onChange={onChangeCheckbox} checked={ important } />
                 </Form.Item>
                 <Form.Item label=" " colon={false}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
                         완료
                     </Button>
                 </Form.Item>
