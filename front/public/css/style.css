@@ -86,3 +86,7 @@
 .ant-menu-submenu-title:hover {
     color: #7262fd; 
 }
+
+.ant-avatar>img {
+    background: #FCEBB9;
+}
