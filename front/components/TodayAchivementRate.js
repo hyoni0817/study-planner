@@ -1,5 +1,22 @@
 import React from 'react';
 import { Progress } from 'antd';
+import { CheckOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
+
+const ProgressWrapper = styled.div`
+    display: table-cell;
+    text-align: center;
+    `
+const CheerUpWrapper = styled.div`
+    font-size: 20px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+`
+
+const CheerUpContent = styled.p`
+    font-weight: 600;
+`
 
 const TodayAchivementRate = ({value}) => {
     const onChangeCheerUp = () => {
@@ -19,15 +36,22 @@ const TodayAchivementRate = ({value}) => {
     }
     return (
         <>
-            <Progress
-                type="circle"
-                strokeColor={{
-                    '0%': '#d76d77',
-                    '100%': '#3a1c71',
-                }}
-                percent={value}
-            />
-            <span>{onChangeCheerUp()}</span>
+            <div style={{display: 'table-row'}}>
+                <ProgressWrapper>
+                    <Progress
+                        type="circle"
+                        strokeColor={{
+                            '0%': '#61DDAA',
+                            '100%': '#61DDAA',
+                        }}
+                        percent={value}
+                        format={(percent) => percent == 100 ? <CheckOutlined style={{color: '#61DDAA'}} /> : `${percent}%`}
+                    />
+                </ProgressWrapper>
+                <CheerUpWrapper>
+                    <CheerUpContent>{onChangeCheerUp()}</CheerUpContent>
+                </CheerUpWrapper>
+            </div>
         </>
     )
 };

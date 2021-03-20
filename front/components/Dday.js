@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { SHOW_DDAY_REQUEST } from '../reducers/dday';
 
 const DdayBox = styled.div`
-    background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+    background: #7262fd;
     border-radius: 5px;
     color: #ffffffe8;
     padding: 12px;
@@ -21,19 +21,24 @@ const DdayContent = styled.p`
     margin-top: 0;
     margin-bottom: 0;
     text-align: left;
-    font-family: 'Fredoka One', cursive;
+    font-weight: 800;
+    font-family: sans-serif;
+    //font-family: 'Fredoka One', cursive;
 `;
 
 const SearchModeDdayTitle = styled.p`
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
+    font-weight: 600;
+    margin-top: 10px;
     margin-bottom: 0;
 `;
 
 const HomeModeDdayTitle = styled.p`
-    font-size: 13px;
+    font-size: 15px;
+    font-weight: 600;
     text-align: left;
-    margin-bottom: 0;
+    margin: 5px 0;
     overflow:hidden; 
     text-overflow:ellipsis; 
     white-space:nowrap;
