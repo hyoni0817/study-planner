@@ -26,13 +26,20 @@ const SpinWrapper = styled.div`
     border-radius: 4px;
 `;
 
+const AllTodoTitle = styled.h2`
+    font-weight: 600;
+    @media(max-width: 767px) {
+        margin-top: 60px;
+    }
+`
+
 const AllTodoList = () => {
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const [ searchData, setSearchData ] = useState({});
 
     const { todoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, todoSearched, useSearch, } = useSelector( state => state.todo );
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+    const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
     const onScrollTodo = useCallback(() => {
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -83,7 +90,7 @@ const AllTodoList = () => {
     
     return (
         <>
-            <h1>공부 계획 모아 보기</h1>
+            <AllTodoTitle>공부 계획 모아 보기</AllTodoTitle>
             <TodoFilter onResult={onResult} />
             <TodoListWrapper>
                 <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">

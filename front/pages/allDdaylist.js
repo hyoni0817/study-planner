@@ -21,13 +21,20 @@ const SearchDday = styled(Dday)`
     margin-bottom: 20px;
 `
 
+const AllDdayTitle = styled.h2`
+    font-weight: 600;
+    @media(max-width: 767px) {
+        margin-top: 60px;
+    }
+`
+
 const AllDdayList = () => {   
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const { DdayList, isLoadingDday, hasMoreDday, isLoadingMoreDday, DdaySearched, useSearch } = useSelector( state => state.dday );
     const [ searchData, setSearchData] = useState({});
 
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+    const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
 
     const onScrollDday = useCallback((value) => {
@@ -80,7 +87,7 @@ const AllDdayList = () => {
     
     return (
         <> 
-            <h1>D-day 모아 보기</h1>
+            <AllDdayTitle>D-day 모아 보기</AllDdayTitle>
             <DdayFilter onResult={onResult} />
             <Spin indicator={antIcon} spinning={useSearch == 'no' ? isLoadingDday : !DdaySearched} tip="D-day 목록을 불러오는 중입니다...">
                 { 
