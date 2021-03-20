@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const initialState = {
     todoList : [],
     todayTodoList: [],
@@ -79,12 +81,18 @@ const reducer = ( state = initialState, action ) => {
                 todoAdded: false,
             }; 
         case ADD_TODO_SUCCESS:
+            const timeFormat = 'HH:mm'; 
+            const nowTime = moment(moment().format(timeFormat), timeFormat);
+            const addNowTodoList =  
+                nowTime.isSameOrAfter(moment(action.data.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(action.data.endTime, timeFormat)) || action.data.allDayStatus ?
+                [action.data, ...state.nowTodoList] : [...state.nowTodoList];
+            
             return {
                 ...state,
                 isAddingTodo: false,
                 todoList : [ action.data, ...state.todoList ],
                 todayTodoList: [action.data, ...state.todayTodoList],
-                nowTodoList: [action.data, ...state.nowTodoList],
+                nowTodoList: addNowTodoList,
                 todoAdded: true,
             }
         case ADD_TODO_FAILURE: 
