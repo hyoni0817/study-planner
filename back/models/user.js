@@ -30,6 +30,10 @@ module.exports = ( sequelize, DataTypes ) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        signupDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
     }, {
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
