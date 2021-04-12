@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import todo from './todo';
 import dday from './dday';
+import user from './user';
 
 // (이전상태, 액션) => 다음 상태
 const rootReducer = (state, action) => {
@@ -14,6 +15,7 @@ const rootReducer = (state, action) => {
             const combineReducer = combineReducers({
                 todo,
                 dday,
+                user,
             });
             return combineReducer(state, action);
         }
