@@ -11,11 +11,11 @@ const SignUpTitle = styled.h3`
 const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 8 },
+      md: { span: 24 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 },
+      md: { span: 24 },
     },
   };
 
@@ -80,8 +80,7 @@ const SignUp = (props) => {
                         <Form 
                             {...formItemLayout}
                             layout="vertical"
-                            initialValues={{ size: 'default' }}
-                            size="default"
+                            size="large"
                             onFinish={ onFinish }
                             form={form}
                         >
@@ -187,7 +186,7 @@ const SignUp = (props) => {
                                 <Checkbox onChange={onChangeTerms}>약관에 동의합니다.</Checkbox>
                             </Form.Item>
                             <Form.Item label=" " colon={false}>
-                                <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: 320}}>
+                                <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>
                                     가입하기
                                 </Button>
                             </Form.Item>
