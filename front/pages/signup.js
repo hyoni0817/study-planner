@@ -100,22 +100,16 @@ const SignUp = (props) => {
                                 label="아이디" 
                                 colon={false}
                             >
-                                <Row gutter={8}>
-                                    <Col span={17}>
-                                        <Form.Item
+                                    <Form.Item
                                         name="userId"
                                         noStyle
                                         rules={[{ required: true, message: '아이디를 입력해주세요' }]}
-                                        >
-                                            <Input value={userId} onChange={onChangeUserId} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={7}>
-                                        <Button type="primary" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
-                                            중복 체크
-                                        </Button>
-                                    </Col>
-                                </Row>
+                                    >
+                                        <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '67%'}}/>
+                                    </Form.Item>
+                                    <Button type="primary" style={{width: '30%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}}>
+                                        중복 체크
+                                    </Button>
                             </Form.Item>
                             <Form.Item 
                                 label="비밀 번호" 
