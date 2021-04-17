@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import styled from 'styled-components';
 
 //import { } from '../reducers/user';
@@ -21,12 +21,24 @@ const formItemLayout = {
 
 const SignUp = (props) => {
     const [ form ] = Form.useForm();
+    const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [passwordCheck, setPasswordCheck] = useState('');
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
+    const [terms, setTerms] = useState(false);
+    const [birthYear, setBirthYear] = useState('');
 
+    useEffect(() => {
+        if(terms) {
+            form.validateFields(['checkbox']);
+        }
+    }, [terms]);
+
+    const onChangeUsername = (e) => {
+        setUsername(e.target.value);
+    }
     const onChangeUserId = (e) => {
         setUserId(e.target.value);
     };
@@ -42,6 +54,14 @@ const SignUp = (props) => {
     const onChangeNickname = (e) => {
         setNickname(e.target.value);
     };
+
+    const onChangeBirthYear = (e) => {
+        setBirthYear(e.target.value);
+    }
+
+    const onChangeTerms = (e) => {
+        setTerms(e.target.checked);
+    }
 
     const onChangeEmail = (e) => {
         setEmail(e.target.value);
@@ -66,6 +86,18 @@ const SignUp = (props) => {
                             form={form}
                         >
                             <Form.Item 
+                                label="이름" 
+                                colon={false}
+                            >
+                                <Form.Item 
+                                    name="username"
+                                    noStyle
+                                    rules={[{ required: true, message: '이름을 입력해주세요' }]}
+                                >
+                                    <Input value={username} onChange={onChangeUsername} />
+                                </Form.Item>                            
+                            </Form.Item>
+                            <Form.Item 
                                 label="아이디" 
                                 colon={false}
                             >
@@ -89,34 +121,70 @@ const SignUp = (props) => {
                             <Form.Item 
                                 label="비밀 번호" 
                                 colon={false}
-                                name="password"
-                                rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
                             >
-                                <Input.Password value={password} onChange={onChangePassword} />
+                                <Form.Item 
+                                    name="password"
+                                    noStyle
+                                    rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
+                                >
+                                    <Input.Password value={password} onChange={onChangePassword} />
+                                </Form.Item>                            
                             </Form.Item>
                             <Form.Item 
                                 label="비밀 번호 확인" 
                                 colon={false}
-                                name="passwordCheck"
-                                rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }]}
                             >
-                                <Input.Password value={passwordCheck} onChange={onChangePasswordCheck} />
-                            </Form.Item>
+                                <Form.Item 
+                                    name="passwordCheck"
+                                    noStyle
+                                    rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }]}
+                                >
+                                    <Input.Password value={passwordCheck} onChange={onChangePasswordCheck} />
+                                </Form.Item>                            </Form.Item>
                             <Form.Item 
                                 label="닉네임" 
                                 colon={false}
-                                name="nickname"
-                                rules={[{ required: true, message: '닉네임을 입력해주세요' }]}
                             >
-                                <Input value={nickname} onChange={onChangeNickname} />
+                                <Form.Item 
+                                    name="nickname"
+                                    noStyle
+                                    rules={[{ required: true, message: '닉네임을 입력해주세요' }]}
+                                >
+                                    <Input value={nickname} onChange={onChangeNickname} />
+                                </Form.Item>
+                            </Form.Item>
+                            <Form.Item 
+                                label="테어난 년도" 
+                                colon={false}
+                            >
+                                <Form.Item 
+                                    name="birthYear"
+                                    noStyle
+                                    rules={[{ required: true, message: '태어난 년도를 입력해주세요' }]}
+                                >
+                                    <Input value={birthYear} onChange={onChangeBirthYear} />
+                                </Form.Item>
                             </Form.Item>
                             <Form.Item 
                                 label="이메일" 
                                 colon={false}
-                                name="email"
-                                rules={[{ required: true, message: '이메일을 입력해주세요' }]}
                             >
-                                <Input value={email} onChange={onChangeEmail} />
+                                <Form.Item 
+                                    name="email"
+                                    noStyle
+                                    rules={[{ required: true, message: '이메일을 입력해주세요' }]}
+                                >
+                                    <Input value={email} onChange={onChangeEmail} />
+                                </Form.Item>
+                            </Form.Item>
+                            <Form.Item 
+                                name="terms"
+                                rules={[{ required: terms, message: '약관 동의을 체크해주세요' }]}
+                            >
+                                {/* <TermsStyle>
+                                    약관 내용
+                                </TermsStyle> */}
+                                <Checkbox onChange={onChangeTerms}>약관에 동의합니다.</Checkbox>
                             </Form.Item>
                             <Form.Item label=" " colon={false}>
                                 <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: 320}}>
