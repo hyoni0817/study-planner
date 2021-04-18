@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import styled from 'styled-components';
 
-//import { } from '../reducers/user';
+//redux
+import { useDispatch } from 'react-redux';
+import { SIGN_UP_REQUEST } from '../reducers/user';
 
 const SignUpTitle = styled.h3`
     text-align: center;
@@ -20,6 +22,8 @@ const formItemLayout = {
   };
 
 const SignUp = (props) => {
+    const dispatch = useDispatch();
+
     const [ form ] = Form.useForm();
     const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
@@ -64,6 +68,18 @@ const SignUp = (props) => {
 
     const onFinish = (values) => {
         console.log('Success:', values);
+        dispatch({
+            type: SIGN_UP_REQUEST,
+            data: {
+                username,
+                userId,
+                password,
+                nickname,
+                birthYear,
+                email,
+                terms,
+            }
+        })
     };
 
     return (
