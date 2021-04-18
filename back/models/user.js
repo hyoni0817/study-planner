@@ -1,48 +1,48 @@
-const { sequelize } = require(".");
+const DataTypes = require('sequelize');
+const { Model } = DataTypes;
 
-module.exports = ( sequelize, DataTypes ) => {
-    const User = sequelize.define( 'User', {
-        userId: {
-            type: DataTypes.STRING(15),
-            allowNull: false,
-        },
-        password: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        username: {
-            type: DataTypes.STRING(30),
-            allowNull: false,
-        }, 
-        nickname: {
-            type: DataTypes.STRING(10),
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING(100),
-            allowNull: false,
-        },
-        term: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
-        birthYear: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        signupDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-    }, {
-        charset: 'utf8mb4',
-        collate: 'utf8mb4_general_ci',
-    });
+module.exports = class User extends Model {
+    static init(sequelize) {
+        return super.init({
+            userId: {
+                type: DataTypes.STRING(15),
+                allowNull: false,
+            },
+            password: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+            },
+            username: {
+                type: DataTypes.STRING(30),
+                allowNull: false,
+            }, 
+            nickname: {
+                type: DataTypes.STRING(10),
+                allowNull: false,
+            },
+            email: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+            },
+            terms: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+            birthYear: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
+        }, {
+            modelName: 'User',
+            tableName: 'users',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
+            sequelize,
+        });
+    }
 
-    User.associate = (db) => {
+    static associate(db) {
         db.User.hasMany(db.Dday);
         db.User.hasMany(db.Todo);
-    };
-
-    return User;
+    }
 }
