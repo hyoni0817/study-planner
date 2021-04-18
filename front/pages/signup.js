@@ -30,11 +30,6 @@ const SignUp = (props) => {
     const [terms, setTerms] = useState(false);
     const [birthYear, setBirthYear] = useState('');
 
-    useEffect(() => {
-        if(terms) {
-            form.validateFields(['checkbox']);
-        }
-    }, [terms]);
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
@@ -171,8 +166,10 @@ const SignUp = (props) => {
                                 </Form.Item>
                             </Form.Item>
                             <Form.Item 
-                                name="terms"
-                                rules={[{ required: terms, message: '약관 동의을 체크해주세요' }]}
+                                name="terms" 
+                                valuePropName="checked"
+                                rules={[{ validator: (_, value) =>
+                                    value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
                             >
                                 {/* <TermsStyle>
                                     약관 내용
