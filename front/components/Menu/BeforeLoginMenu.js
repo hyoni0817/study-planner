@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch, Button } from 'antd';
+import Login from '../../containers/Login';
 
 const MobileHeader = styled.ul`
     list-style-type: none;
@@ -32,14 +33,21 @@ const NavCol = styled(Col)`
 `;
 
 const BeforeLoginMenu = () => {
+    const [loginForm, setLoginForm] = useState(false);
+
+    const onHandleOpen = (value) => {
+        setLoginForm(value);
+    }
+
     return (
         <>
             <MobileHeader>
                 <Link href="/"><a>Study Planner</a></Link>
                 <LoginAndSignUpWrapper>
-                    <LoginBtn type="primary" size="default">
-                        <Link href="/login"><a>로그인</a></Link>
+                    <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>
+                        로그인
                     </LoginBtn>
+                    { loginForm && <Login isOpen={onHandleOpen} />}
                     <SignUpBtn type="primary" size="default">
                         <Link href="/signup"><a>회원 가입</a></Link>
                     </SignUpBtn>
