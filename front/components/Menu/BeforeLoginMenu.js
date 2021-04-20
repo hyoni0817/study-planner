@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch, Button } from 'antd';
-import Login from '../../containers/Login';
+import DesktopLogin from '../../containers/DesktopLogin';
+import MobileLoginPortal from '../../components/MobileLoginPortal';
+import MobileLogin from '../../containers/MobileLogin';
 
 const MobileHeader = styled.ul`
     list-style-type: none;
@@ -47,7 +49,12 @@ const BeforeLoginMenu = () => {
                     <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>
                         로그인
                     </LoginBtn>
-                    { loginForm && <Login isOpen={onHandleOpen} />}
+                    { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
+                    { loginForm && 
+                        <MobileLoginPortal selector="#mobile-login">
+                            <MobileLogin isOpen={onHandleOpen}/>
+                        </MobileLoginPortal>
+                    }
                     <SignUpBtn type="primary" size="default">
                         <Link href="/signup"><a>회원 가입</a></Link>
                     </SignUpBtn>
