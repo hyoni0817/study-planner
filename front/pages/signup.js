@@ -6,7 +6,8 @@ import styled from 'styled-components';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { SIGN_UP_REQUEST } from '../reducers/user';
+import { SIGN_UP_REQUEST, USER_ID_CHECK_REQUEST, } from '../reducers/user';
+import { SEARCH_TODO_LIST_FAILURE } from '../reducers/todo';
 
 const SignUpTitle = styled.h3`
     text-align: center;
@@ -30,7 +31,7 @@ const reponsive = {
 
 const SignUp = (props) => {
     const dispatch = useDispatch();
-    const { isSignedUp, isSigningUp } = useSelector(state => state.user);
+    const { isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking } = useSelector(state => state.user);
     
     const [ form ] = Form.useForm();
     const [username, setUsername] = useState('');
@@ -41,12 +42,20 @@ const SignUp = (props) => {
     const [email, setEmail] = useState('');
     const [terms, setTerms] = useState(false);
     const [birthYear, setBirthYear] = useState('');
+    const [idBtnClick, setIdBtnClick] = useState(false);
+    const [idInputStat, setIdInputStat] = useState(false);
 
+    useEffect(() => {
+        if(idInputStat) {
+            form.validateFields(['userId']);
+        }
+    }, [existingUserId, idBtnClick, idInputStat]);
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);
     }
     const onChangeUserId = (e) => {
+        setIdInputStat(true);
         setUserId(e.target.value);
     };
 
@@ -89,6 +98,31 @@ const SignUp = (props) => {
             }
         })
     };
+
+    const onIdCheck = () => {
+        setIdBtnClick(true);
+        dispatch({
+            type: USER_ID_CHECK_REQUEST,
+            data: {
+                userId,
+            }
+        })
+    }
+
+    const onRuleHandler = (idBtnCheckStat) => ({
+        validator(_, value) {
+            if (!value || value!==userId) { 
+                setIdBtnClick(false);
+                return Promise.resolve();
+            } else if(!idBtnCheckStat) {
+                return Promise.reject(new Error('아이디 중복 체크를 해주세요'))
+            } else if (existingUserId) {
+                return Promise.reject(new Error('중복되는 아이디가 있습니다'));
+            } else if (userId == '') {
+                return Promise.reject(new Error('아이디를 입력해주세요'));
+            }
+        }
+      })
 
     return (
         <>
@@ -139,13 +173,15 @@ const SignUp = (props) => {
                                             <Form.Item
                                                 name="userId"
                                                 noStyle
-                                                rules={[{ required: true, message: '아이디를 입력해주세요' }]}
+                                                validator
+                                                rules={[{required: true, message: '아이디를 입력해주세요'}, onRuleHandler(idBtnClick)]}
                                             >
-                                                <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '67%'}}/>
+                                                <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '65%'}}/>
                                             </Form.Item>
-                                            <Button type="primary" style={{width: '30%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}}>
+                                            <Button type="primary" style={{width: '32%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}} onClick={onIdCheck} loading={isUserIdChecking}>
                                                 중복 체크
                                             </Button>
+                                            { userId && isUserIdChecked && !existingUserId && idBtnClick ? <p>사용 가능한 아이디 입니다.</p> : ''}
                                     </Form.Item>
                                     <Form.Item 
                                         label="비밀 번호" 
@@ -169,7 +205,8 @@ const SignUp = (props) => {
                                             rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }]}
                                         >
                                             <Input.Password value={passwordCheck} onChange={onChangePasswordCheck} />
-                                        </Form.Item>                            </Form.Item>
+                                        </Form.Item>                            
+                                    </Form.Item>
                                     <Form.Item 
                                         label="닉네임" 
                                         colon={false}
