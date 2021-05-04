@@ -170,18 +170,18 @@ const SignUp = (props) => {
                                         label="아이디" 
                                         colon={false}
                                     >
-                                            <Form.Item
-                                                name="userId"
-                                                noStyle
-                                                validator
-                                                rules={[{required: true, message: '아이디를 입력해주세요'}, onRuleHandler(idBtnClick)]}
-                                            >
-                                                <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '65%'}}/>
-                                            </Form.Item>
-                                            <Button type="primary" style={{width: '32%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}} onClick={onIdCheck} loading={isUserIdChecking}>
-                                                중복 체크
-                                            </Button>
-                                            { userId && isUserIdChecked && !existingUserId && idBtnClick ? <p>사용 가능한 아이디 입니다.</p> : ''}
+                                        <Form.Item
+                                            name="userId"
+                                            noStyle
+                                            validator
+                                            rules={[{required: true, message: '아이디를 입력해주세요'}, onRuleHandler(idBtnClick)]}
+                                        >
+                                            <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '65%'}}/>
+                                        </Form.Item>
+                                        <Button type="primary" style={{width: '32%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}} onClick={onIdCheck} loading={isUserIdChecking}>
+                                            중복 체크
+                                        </Button>
+                                        { userId && isUserIdChecked && !existingUserId && idBtnClick ? <p>사용 가능한 아이디 입니다.</p> : ''}
                                     </Form.Item>
                                     <Form.Item 
                                         label="비밀 번호" 
