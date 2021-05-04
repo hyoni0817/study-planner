@@ -121,6 +121,7 @@ const SignUp = (props) => {
             } else if (userId == '') {
                 return Promise.reject(new Error('아이디를 입력해주세요'));
             }
+            return Promise.resolve();
         }
       })
 
