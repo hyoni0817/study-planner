@@ -1,6 +1,8 @@
 const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
+const moment = require('moment');
+
 module.exports = class Todo extends Model {
     static init(sequelize) {
         return super.init({
@@ -44,6 +46,13 @@ module.exports = class Todo extends Model {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: false,
+            },
+            createdAt: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                get() {
+                    return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD')
+                }
             }
         }, {
             modelName: 'Todo',
