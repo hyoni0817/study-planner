@@ -35,6 +35,6 @@ module.exports = class Dday extends Model {
         });
     }
     static associate(db){
-        // db.Dday.belongsTo(db.User);
+        db.Dday.belongsTo(db.User);
     }
 };

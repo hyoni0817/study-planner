@@ -63,6 +63,6 @@ module.exports = class Todo extends Model {
         });
     }
     static associate(db) {
-        //db.Todo.belongsTo(db.User);
+        db.Todo.belongsTo(db.User);
     }
 };
