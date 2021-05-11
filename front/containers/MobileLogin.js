@@ -35,7 +35,7 @@ const MobileLogin = ({isOpen}) => {
                     <CloseBtn onClick={onHandleClose}><CloseOutlined /></CloseBtn>
                 </div>
                 <h1>Study Planner</h1>
-                <LoginForm onSubmit={onHandleClose} />
+                <LoginForm onClose={onHandleClose} />
             </LoginFormWrapper>
         </>
     );

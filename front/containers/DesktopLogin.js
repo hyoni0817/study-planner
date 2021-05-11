@@ -20,7 +20,7 @@ const DesktopLogin = ({isOpen}) => {
                 cancelButtonProps={{ disabled: true }}
                 width={400}
             >
-                <LoginForm onSubmit={onHandleCancel}/>
+                <LoginForm onClose={onHandleCancel}/>
             </Modal>
         </>
     )

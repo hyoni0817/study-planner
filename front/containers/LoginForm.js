@@ -5,11 +5,11 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 //redux
 //import {} from '../reducers/user';
 
-const LoginForm = ({onSubmit}) => {
+const LoginForm = ({onClose}) => {
 
     const onFinish = (values) => {
         console.log('Success:', values);
-        onSubmit();
+        onClose();
     };
 
     return (
