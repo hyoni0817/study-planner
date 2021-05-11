@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Modal, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 //redux
 //import {} from '../reducers/user';
 
 const LoginForm = ({onClose}) => {
+    const dispatch = useDispatch();
+
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onChangeUserId = (e) => {
+        setUserId(e.target.value);
+    };
+
+    const onChangePassword = (e) => {
+        setPassword(e.target.value);
+    };
 
     const onFinish = (values) => {
         console.log('Success:', values);
+        dispatch({
+            type: LOG_IN_REQUEST,
+            data: {
+                userId,
+                password
+            }
+        })
         onClose();
     };
 
@@ -31,7 +52,7 @@ const LoginForm = ({onClose}) => {
                             },
                             ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="아이디"/>
+                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="아이디" value={userId} onChange={onChangeUserId} />
                         </Form.Item>
 
                         <Form.Item
@@ -43,7 +64,7 @@ const LoginForm = ({onClose}) => {
                             },
                             ]}
                         >
-                            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="비밀 번호"/>
+                            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="비밀 번호" value={password} onChange={onChangePassword} />
                         </Form.Item>
                         <Form.Item name="remember" valuePropName="checked">
                             <Checkbox>로그인 상태 유지</Checkbox>
