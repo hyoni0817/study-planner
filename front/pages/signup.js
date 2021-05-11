@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
+import Router from 'next/router';
 import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import styled from 'styled-components';
 
@@ -31,7 +32,7 @@ const reponsive = {
 
 const SignUp = (props) => {
     const dispatch = useDispatch();
-    const { isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking } = useSelector(state => state.user);
+    const { me, isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking } = useSelector(state => state.user);
     
     const [ form ] = Form.useForm();
     const [username, setUsername] = useState('');
@@ -50,6 +51,12 @@ const SignUp = (props) => {
             form.validateFields(['userId']);
         }
     }, [existingUserId, idBtnClick, idInputStat]);
+
+    useEffect(() => {
+        if(me) {
+            Router.push('/home');
+        }
+    }, [me && me.id])
 
     const onChangeUsername = (e) => {
         setUsername(e.target.value);

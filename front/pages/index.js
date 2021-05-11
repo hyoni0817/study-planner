@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image'
 import Router from 'next/router';
+import { useSelector } from 'react-redux';
 
 const CarouselContent = styled.h3`
     color: #fff;
@@ -30,6 +31,13 @@ const Welcome = () => {
     //         Router.push('/home')
     //     }
     // });
+    const { me } = useSelector(state => state.user);
+
+    useEffect(() => {
+        if(me) {
+            Router.push('/home');
+        }
+    }, [me && me.id]);
 
     return (
         <>
