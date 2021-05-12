@@ -10,6 +10,8 @@ import {
   AntDesignOutlined,
 } from '@ant-design/icons';
 
+//redux
+import { useSelector } from 'react-redux';
 
 const { SubMenu } = Menu;
 
@@ -120,6 +122,7 @@ const SiteName = styled.a`
 `
 const MobileMenu = () => {
     const router = useRouter();
+    const { me } = useSelector(state => state.user);
 
     const [visible, setVisible] = useState(false);
     const [ theme, setTheme ] = useState('light');
@@ -169,7 +172,7 @@ const MobileMenu = () => {
                         icon={<AntDesignOutlined />}
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                     />
-                    <Nickname>푸름이</Nickname>
+                    <Nickname>{ me.nickname }</Nickname>
                     <p>"카르페디엠"</p>
                 </Profile>
                 <MobileWebMenu>

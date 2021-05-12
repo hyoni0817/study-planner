@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import { Menu, Switch, Avatar, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {useRouter} from 'next/router';
-
 import {
   HomeOutlined,
   DatabaseOutlined,
   BarChartOutlined,
   AntDesignOutlined,
 } from '@ant-design/icons';
+
+//redux
+import { useSelector } from 'react-redux';
 
 const { SubMenu } = Menu;
 
@@ -34,6 +36,7 @@ const AddBtnWrapper = styled.div`
 
 const DesktopMenu = ({ children }) => {
     const router = useRouter();
+    const { me } = useSelector(state => state.user);
 
     const [ theme, setTheme ] = useState('light');
     
@@ -58,7 +61,7 @@ const DesktopMenu = ({ children }) => {
                         icon={<AntDesignOutlined />}
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                     />
-                    <Nickname>푸름이</Nickname>
+                    <Nickname>{ me.nickname }</Nickname>
                     <p>"카르페디엠"</p>
                 </Profile>
                 <Menu.Item key="1" icon={<HomeOutlined />} className={ router.pathname == '/home' ? 'ant-menu-item-selected ant-menu-item' : ''}> 
