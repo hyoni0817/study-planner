@@ -54,6 +54,7 @@ const SignUp = (props) => {
 
     useEffect(() => {
         if(me) {
+            alert('로그인한 상태로 인해 홈으로 이동합니다.')
             Router.push('/home');
         }
     }, [me && me.id])
