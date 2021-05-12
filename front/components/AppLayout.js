@@ -8,6 +8,7 @@ import Welcome from '../pages/index';
 import Home from '../pages/home';
 import CreatePlan from '../pages/createplan';
 import BeforeLoginMenu from './Menu/BeforeLoginMenu';
+import { useSelector } from 'react-redux';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -46,11 +47,12 @@ const SiteContent = styled(Content)`
 `
 const AppLayout = ({ children }) => {
     const router = useRouter();
-    const me = [];
+    const { me } = useSelector(state => state.user);
+
     console.log("children:", children);
     return (
         <>
-            { !me.length ? 
+            { !me ? 
                 <>
                     <Layout>
                         <BeforeLoginMenu />
