@@ -24,7 +24,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    orgin: 'http://localhost:3000',
+    origin: true,
     credentials: true,
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -34,7 +34,8 @@ app.use(expressSession({
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
-    }
+    },
+    name: 'pspl'
 }));
 app.use(passport.initialize());
 app.use(passport.session());
