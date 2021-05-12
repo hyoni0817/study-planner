@@ -1,4 +1,5 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
+import Router from 'next/router';
 import { Tabs, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import TodoFilter from '../containers/TodoFilter';
@@ -39,6 +40,7 @@ const AllTodoList = () => {
     const [ searchData, setSearchData ] = useState({});
 
     const { todoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, todoSearched, useSearch, } = useSelector( state => state.todo );
+    const { me } = useSelector(state => state.user);
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
     const onScrollTodo = useCallback(() => {
@@ -76,6 +78,13 @@ const AllTodoList = () => {
             window.removeEventListener('scroll', onScrollTodo);
         }
     }, [hasMoreTodo, todoList.length]);
+
+    useEffect(() => {
+        if(!me) {
+            alert('로그인 후 이용해주세요.');
+            Router.push('/');
+        }
+    }, [me && me.id])
 
     const separateDate = (id, createdAt, list) => {
         const prevCreatedAt = list[list.findIndex(v => v.id == id) - 1].createdAt || '';

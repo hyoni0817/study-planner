@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import Router from 'next/router';
 import { Button, Affix, Row, Col, Spin } from 'antd';
 import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
@@ -70,6 +71,7 @@ const Home = (props) => {
     const countRef = useRef([]);
     const { todayTodoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, nowTodoList } = useSelector( state => state.todo )
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
+    const { me } = useSelector(state => state.user);
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -141,6 +143,13 @@ const Home = (props) => {
         }
         
     }, [hasMoreDday, viewableDdayList.length]);
+
+    useEffect(() => {
+        if(!me) {
+            alert('로그인 후 이용해주세요.');
+            Router.push('/');
+        }
+    }, [me && me.id]);
     
     const onClickWriteBtn = () => {
         router.push('/createplan');

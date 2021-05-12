@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
+import Router from 'next/router';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -32,6 +33,7 @@ const AllDdayList = () => {
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const { DdayList, isLoadingDday, hasMoreDday, isLoadingMoreDday, DdaySearched, useSearch } = useSelector( state => state.dday );
+    const { me } = useSelector(state => state.user);
     const [ searchData, setSearchData] = useState({});
 
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
@@ -73,7 +75,14 @@ const AllDdayList = () => {
             window.removeEventListener('scroll', onScrollDday);
         }
     }, [hasMoreDday, DdayList.length])
-    
+
+    useEffect(() => {
+        if(!me) {
+            alert('로그인 후 이용해주세요.');
+            Router.push('/');
+        }
+    }, [me && me.id])
+
     const separateDate = (id, dueDate, list) => {
         const prevDueDate = list[list.findIndex(v => v.id == id) - 1].dueDate || '';
 
