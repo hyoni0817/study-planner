@@ -7,6 +7,8 @@ export const initialState = {
     existingUserId: false,
     isLoggingIn: false,
     isLoggedIn: false,
+    isLoggingOut: false,
+    logoutErrorReason: '',
     loginErrorReason: '',
     userIdCheckReason: '',
     signUpErrorReason: '',
@@ -26,6 +28,11 @@ export const USER_ID_CHECK_FAILURE = 'USER_ID_CHECK_FAILURE';
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+
+//로그아웃 액션
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
@@ -86,6 +93,25 @@ const reducer = ( state = initialState, action ) => {
                 isLoggingIn: false,
                 me: null,
                 loginErrorReason: action.error,
+            };
+        case LOG_OUT_REQUEST: 
+            return {
+                ...state,
+                isLoggingOut: true,
+                logoutErrorReason: '',
+            };
+        case LOG_OUT_SUCCESS: 
+            return {
+                ...state,
+                isLoggingOut: false,
+                me: null,
+            };  
+        case LOG_OUT_FAILURE: 
+            return {
+                ...state,
+                isLoggingOut: false,
+                me: null,
+                logoutErrorReason: action.error,
             };
         default: {
             return {
