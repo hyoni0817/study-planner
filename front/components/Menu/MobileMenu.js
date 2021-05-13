@@ -11,7 +11,8 @@ import {
 } from '@ant-design/icons';
 
 //redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_OUT_REQUEST } from '../../reducers/user';
 
 const { SubMenu } = Menu;
 
@@ -120,8 +121,16 @@ const SiteName = styled.a`
         color: black;
     }
 `
+
+const Logout = styled.div`
+    margin-top: 100%;
+    text-decoration: underline;
+    text-align: center;
+`;
+
 const MobileMenu = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { me } = useSelector(state => state.user);
 
     const [visible, setVisible] = useState(false);
@@ -134,6 +143,12 @@ const MobileMenu = () => {
     const onClose = () => {
         setVisible(false);
     };
+
+    const onClickLogout = () => {
+        dispatch({
+            type: LOG_OUT_REQUEST,
+        })
+    }
     
     const onChangeTheme = (value) => {
         value ? setTheme('dark') : setTheme('light');
@@ -202,6 +217,9 @@ const MobileMenu = () => {
                             </li> */}
                         </ul>
                     </li>
+                    <Logout>
+                        <a style={{color: '#9a9494'}} onClick={onClickLogout}>로그아웃</a>
+                    </Logout>
                 </MobileWebMenu>
                 {/* <Switch onChange={onChangeTheme} /> 다크 모드 */}
             </Drawer>

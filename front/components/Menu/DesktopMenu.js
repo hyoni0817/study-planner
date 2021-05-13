@@ -12,7 +12,8 @@ import {
 } from '@ant-design/icons';
 
 //redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_OUT_REQUEST } from '../../reducers/user';
 
 const { SubMenu } = Menu;
 
@@ -33,9 +34,15 @@ const AddBtnWrapper = styled.div`
     margin:10px 0;
     padding:0 24px;
 `;
+const Logout = styled.div`
+    margin-top: 100%;
+    text-decoration: underline;
+    text-align: center;
+`
 
 const DesktopMenu = ({ children }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { me } = useSelector(state => state.user);
 
     const [ theme, setTheme ] = useState('light');
@@ -47,6 +54,12 @@ const DesktopMenu = ({ children }) => {
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
+
+    const onClickLogout = () => {
+        dispatch({
+            type: LOG_OUT_REQUEST,
+        });
+    };
     
     return (
         <>
@@ -89,7 +102,10 @@ const DesktopMenu = ({ children }) => {
                         >
                         계획 / D-day 추가
                     </Button>
-                </AddBtnWrapper>         
+                </AddBtnWrapper>     
+                <Logout>
+                    <a style={{color: '#9a9494'}} onClick={onClickLogout}>로그아웃</a>
+                </Logout>   
                 {/* <Switch onChange={onChangeTheme} /> 다크 모드 */}
             </PcWebMenu>
         </>
