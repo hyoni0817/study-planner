@@ -6,6 +6,9 @@ import MobileForm from '../containers/MobileForm';
 import MobileFormPortal from '../components/MobileFormPortal';
 import DesktopForm from '../containers/DesktopForm';
 
+//redux
+import { useSelector } from 'react-redux';
+
 const MobileFormWrapper = styled(MobileForm)`
     @media(min-width: 768px) {
         display: none;
