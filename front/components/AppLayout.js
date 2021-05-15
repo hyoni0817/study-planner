@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Layout } from 'antd';
 import {useRouter} from 'next/router';
@@ -8,7 +8,8 @@ import Welcome from '../pages/index';
 import Home from '../pages/home';
 import CreatePlan from '../pages/createplan';
 import BeforeLoginMenu from './Menu/BeforeLoginMenu';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -47,7 +48,16 @@ const SiteContent = styled(Content)`
 `
 const AppLayout = ({ children }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const { me } = useSelector(state => state.user);
+
+    useEffect(() => {
+        if(!me) {
+            dispatch({
+                type: LOAD_USER_REQUEST,
+            });
+        }
+    }, []);
 
     console.log("children:", children);
     return (
