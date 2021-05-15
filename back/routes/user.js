@@ -27,7 +27,7 @@ router.post('/idcheck', async (req, res, next) => {
     }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 12);
 

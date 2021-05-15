@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, USER_ID_CHECK_REQUEST, USER_ID_CHECK_SUCCESS, USER_ID_CHECK_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE } from '../reducers/user';
 
 function signUpAPI(userData) {
-    return axios.post('/user', userData);
+    return axios.post('/user/signup', userData);
 }
 
 function* signUp(action) {
