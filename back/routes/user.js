@@ -63,11 +63,15 @@ router.post('/login', (req, res, next) => {
                 if(loginErr) {
                     return next(loginErr);
                 }
+                const userInfo = await db.User.findOne({
+                    where: { id: user.id },
+                    attributes: ['id', 'nickname', 'userId']
+                });
 
-                const filteredUser = Object.assign({}, user.toJSON());
-                delete filteredUser.password;
+                // const filteredUser = Object.assign({}, user.toJSON());
+                // delete filteredUser.password;
                 
-                return res.json(filteredUser);
+                return res.json(userInfo);
             } catch (e) {
                 console.error(e);
                 return next(e);
