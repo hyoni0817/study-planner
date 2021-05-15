@@ -3,7 +3,9 @@ import axios from 'axios';
 import { ADD_TODO_REQUEST, ADD_TODO_SUCCESS, ADD_TODO_FAILURE, LOAD_TODO_LIST_REQUEST, LOAD_TODO_LIST_SUCCESS, LOAD_TODO_LIST_FAILURE, SEARCH_TODO_LIST_REQUEST, SEARCH_TODO_LIST_SUCCESS, SEARCH_TODO_LIST_FAILURE, LOAD_SUBJECT_LIST_REQUEST, LOAD_SUBJECT_LIST_SUCCESS, LOAD_SUBJECT_LIST_FAILURE, COMPLETE_TODO_REQUEST, COMPLETE_TODO_SUCCESS, COMPLETE_TODO_FAILURE, EDIT_TODO_REQUEST, EDIT_TODO_SUCCESS, EDIT_TODO_FAILURE, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS, DELETE_TODO_FAILURE, LOAD_TODAY_TODO_LIST_REQUEST, LOAD_TODAY_TODO_LIST_SUCCESS, LOAD_TODAY_TODO_LIST_FAILURE, LOAD_NOW_TODO_LIST_REQUEST, LOAD_NOW_TODO_LIST_SUCCESS, LOAD_NOW_TODO_LIST_FAILURE, } from '../reducers/todo';
 
 function addTodoAPI(todoData) {
-    return axios.post('/todo', todoData);
+    return axios.post('/todo', todoData, {
+        withCredentials: true,
+    });
 }
 function* addTodo(action) {
     console.log("action.data:", action.data);
@@ -26,7 +28,9 @@ function* watchAddTodo() {
 }
 
 function loadTodoAPI(lastId=0, limit=10) {
-    return axios.get(`/todolist?lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/todolist?lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
 }
 
 function* loadTodo(action) {
@@ -51,7 +55,9 @@ function* watchLoadTodo() {
 }
 
 function loadNowTodoAPI() {
-    return axios.get(`/todolist/now`);
+    return axios.get(`/todolist/now`, {
+        withCredentials: true,
+    });
 }
 
 function* loadNowTodo(action) {
@@ -77,7 +83,9 @@ function* watchLoadNowTodo() {
 }
 
 function loadTodayTodoAPI(lastId=0, limit=10) {
-    return axios.get(`/todolist/today?lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/todolist/today?lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
 }
 
 function* loadTodayTodo(action) {
@@ -103,7 +111,9 @@ function* watchLoadTodayTodo() {
 
 function searchTodoAPI(conditionData, lastId=0, limit=10) {
     console.log("conditionData:", conditionData);
-    return axios.get(`/todo/search?todoTitle=${conditionData.todoTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&subjects=${conditionData.subjects}&lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/todo/search?todoTitle=${conditionData.todoTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&subjects=${conditionData.subjects}&lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
     //return axios.get('/todolist');
 
 }
@@ -131,7 +141,9 @@ function* watchSearchTodo() {
 }
 
 function loadSubjectAPI() {
-    return axios.get('/todo/subjects');
+    return axios.get('/todo/subjects', {
+        withCredentials: true,
+    });
 }
 
 function* loadSubject() {
@@ -156,7 +168,9 @@ function* watchLoadSubject() {
 }
 
 function completeTodoAPI(todoData) {
-    return axios.put('/todo/complete', todoData);
+    return axios.put('/todo/complete', todoData, {
+        withCredentials: true,
+    });
 }
 function* completeTodo(action) {
     console.log("action.data:", action.data);
@@ -179,7 +193,9 @@ function* watchCompleteTodo() {
 }
 
 function editTodoAPI(todoData) {
-    return axios.put('/todo/edit', todoData);
+    return axios.put('/todo/edit', todoData, {
+        withCredentials: true,
+    });
 }
 function* editTodo(action) {
     try {
@@ -201,7 +217,9 @@ function* watchEditTodo() {
 }
 
 function deleteTodoAPI(todoData) {
-    return axios.delete(`/todo/${todoData.id}`);
+    return axios.delete(`/todo/${todoData.id}`, {
+        withCredentials: true,
+    });
 }
 function* deleteTodo(action) {
     try {
