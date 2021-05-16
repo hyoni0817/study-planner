@@ -8,9 +8,9 @@ const db = require('../models');
 
 router.get('/', async (req, res, next) => {
     try {
-        let where = {};
+        let where = [{ UserId: req.user.id }];
         if (parseInt(req.query.lastId)) {
-            where = {
+            where[1] = {
                 id: {
                     [Op.gt]: parseInt(req.query.lastId),
                 }
@@ -38,6 +38,7 @@ router.get('/now', async (req, res, next) => {
         const nowTime = moment().format(timeFormat);
 
         let where = [{
+            UserId: req.user.id,
             createdAt: { 
                     [Op.gte]: todayDate,
                     [Op.lt]: addOneDay,
@@ -74,6 +75,7 @@ router.get('/today', async (req, res, next) => {
         const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
         const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         let where = [{
+            UserId: req.user.id,
             createdAt: { 
                 [Op.gte]: todayDate,
                 [Op.lt]: addOneDay,

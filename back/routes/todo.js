@@ -18,6 +18,7 @@ router.post('/', async (req, res, next) => {
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             allDayStatus: req.body.allDayStatus,
+            UserId: req.user.id,
         });
         console.log(newTodo);
         return res.status(200).json(newTodo);
@@ -29,7 +30,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/search', async (req, res, next) => {
     try {
-        let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`)];
+        let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`), {UserId: req.user.id}];
         const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         const createdAt = req.query.allDateCheckState === true ? '' : where.push({createdAt: {
             [Op.and]: {
@@ -64,7 +65,7 @@ router.get('/search', async (req, res, next) => {
 router.get('/subjects', async (req, res, next) => {
     try {
         const subjectList = await db.Todo.findAll({
-            where: {},
+            where: {UserId: req.user.id},
             attributes: [
                 //Sequelize.fn('DISTINCT', Sequelize.col('subject'))
                 'id',
@@ -85,7 +86,7 @@ router.put('/complete', async (req, res, next) => {
         const updateCompletion = await db.Todo.update({
             completion: req.body.checkBtnState,
         }, {
-            where: {id : req.body.id}
+            where: {id : req.body.id, UserId: req.user.id}
         });
 
         return res.json({id: req.body.id, completion: req.body.checkBtnState});
@@ -117,7 +118,7 @@ router.put('/edit', async (req, res, next) => {
             endTime,
             allDayStatus,
         }, {
-            where: { id }
+            where: { id, UserId: req.user.id }
         });
 
         return res.json({
@@ -140,7 +141,7 @@ router.put('/edit', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     try {
         const deleteTodo = await db.Todo.destroy({
-            where : { id: req.params.id }
+            where : { id: req.params.id, UserId: req.user.id }
         })
 
         return res.send(req.params.id);
