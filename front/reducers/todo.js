@@ -9,6 +9,7 @@ export const initialState = {
     hasMoreTodo: false,
     isLoadingTodo: false,
     isLoadingMoreTodo: false,
+    isLoadingNowTodo: false,
     isAddingTodo: false,
     addingTodoErrorReason: '',
     todoAdded: false,
@@ -148,19 +149,19 @@ const reducer = ( state = initialState, action ) => {
         case LOAD_NOW_TODO_LIST_REQUEST:
             return {
                 ...state,
-                isLoadingTodo: true,
+                isLoadingNowTodo: true,
                 nowTodoList: [],
             }
         case LOAD_NOW_TODO_LIST_SUCCESS:
             return {
                 ...state,
-                isLoadingTodo: false,
+                isLoadingNowTodo: false,
                 nowTodoList: action.data,
             }
         case LOAD_NOW_TODO_LIST_FAILURE:
             return {
                 ...state,
-                isLoadingTodo: false,
+                isLoadingNowTodo: false,
             }
         case SEARCH_TODO_LIST_REQUEST:
             return {

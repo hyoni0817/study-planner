@@ -69,7 +69,7 @@ const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const countRef = useRef([]);
-    const { todayTodoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, nowTodoList } = useSelector( state => state.todo )
+    const { todayTodoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, nowTodoList, isLoadingNowTodo } = useSelector( state => state.todo )
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
     const { me } = useSelector(state => state.user);
 
@@ -184,7 +184,7 @@ const Home = (props) => {
             </TodayAchivementRateWrapper>
             <Title>지금 해야할 일</Title>
             <TodoNowWrapper>
-                <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
+                <Spin indicator={antIcon} spinning={isLoadingNowTodo} tip="할 일 목록을 불러오는 중입니다...">
                     {
                         nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
                         : nowTodoList.map((c) => {
