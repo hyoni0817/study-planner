@@ -82,6 +82,7 @@ const Home = (props) => {
 
     const completionCount = todayTodoList.filter(v => v.completion == true).length;
     const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
+    let page = 2;
     
     const onScrollTodo = useCallback(() => {
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -90,6 +91,7 @@ const Home = (props) => {
                 if(hasMoreTodo) {    
                     dispatch({
                         type: LOAD_TODAY_TODO_LIST_REQUEST,
+                        page: page++,
                         lastId,
                     });
                 }

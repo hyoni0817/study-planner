@@ -81,19 +81,13 @@ router.get('/today', async (req, res, next) => {
                 [Op.lt]: addOneDay,
             }
         }];
-
-        if (parseInt(req.query.lastId)) {
-            where.push({
-                id: {
-                    [Op.gt]: parseInt(req.query.lastId, 10),
-                },
-            })
-        }
+        const offset = 10 * (req.query.page - 1);
 
         const todoList = await db.Todo.findAll({
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
             limit: parseInt(req.query.limit),
+            offset,
             order: [['important', 'DESC'], ['startTime', 'ASC']]
         });
         res.json(todoList);

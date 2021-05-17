@@ -82,15 +82,15 @@ function* watchLoadNowTodo() {
     yield takeLatest(LOAD_NOW_TODO_LIST_REQUEST, loadNowTodo);
 }
 
-function loadTodayTodoAPI(lastId=0, limit=10) {
-    return axios.get(`/todolist/today?lastId=${lastId}&limit=${limit}`, {
+function loadTodayTodoAPI(page=1, limit=10) {
+    return axios.get(`/todolist/today?page=${page}&limit=${limit}`, {
         withCredentials: true,
     });
 }
 
 function* loadTodayTodo(action) {
     try {
-        const result = yield call(loadTodayTodoAPI, action.lastId);
+        const result = yield call(loadTodayTodoAPI, action.page);
         yield put({
             type: LOAD_TODAY_TODO_LIST_SUCCESS,
             data: result.data,
