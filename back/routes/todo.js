@@ -7,6 +7,9 @@ const db = require('../models');
 
 const router = express.Router();
 
+const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+
 router.post('/', async (req, res, next) => {
     try {
         const newTodo = await db.Todo.create({
@@ -20,8 +23,48 @@ router.post('/', async (req, res, next) => {
             allDayStatus: req.body.allDayStatus,
             UserId: req.user.id,
         });
+
+        const todoAndCompletedCount = await db.User.findOne({
+            where: { id: req.user.id },
+            attributes: ['id'],
+            include: [{ 
+                model: db.Todo,
+                as: 'Todos',
+                attributes: ['id'], 
+                where: [{
+                    createdAt: { 
+                        [Op.gte]: todayDate,
+                        [Op.lt]: addOneDay,
+                    },
+                }],
+                order: [['important', 'DESC'], ['startTime', 'ASC']],
+                required: false,
+            }, { 
+                model: db.Todo,
+                as: 'CompletedTodos',
+                attributes: ['id'], 
+                where: [{
+                    createdAt: { 
+                        [Op.gte]: todayDate,
+                        [Op.lt]: addOneDay,
+                    },
+                }, {
+                    completion: 1
+                }],
+                order: [['important', 'DESC'], ['startTime', 'ASC']],
+                required: false,
+            }],
+        });
+        const result = {
+            newTodo,
+            count: {
+                Todos: todoAndCompletedCount.Todos.length,
+                CompletedTodos: todoAndCompletedCount.CompletedTodos.length,
+            },
+        }
         console.log(newTodo);
-        return res.status(200).json(newTodo);
+
+        return res.status(200).json(result);
     } catch (e) {
         console.error(e);
         return next(e);
@@ -89,7 +132,47 @@ router.put('/complete', async (req, res, next) => {
             where: {id : req.body.id, UserId: req.user.id}
         });
 
-        return res.json({id: req.body.id, completion: req.body.checkBtnState});
+        const todoAndCompletedCount = await db.User.findOne({
+            where: { id: req.user.id },
+            attributes: ['id'],
+            include: [{ 
+                model: db.Todo,
+                as: 'Todos',
+                attributes: ['id'], 
+                where: [{
+                    createdAt: { 
+                        [Op.gte]: todayDate,
+                        [Op.lt]: addOneDay,
+                    },
+                }],
+                order: [['important', 'DESC'], ['startTime', 'ASC']],
+                required: false,
+            }, { 
+                model: db.Todo,
+                as: 'CompletedTodos',
+                attributes: ['id'], 
+                where: [{
+                    createdAt: { 
+                        [Op.gte]: todayDate,
+                        [Op.lt]: addOneDay,
+                    },
+                }, {
+                    completion: 1
+                }],
+                order: [['important', 'DESC'], ['startTime', 'ASC']],
+                required: false,
+            }],
+        });
+        const result = {
+            id: req.body.id, 
+            completion: req.body.checkBtnState,
+            count: {
+                Todos: todoAndCompletedCount.Todos.length,
+                CompletedTodos: todoAndCompletedCount.CompletedTodos.length,
+            },
+        }
+
+        return res.json(result);
     } catch (e) {
         console.error(e);
         return next(e);

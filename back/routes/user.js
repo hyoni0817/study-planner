@@ -5,13 +5,51 @@ const router = express.Router();
 const db = require('../models');
 const passport = require('passport');
 
+const { Op } = require('sequelize');
+const moment = require('moment');
+
+const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+
 router.get('/', async (req, res) => {
     if(!req.user) {
         return res.status(401).send('로그인이 필요합니다');
     }
-    const user = Object.assign({}, req.user.toJSON());
-    delete user.password
-    return res.json(user);
+
+    const user = await db.User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+            exclude: ['password']
+        },
+        include: [{ 
+            model: db.Todo,
+            as: 'Todos',
+            attributes: ['id'], 
+            where: [{
+                createdAt: { 
+                    [Op.gte]: todayDate,
+                    [Op.lt]: addOneDay,
+                },
+            }],
+            order: [['important', 'DESC'], ['startTime', 'ASC']],
+            required: false,
+        }, { 
+            model: db.Todo,
+            as: 'CompletedTodos',
+            attributes: ['id'], 
+            where: [{
+                createdAt: { 
+                    [Op.gte]: todayDate,
+                    [Op.lt]: addOneDay,
+                },
+            }, {
+                completion: 1
+            }],
+            order: [['important', 'DESC'], ['startTime', 'ASC']],
+            required: false,
+        }],
+    });
+    return res.status(200).json(user);
 });
 
 router.post('/idcheck', async (req, res, next) => {
@@ -63,13 +101,38 @@ router.post('/login', (req, res, next) => {
                 if(loginErr) {
                     return next(loginErr);
                 }
+
                 const userInfo = await db.User.findOne({
                     where: { id: user.id },
+                    include: [{ 
+                        model: db.Todo,
+                        as: 'Todos',
+                        attributes: ['id'], 
+                        where: [{
+                            createdAt: { 
+                                [Op.gte]: todayDate,
+                                [Op.lt]: addOneDay,
+                            },
+                        }],
+                        order: [['important', 'DESC'], ['startTime', 'ASC']],
+                        required: false,
+                    }, { 
+                        model: db.Todo,
+                        as: 'CompletedTodos',
+                        attributes: ['id'], 
+                        where: [{
+                            createdAt: { 
+                                [Op.gte]: todayDate,
+                                [Op.lt]: addOneDay,
+                            },
+                        }, {
+                            completion: 1
+                        }],
+                        order: [['important', 'DESC'], ['startTime', 'ASC']],
+                        required: false,
+                    }],
                     attributes: ['id', 'nickname', 'userId']
                 });
-
-                // const filteredUser = Object.assign({}, user.toJSON());
-                // delete filteredUser.password;
                 
                 return res.json(userInfo);
             } catch (e) {

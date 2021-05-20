@@ -10,8 +10,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import { LOAD_NOW_TODO_LIST_REQUEST, LOAD_TODAY_TODO_LIST_REQUEST } from '../reducers/todo';
+import { LOAD_NOW_TODO_LIST_REQUEST, LOAD_SUBJECT_LIST_REQUEST, LOAD_TODAY_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_VIEWABLE_DDAY_LIST_REQUEST } from '../reducers/dday';
+import { LOAD_USER_REQUEST } from '../reducers/user';
 import TodayAchivementRate from '../components/TodayAchivementRate';
 
 const TodoNowWrapper = styled.div`
@@ -69,7 +70,7 @@ const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const countRef = useRef([]);
-    const { todayTodoList, hasMoreTodo, isLoadingMoreTodo, nowTodoList, isLoadingNowTodo, isLoadingTodayTodo } = useSelector( state => state.todo )
+    const { todayTodoList, hasMoreTodo, isLoadingMoreTodo, nowTodoList, isLoadingNowTodo, isLoadingTodayTodo, totalTodo, totalCompletedTodo } = useSelector( state => state.todo )
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
     const { me } = useSelector(state => state.user);
 
@@ -80,8 +81,14 @@ const Home = (props) => {
     const nowTime = moment(moment().format(timeFormat), timeFormat);
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
-    const completionCount = todayTodoList.filter(v => v.completion == true).length;
-    const progressValue = +(completionCount / todayTodoList.length * 100).toFixed(2);
+    let completionCount = 0;
+    let progressValue = 0;
+
+    if(me) {
+        completionCount = totalCompletedTodo ? totalCompletedTodo : me.CompletedTodos.length;
+        progressValue = totalTodo ? +(completionCount / totalTodo * 100).toFixed(2) : +(completionCount / me.Todos.length * 100).toFixed(2);    
+    } 
+
     let page = 2;
     
     const onScrollTodo = useCallback(() => {

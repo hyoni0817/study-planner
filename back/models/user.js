@@ -43,6 +43,7 @@ module.exports = class User extends Model {
 
     static associate(db) {
         db.User.hasMany(db.Dday);
-        db.User.hasMany(db.Todo);
+        db.User.hasMany(db.Todo, {as: 'Todos'});
+        db.User.hasMany(db.Todo, {as: 'CompletedTodos'});
     }
 }

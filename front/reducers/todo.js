@@ -5,6 +5,8 @@ export const initialState = {
     todayTodoList: [],
     nowTodoList: [],
     subjectList: [],
+    totalTodo: 0,
+    totalCompletedTodo: 0,
     todoPostId: 0,
     hasMoreTodo: false,
     isLoadingTodo: false,
@@ -86,16 +88,18 @@ const reducer = ( state = initialState, action ) => {
             const timeFormat = 'HH:mm'; 
             const nowTime = moment(moment().format(timeFormat), timeFormat);
             const addNowTodoList =  
-                nowTime.isSameOrAfter(moment(action.data.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(action.data.endTime, timeFormat)) || action.data.allDayStatus ?
-                [action.data, ...state.nowTodoList] : [...state.nowTodoList];
+                nowTime.isSameOrAfter(moment(action.data.newTodo.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(action.data.newTodo.endTime, timeFormat)) || action.data.newTodo.allDayStatus ?
+                [action.data.newTodo, ...state.nowTodoList] : [...state.nowTodoList];
             
             return {
                 ...state,
                 isAddingTodo: false,
-                todoList : [ action.data, ...state.todoList ],
-                todayTodoList: [action.data, ...state.todayTodoList],
+                todoList : [ action.data.newTodo, ...state.todoList ],
+                todayTodoList: [action.data.newTodo, ...state.todayTodoList],
                 nowTodoList: addNowTodoList,
                 todoAdded: true,
+                totalTodo: action.data.count.Todos,
+                totalCompletedTodo: action.data.count.CompletedTodos,
             }
         case ADD_TODO_FAILURE: 
             return {
@@ -231,6 +235,8 @@ const reducer = ( state = initialState, action ) => {
                 todayTodoList: [...todayTodoList],
                 todoList : [ ...todoList ],
                 nowTodoList: [...nowTodoList],
+                totalTodo: action.data.count.Todos,
+                totalCompletedTodo: action.data.count.CompletedTodos,
             }
         case COMPLETE_TODO_FAILURE:
             return {
