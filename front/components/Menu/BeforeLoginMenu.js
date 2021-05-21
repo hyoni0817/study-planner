@@ -11,7 +11,7 @@ const MobileHeader = styled.ul`
     margin: 0;
     padding: 14px 16px;
     overflow: hidden;
-    background-color: #333;
+    background-color: #f0f2f5;
 `;
 
 const LoginAndSignUpWrapper = styled.span`
@@ -19,11 +19,17 @@ const LoginAndSignUpWrapper = styled.span`
 `;
 
 const LoginBtn = styled(Button)`
-    margin: 0 8px;
+    &&& {
+        margin: 0 8px;
+        background-color: #7262fd;
+    } 
 `;
 
 const SignUpBtn = styled(Button)`
-    margin: 0 8px;
+    &&& {
+        margin: 0 8px;
+        background-color: #7262fd;
+    }
 `;
 
 const NavCol = styled(Col)`
@@ -33,6 +39,16 @@ const NavCol = styled(Col)`
     padding: 14px 16px;
     text-decoration: none;
 `;
+
+const SiteName = styled.a`
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+
+    &: hover {
+        color: black;
+    }
+`
 
 const BeforeLoginMenu = () => {
     const [loginForm, setLoginForm] = useState(false);
@@ -44,7 +60,7 @@ const BeforeLoginMenu = () => {
     return (
         <>
             <MobileHeader>
-                <Link href="/"><a>Study Planner</a></Link>
+                <Link href="/"><SiteName>Study Planner</SiteName></Link>
                 <LoginAndSignUpWrapper>
                     <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>
                         로그인
