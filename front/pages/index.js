@@ -7,14 +7,16 @@ import Router from 'next/router';
 import { useSelector } from 'react-redux';
 
 const CarouselContent = styled.h3`
-    color: #fff;
+    color: black;
     line-height: 30px;
     text-align: center;
-    background: #364d79;
 `  ;
 
 const SignUpBtn = styled(Button)`
-    margin: 0 8px;
+    &&& {
+        margin: 0 8px;
+        background-color: #7262fd;
+    }
 `;
 
 const reponsive = {

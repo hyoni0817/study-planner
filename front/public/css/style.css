@@ -93,3 +93,12 @@
 .ant-avatar>img {
     background: #FCEBB9;
 }
+
+.ant-carousel .slick-dots li.slick-active button {
+    background: #7262fd;
+    opacity: 1;
+}
+
+.ant-carousel .slick-dots li button {
+    background: #7262fd;
+}
