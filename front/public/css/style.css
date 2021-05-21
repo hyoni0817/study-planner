@@ -12,6 +12,9 @@
     #mobile-form {
         display: none;
     }   
+    #mobile-login {
+        display: none;
+    }
 }
 
 .ant-layout-sider {
