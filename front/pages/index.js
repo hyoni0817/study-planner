@@ -43,7 +43,7 @@ const Welcome = () => {
 
     return (
         <>
-            <Carousel>
+            <Carousel autoplay>
                 <div>
                     <CarouselContent>
                         D-day와 <br/>
