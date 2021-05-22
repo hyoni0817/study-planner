@@ -16,6 +16,7 @@ const SignUpBtn = styled(Button)`
     &&& {
         margin: 0 8px;
         background-color: #7262fd;
+        border-color: #7262fd;
     }
 `;
 
