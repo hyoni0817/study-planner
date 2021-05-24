@@ -50,6 +50,6 @@ app.use('/api/dday', DdayAPIRouter);
 app.use('/api/ddaylist', DdayListAPIRouter);
 app.use('/api/user', userAPIRouter);
 
-app.listen(3065, () => {
-    console.log('server is running on http://localhost:3065');
+app.listen(3070, () => {
+    console.log('server is running on http://localhost:3070');
 });

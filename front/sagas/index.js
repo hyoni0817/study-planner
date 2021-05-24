@@ -5,7 +5,7 @@ import todo from './todo';
 import Dday from './dday';
 import user from './user';
 
-axios.defaults.baseURL = "http://localhost:3065/api";
+axios.defaults.baseURL = "http://localhost:3070/api";
 
 export default function* rootSaga() {
     yield all([
