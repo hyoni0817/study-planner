@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Modal, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../reducers/user';
 
-//redux
-//import {} from '../reducers/user';
+const LoginError = styled.div`
+    color: red;
+`;
 
 const LoginForm = ({onClose}) => {
     const dispatch = useDispatch();
+    const { loginErrorReason } = useSelector(state => state.user);
 
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
@@ -66,6 +69,7 @@ const LoginForm = ({onClose}) => {
                         >
                             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="비밀 번호" value={password} onChange={onChangePassword} />
                         </Form.Item>
+                        <LoginError>{loginErrorReason}</LoginError>
                         <Form.Item name="remember" valuePropName="checked">
                             <Checkbox>로그인 상태 유지</Checkbox>
                         </Form.Item>

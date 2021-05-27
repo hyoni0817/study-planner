@@ -97,7 +97,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 isLoggingIn: false,
                 me: null,
-                loginErrorReason: action.error,
+                loginErrorReason: action.reason,
             };
         case LOG_OUT_REQUEST: 
             return {
