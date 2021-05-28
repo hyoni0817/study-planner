@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import LoginForm from './LoginForm';
 import { CloseOutlined } from '@ant-design/icons';
 
+//redux
+import { useDispatch, useSelector } from 'react-redux';
+import { INITIAL_LOG_IN_ERROR_REASON } from '../reducers/user';
+
 const LoginFormWrapper = styled.div`
     background-color: white;
     padding: 24px;       
@@ -24,8 +28,16 @@ const CloseBtn = styled.button`
 `
 
 const MobileLogin = ({isOpen}) => {
+    const dispatch = useDispatch();
+    const { loginErrorReason } = useSelector(state => state.user);
+    
     const onHandleClose = () => {
         isOpen(false);
+        if(loginErrorReason) {
+            dispatch({
+                type: INITIAL_LOG_IN_ERROR_REASON,
+            })
+        }
     }
 
     return (
