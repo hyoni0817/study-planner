@@ -39,6 +39,9 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
+//loginErrorReason state 초기화하는 액션
+export const INITIAL_LOG_IN_ERROR_REASON = 'INITIAL_LOG_IN_ERROR_REASON';
+
 const reducer = ( state = initialState, action ) => {
     switch (action.type) {
         case SIGN_UP_REQUEST:
@@ -132,6 +135,11 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
             };
+        case INITIAL_LOG_IN_ERROR_REASON: 
+            return {
+                ...state,
+                loginErrorReason: '',
+            }
         default: {
             return {
                 ...state,
