@@ -11,7 +11,7 @@ const LoginError = styled.div`
 
 const LoginForm = ({onClose}) => {
     const dispatch = useDispatch();
-    const { loginErrorReason } = useSelector(state => state.user);
+    const { loginErrorReason, isLoggedIn } = useSelector(state => state.user);
 
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
@@ -32,8 +32,11 @@ const LoginForm = ({onClose}) => {
                 userId,
                 password
             }
-        })
-        onClose();
+        });
+
+        if(isLoggedIn) {
+            onClose();
+        };
     };
 
     return (
