@@ -198,7 +198,8 @@ const SignUp = (props) => {
                                     >
                                         <Form.Item 
                                             name="password"
-                                            noStyle
+                                            hasFeedback
+                                            style={{margin: 0}}
                                             rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
                                         >
                                             <Input.Password value={password} onChange={onChangePassword} />
@@ -210,7 +211,8 @@ const SignUp = (props) => {
                                     >
                                         <Form.Item 
                                             name="passwordCheck"
-                                            noStyle
+                                            hasFeedback
+                                            style={{margin: 0}}
                                             dependencies={['password']}
                                             rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }, 
                                                 ({ getFieldValue }) => ({
