@@ -3,7 +3,9 @@ import axios from 'axios';
 import { ADD_DDAY_REQUEST, ADD_DDAY_SUCCESS, ADD_DDAY_FAILURE, LOAD_DDAY_LIST_REQUEST, LOAD_DDAY_LIST_SUCCESS, LOAD_DDAY_LIST_FAILURE, SEARCH_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_SUCCESS, SEARCH_DDAY_LIST_FAILURE, EDIT_DDAY_REQUEST, EDIT_DDAY_SUCCESS, EDIT_DDAY_FAILURE, DELETE_DDAY_REQUEST, DELETE_DDAY_SUCCESS, DELETE_DDAY_FAILURE, SHOW_DDAY_REQUEST, SHOW_DDAY_SUCCESS, SHOW_DDAY_FAILURE, LOAD_VIEWABLE_DDAY_LIST_REQUEST, LOAD_VIEWABLE_DDAY_LIST_SUCCESS, LOAD_VIEWABLE_DDAY_LIST_FAILURE } from '../reducers/dday';
 
 function addDdayAPI(DdayData) {
-    return axios.post('/dday', DdayData);
+    return axios.post('/dday', DdayData, {
+        withCredentials: true,
+    });
 }
 
 function* addDday(action) {
@@ -27,7 +29,9 @@ function* watchAddDday() {
 }
 
 function loadDdayAPI(lastId=0, limit=10) {
-    return axios.get(`/ddaylist?lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/ddaylist?lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
 }
 
 function* loadDday(action) {
@@ -52,7 +56,9 @@ function* watchLoadDday() {
 }
 
 function loadViewableDdayAPI(lastId=0, limit=10) {
-    return axios.get(`/ddaylist/viewable?lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/ddaylist/viewable?lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
 }
 
 function* loadViewableDday(action) {
@@ -77,7 +83,9 @@ function* watchLoadViewableDday() {
 }
 
 function searchDdayAPI(conditionData, lastId=0, limit=10) {
-    return axios.get(`/dday/search?DdayTitle=${conditionData.DdayTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&memo=${conditionData.memo}&lastId=${lastId}&limit=${limit}`);
+    return axios.get(`/dday/search?DdayTitle=${conditionData.DdayTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&memo=${conditionData.memo}&lastId=${lastId}&limit=${limit}`, {
+        withCredentials: true,
+    });
 }
 
 function* searchDday(action) {
@@ -102,7 +110,9 @@ function* watchSearchDday() {
 }
 
 function editDdayAPI(DdayData) {
-    return axios.put('/dday/edit', DdayData);
+    return axios.put('/dday/edit', DdayData, {
+        withCredentials: true,
+    });
 }
 function* editDday(action) {
     try {
@@ -124,7 +134,9 @@ function* watchEditDday() {
 }
 
 function deleteDdayAPI(DdayData) {
-    return axios.delete(`/dday/${DdayData.id}`);
+    return axios.delete(`/dday/${DdayData.id}`, {
+        withCredentials: true,
+    });
 }
 function* deleteDday(action) {
     try {
@@ -146,7 +158,9 @@ function* watchDeleteDday() {
 }
 
 function showDdayAPI(DdayData) {
-    return axios.put('/dday/show', DdayData);
+    return axios.put('/dday/show', DdayData, {
+        withCredentials: true,
+    });
 }
 
 function* showDday(action) {
