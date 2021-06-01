@@ -12,6 +12,7 @@ router.post('/', async (req, res, next) => {
             title: req.body.title,
             memo: req.body.memo,
             dueDate: req.body.dueDate,
+            UserId: req.user.id,
         });
         return res.status(200).json(newDday);
     } catch (e) {
@@ -22,7 +23,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/search', async (req, res, next) => {
     try {
-        let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.DdayTitle}*' in boolean mode)`)];
+        let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.DdayTitle}*' in boolean mode)`), {UserId: req.user.id}];
         const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         const dueDate = req.query.allDateCheckState === true ? '' : where.push({dueDate: {
             [Op.and]: {
@@ -60,6 +61,7 @@ router.put('/edit', async (req, res, next) => {
     const title = req.body.title;
     const memo = req.body.memo;
     const dueDate = req.body.dueDate;
+    const UserId = req.user.id;
 
     try {
         const updateTodo = await db.Dday.update({
@@ -67,7 +69,7 @@ router.put('/edit', async (req, res, next) => {
             memo,
             dueDate,
         }, {
-            where: { id }
+            where: [{ id }, { UserId }]
         });
 
         return res.json({
@@ -85,7 +87,7 @@ router.put('/edit', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
     try {
         const deleteDday = await db.Dday.destroy({
-            where : { id: req.params.id }
+            where : [{ id: req.params.id }, { UserId: req.user.id }]
         })
 
         return res.send(req.params.id);
@@ -100,7 +102,7 @@ router.put('/show', async (req, res, next) => {
         const updateViewState = await db.Dday.update({
             viewState: req.body.viewState,
         }, {
-            where: {id : req.body.id}
+            where: [{id : req.body.id}, {UserId: req.user.id}]
         });
 
         return res.json({id: req.body.id, viewState: req.body.viewState});

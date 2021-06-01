@@ -7,10 +7,10 @@ const db = require('../models');
 
 router.get('/', async (req, res, next) => {
     try {
-        let where = {};
+        let where = [{ UserId: req.user.id }];
 
         if (parseInt(req.query.lastId)) {
-            where = {
+            where[1] = {
                 id: {
                     [Op.gt]: parseInt(req.query.lastId, 10),
                 },
@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/viewable', async(req, res, next) => {
     try {
-        let where = [{viewState : 1}];
+        let where = [{viewState : 1}, {UserId: req.user.id}];
         if (parseInt(req.query.lastId)) {
             where.push({ 
                 id: {
