@@ -8,9 +8,9 @@ import user from './user';
 // (이전상태, 액션) => 다음 상태
 const rootReducer = (state, action) => {
     switch (action.type) {
-        // case HYDRATE:
-        //     console.log('HYDRATE', action);
-        //     return action.payload;
+        case HYDRATE:
+            console.log('HYDRATE', action);
+            return action.payload;
         default: {
             const combineReducer = combineReducers({
                 todo,

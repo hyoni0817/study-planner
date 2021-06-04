@@ -29,4 +29,4 @@ StudyPlanner.propTypes = {
     pageProps: PropTypes.object.isRequired,
 }
 
-export default wrapper.withRedux(withReduxSaga(StudyPlanner));
+export default wrapper.withRedux(StudyPlanner);

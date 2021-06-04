@@ -9,6 +9,9 @@ import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import moment from 'moment';
+import wrapper from '../store/configureStore';
+import { END } from 'redux-saga';
+import axios from 'axios';
 
 import { LOAD_NOW_TODO_LIST_REQUEST, LOAD_SUBJECT_LIST_REQUEST, LOAD_TODAY_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_VIEWABLE_DDAY_LIST_REQUEST } from '../reducers/dday';
@@ -123,17 +126,6 @@ const Home = (props) => {
         }
     }, [hasMoreDday, viewableDdayList.length])
 
-    useEffect(() =>{
-        dispatch({
-            type: LOAD_TODAY_TODO_LIST_REQUEST,
-        });
-        dispatch({
-            type: LOAD_VIEWABLE_DDAY_LIST_REQUEST,
-        });
-        dispatch({
-            type: LOAD_NOW_TODO_LIST_REQUEST,
-        })
-    }, []);
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollTodo);
@@ -226,5 +218,31 @@ const Home = (props) => {
         </> 
     )
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+    console.log('getServerSideProps start');
+    console.log(context.req.headers);
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch({
+        type: LOAD_USER_REQUEST,
+    })
+    context.store.dispatch({
+        type: LOAD_TODAY_TODO_LIST_REQUEST,
+    });
+    context.store.dispatch({
+        type: LOAD_VIEWABLE_DDAY_LIST_REQUEST,
+    });
+    context.store.dispatch({
+        type: LOAD_NOW_TODO_LIST_REQUEST,
+    });
+    context.store.dispatch(END);
+    console.log('getServerSideProps end');
+    await context.store.sagaTask.toPromise();
+});
 
 export default Home;
