@@ -6,6 +6,7 @@ import Dday from './dday';
 import user from './user';
 
 axios.defaults.baseURL = "http://localhost:3070/api";
+axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
     yield all([
