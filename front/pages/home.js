@@ -76,7 +76,7 @@ const Home = (props) => {
     const countRef = useRef([]);
     const { todayTodoList, hasMoreTodo, isLoadingMoreTodo, nowTodoList, isLoadingNowTodo, isLoadingTodayTodo, totalTodo, totalCompletedTodo } = useSelector( state => state.todo )
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
-    const { me } = useSelector(state => state.user);
+    const { me, isLoggedOut } = useSelector(state => state.user);
     const [pageLoading, setPageLoading] = useState(false);
 
     const date = new Date();
@@ -158,9 +158,9 @@ const Home = (props) => {
     }, [hasMoreDday, viewableDdayList.length]);
 
     useEffect(() => {
-        if(!me) {
+        if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
-            Router.push('/');
+            router.push('/');
         }
     }, [me && me.id]);
     
