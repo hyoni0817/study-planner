@@ -1,17 +1,30 @@
 import React from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+
 
 const LoadingView = styled.div`
-    width: '100%',
-    height: 'auto',
+    color: #7262fd;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-top: 40vmin;
+    display: inline-block;
+
+    @media(max-width:767px) {
+        margin-top: 70vmin;
+    }
 `;
 
 const Loading = () => {
+    const antIcon = <LoadingOutlined style={{ fontSize: 45, color: '#7262fd' }} spin />;
+
     return (
         <>
             <LoadingView>
-                <LoadingOutlined style={{ fontSize: 24 }} spin />
+                <Spin indicator={antIcon} />
+                <p style={{ marginTop:'15px' }}>잠시만 기다려주세요...</p>
             </LoadingView>
         </>
     );
