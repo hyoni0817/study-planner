@@ -148,6 +148,7 @@ const MobileMenu = () => {
         dispatch({
             type: LOG_OUT_REQUEST,
         })
+        router.push('/');
     }
     
     const onChangeTheme = (value) => {
