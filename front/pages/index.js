@@ -34,13 +34,13 @@ const Welcome = () => {
     //         Router.push('/home')
     //     }
     // });
-    const { me } = useSelector(state => state.user);
+    const { me, isLoggedIn } = useSelector(state => state.user);
 
     useEffect(() => {
-        if(me) {
+        if(me && isLoggedIn) {
             Router.push('/home');
         }
-    }, [me && me.id]);
+    }, [me && me.id && isLoggedIn]);
 
     return (
         <>
