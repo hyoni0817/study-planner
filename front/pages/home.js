@@ -5,6 +5,7 @@ import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
+import Loading from '../components/Loading';
 import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -76,6 +77,7 @@ const Home = (props) => {
     const { todayTodoList, hasMoreTodo, isLoadingMoreTodo, nowTodoList, isLoadingNowTodo, isLoadingTodayTodo, totalTodo, totalCompletedTodo } = useSelector( state => state.todo )
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
     const { me } = useSelector(state => state.user);
+    const [pageLoading, setPageLoading] = useState(false);
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -93,6 +95,16 @@ const Home = (props) => {
     } 
 
     let page = 2;
+    
+    useEffect(()=> {
+        if(!me) {
+            const handleStart= ()=> { setPageLoading(true); };
+            const handleComplete= ()=> { setPageLoading(false); };
+            router.events.on('routeChangeStart', handleStart);
+            router.events.on('routeChangeComplete', handleComplete);
+            router.events.on('routeChangeError', handleComplete);
+        }
+    }, [router && !me]);
     
     const onScrollTodo = useCallback(() => {
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -158,64 +170,67 @@ const Home = (props) => {
 
     return (
         <>
-            <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
-            <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
-                <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
-                    <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
-                        { 
-                            viewableDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                            : viewableDdayList.map((c) => {
-                                console.log("c:", c)
-                                return (
-                                    <Col xs={12} sm={6} md={10} lg={6}>
-                                        <Dday key={c.id} data={c} view="home"/>    
-                                    </Col>
-                                )
-                            })  
-                        }   
-                        {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-                    </Row>
-                </Spin>             
-            </div> 
-            <TodayAchivementRateWrapper>
-                <Title>오늘의 성취율</Title>
-                <TodayAchivementRate value={progressValue} />
-            </TodayAchivementRateWrapper>
-            <Title>지금 해야할 일</Title>
-            <TodoNowWrapper>
-                <Spin indicator={antIcon} spinning={isLoadingNowTodo} tip="할 일 목록을 불러오는 중입니다...">
-                    {
-                        nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
-                        : nowTodoList.map((c) => {
-                            return (
-
-                                <Todo post={c} view="now" />
-                            )
-                        })
-                    }
-                </Spin> 
-            </TodoNowWrapper>
-            <Title>오늘 해야할 일</Title>
-            <TodayTodoListWrapper>
-                <Spin indicator={antIcon} spinning={isLoadingTodayTodo} tip="할 일 목록을 불러오는 중입니다...">
-                    { 
-                        todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
-                        : 
-                                todayTodoList.map((c) => {
+            { pageLoading ? <><Loading /></> : 
+                <>
+                    <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
+                    <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
+                        <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
+                            <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
+                                { 
+                                    viewableDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                                    : viewableDdayList.map((c) => {
+                                        console.log("c:", c)
+                                        return (
+                                            <Col xs={12} sm={6} md={10} lg={6}>
+                                                <Dday key={c.id} data={c} view="home"/>    
+                                            </Col>
+                                        )
+                                    })  
+                                }   
+                                {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                            </Row>
+                        </Spin>             
+                    </div> 
+                    <TodayAchivementRateWrapper>
+                        <Title>오늘의 성취율</Title>
+                        <TodayAchivementRate value={progressValue} />
+                    </TodayAchivementRateWrapper>
+                    <Title>지금 해야할 일</Title>
+                    <TodoNowWrapper>
+                        <Spin indicator={antIcon} spinning={isLoadingNowTodo} tip="할 일 목록을 불러오는 중입니다...">
+                            {
+                                nowTodoList.length == 0 ? <p style={{textAlign: 'center', display: 'tableCell', }}>지금 해야할 일이 없습니다.</p> 
+                                : nowTodoList.map((c) => {
                                     return (
-                                        <Todo key={c.id} post={c} />
+
+                                        <Todo post={c} view="now" />
                                     )
-                                }) 
-                            
-                    }
-                    {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-                </Spin>
-            </TodayTodoListWrapper>
-            <AddTodoAffix>
-                <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
-            </AddTodoAffix>
-            
-        </> 
+                                })
+                            }
+                        </Spin> 
+                    </TodoNowWrapper>
+                    <Title>오늘 해야할 일</Title>
+                    <TodayTodoListWrapper>
+                        <Spin indicator={antIcon} spinning={isLoadingTodayTodo} tip="할 일 목록을 불러오는 중입니다...">
+                            { 
+                                todayTodoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
+                                : 
+                                        todayTodoList.map((c) => {
+                                            return (
+                                                <Todo key={c.id} post={c} />
+                                            )
+                                        }) 
+                                    
+                            }
+                            {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                        </Spin>
+                    </TodayTodoListWrapper>
+                    <AddTodoAffix>
+                        <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
+                    </AddTodoAffix>
+                </>
+            }
+        </>
     )
 };
 
