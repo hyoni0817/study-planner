@@ -8,6 +8,7 @@ export const initialState = {
     isLoggingIn: false,
     isLoggedIn: false,
     isLoggingOut: false,
+    isLoggedOut: false,
     logoutErrorReason: '',
     loginErrorReason: '',
     userIdCheckReason: '',
@@ -93,6 +94,7 @@ const reducer = ( state = initialState, action ) => {
                 ...state,
                 isLoggingIn: false,
                 isLoggedIn: true,
+                isLoggedOut: false,
                 me: action.data,
             };  
         case LOG_IN_FAILURE: 
@@ -112,6 +114,7 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 isLoggingOut: false,
+                isLoggedOut: true,
                 isLoggedIn: false,
                 me: null,
             };  
