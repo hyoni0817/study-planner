@@ -96,16 +96,6 @@ const Home = (props) => {
 
     let page = 2;
     
-    useEffect(()=> {
-        if(!me) {
-            const handleStart= ()=> { setPageLoading(true); };
-            const handleComplete= ()=> { setPageLoading(false); };
-            router.events.on('routeChangeStart', handleStart);
-            router.events.on('routeChangeComplete', handleComplete);
-            router.events.on('routeChangeError', handleComplete);
-        }
-    }, [router && !me]);
-    
     const onScrollTodo = useCallback(() => {
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
             const lastId = todayTodoList[todayTodoList.length - 1] && todayTodoList[todayTodoList.length - 1].id;
@@ -138,7 +128,10 @@ const Home = (props) => {
         }
     }, [hasMoreDday, viewableDdayList.length])
 
-
+    const onClickWriteBtn = () => {
+        router.push('/createplan');
+    }
+    
     useEffect(() => {
         window.addEventListener('scroll', onScrollTodo);
         return () => {
@@ -163,10 +156,16 @@ const Home = (props) => {
             router.push('/');
         }
     }, [me && me.id]);
-    
-    const onClickWriteBtn = () => {
-        router.push('/createplan');
-    }
+
+    useEffect(()=> {
+        if(!me) {
+            const handleStart= ()=> { setPageLoading(true); };
+            const handleComplete= ()=> { setPageLoading(false); };
+            router.events.on('routeChangeStart', handleStart);
+            router.events.on('routeChangeComplete', handleComplete);
+            router.events.on('routeChangeError', handleComplete);
+        }
+    }, [router && !me]);
 
     return (
         <>
