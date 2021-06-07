@@ -12,7 +12,7 @@ const LoadingView = styled.div`
     margin-top: 40vmin;
     display: inline-block;
 
-    @media(max-width:767px) {
+    @media(max-width:420px) {
         margin-top: 70vmin;
     }
 `;
