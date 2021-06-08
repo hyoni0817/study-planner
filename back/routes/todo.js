@@ -7,11 +7,11 @@ const db = require('../models');
 
 const router = express.Router();
 
-const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
-
 router.post('/', async (req, res, next) => {
     try {
+        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        
         const newTodo = await db.Todo.create({
             title: req.body.title,
             subject: req.body.selectSubject,
@@ -126,6 +126,9 @@ router.get('/subjects', async (req, res, next) => {
 
 router.put('/complete', async (req, res, next) => {
     try {
+        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        
         const updateCompletion = await db.Todo.update({
             completion: req.body.checkBtnState,
         }, {

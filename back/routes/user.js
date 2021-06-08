@@ -8,14 +8,14 @@ const passport = require('passport');
 const { Op } = require('sequelize');
 const moment = require('moment');
 
-const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
-
 router.get('/', async (req, res) => {
     if(!req.user) {
         return res.status(401).send('로그인이 필요합니다');
     }
 
+    const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+    const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+    
     const user = await db.User.findOne({
         where: { id: req.user.id },
         attributes: {
@@ -96,6 +96,8 @@ router.post('/login', (req, res, next) => {
             return res.status(401).send(info.reason);
         }
 
+        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         return req.login(user, async (loginErr) => {
             try {
                 if(loginErr) {
