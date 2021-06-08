@@ -169,7 +169,7 @@ const Home = (props) => {
 
     return (
         <>
-            { pageLoading ? <><Loading /></> : 
+            { pageLoading ? <><Loading logOut={true} /></> : 
                 <>
                     <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
                     <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
