@@ -154,8 +154,10 @@ const Home = (props) => {
         if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
             router.push('/');
+        } else if(!me && isLoggedOut) {
+            router.push('/');
         }
-    }, [me && me.id]);
+    }, [me && me.id, isLoggedOut]);
 
     useEffect(()=> {
         if(!me) {
