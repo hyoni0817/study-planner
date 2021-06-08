@@ -1,9 +1,10 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Tabs, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import TodoFilter from '../containers/TodoFilter';
 import Todo from '../components/Todo';
+import Loading from '../components/Loading';
 
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -35,12 +36,14 @@ const AllTodoTitle = styled.h2`
 `
 
 const AllTodoList = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const [ searchData, setSearchData ] = useState({});
+    const [ pageLoading, setPageLoading ] = useState(false);
 
     const { todoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, todoSearched, useSearch, } = useSelector( state => state.todo );
-    const { me } = useSelector(state => state.user);
+    const { me, isLoggedOut } = useSelector(state => state.user);
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
     const onScrollTodo = useCallback(() => {
@@ -80,11 +83,23 @@ const AllTodoList = () => {
     }, [hasMoreTodo, todoList.length]);
 
     useEffect(() => {
-        if(!me) {
+        if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
-            Router.push('/');
+            router.push('/');
+        } else if(!me && isLoggedOut) {
+            router.push('/');
         }
-    }, [me && me.id])
+    }, [me && me.id, isLoggedOut]);
+
+    useEffect(()=> {
+        if(!me) {
+            const handleStart= ()=> { setPageLoading(true); };
+            const handleComplete= ()=> { setPageLoading(false); };
+            router.events.on('routeChangeStart', handleStart);
+            router.events.on('routeChangeComplete', handleComplete);
+            router.events.on('routeChangeError', handleComplete);
+        }
+    }, [router && !me]);
 
     const separateDate = (id, createdAt, list) => {
         const prevCreatedAt = list[list.findIndex(v => v.id == id) - 1].createdAt || '';
@@ -99,24 +114,28 @@ const AllTodoList = () => {
     
     return (
         <>
-            <AllTodoTitle>공부 계획 모아 보기</AllTodoTitle>
-            <TodoFilter onResult={onResult} />
-            <TodoListWrapper>
-                <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
-                    { 
-                        todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
-                        : todoList.map((c) => {
-                            return (
-                                <>
-                                    {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <tr><th colSpan="3">{c.createdAt}</th></tr>}
-                                    <Todo key={c.id} post={c} view="search"/>
-                                </>
-                            )
-                        }) 
-                    }
-                    {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-                </Spin>
-            </TodoListWrapper>
+            { pageLoading ? <><Loading logOut={true} /></> : 
+                <>
+                    <AllTodoTitle>공부 계획 모아 보기</AllTodoTitle>
+                    <TodoFilter onResult={onResult} />
+                    <TodoListWrapper>
+                        <Spin indicator={antIcon} spinning={isLoadingTodo} tip="할 일 목록을 불러오는 중입니다...">
+                            { 
+                                todoList.length == 0 ? <p style={{textAlign: 'center'}}>아직 할 일이 등록되지 않았습니다.</p> 
+                                : todoList.map((c) => {
+                                    return (
+                                        <>
+                                            {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <tr><th colSpan="3">{c.createdAt}</th></tr>}
+                                            <Todo key={c.id} post={c} view="search"/>
+                                        </>
+                                    )
+                                }) 
+                            }
+                            {isLoadingMoreTodo ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                        </Spin>
+                    </TodoListWrapper>
+                </>
+            }
         </>
     )
 };

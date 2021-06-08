@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import Dday from '../components/Dday';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { LOAD_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
+import Loading from '../components/Loading';
 
 const SpinWrapper = styled.div`
     margin: 20px 0;
@@ -30,11 +31,13 @@ const AllDdayTitle = styled.h2`
 `
 
 const AllDdayList = () => {   
+    const router = useRouter();
     const dispatch = useDispatch();
     const countRef = useRef([]);
     const { DdayList, isLoadingDday, hasMoreDday, isLoadingMoreDday, DdaySearched, useSearch } = useSelector( state => state.dday );
-    const { me } = useSelector(state => state.user);
+    const { me, isLoggedOut, isLoggingOut } = useSelector(state => state.user);
     const [ searchData, setSearchData] = useState({});
+    const [ pageLoading, setPageLoading ] = useState(false);
 
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
@@ -77,11 +80,23 @@ const AllDdayList = () => {
     }, [hasMoreDday, DdayList.length])
 
     useEffect(() => {
-        if(!me) {
+        if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
-            Router.push('/');
+            router.push('/');
+        } else if(!me && isLoggedOut) {
+            router.push('/');
         }
-    }, [me && me.id])
+    }, [me && me.id, isLoggedOut]);
+
+    useEffect(()=> {
+        if(!me) {
+            const handleStart= ()=> { setPageLoading(true); };
+            const handleComplete= ()=> { setPageLoading(false); };
+            router.events.on('routeChangeStart', handleStart);
+            router.events.on('routeChangeComplete', handleComplete);
+            router.events.on('routeChangeError', handleComplete);
+        }
+    }, [router && !me]);
 
     const separateDate = (id, dueDate, list) => {
         const prevDueDate = list[list.findIndex(v => v.id == id) - 1].dueDate || '';
@@ -95,24 +110,28 @@ const AllDdayList = () => {
     }
     
     return (
-        <> 
-            <AllDdayTitle>D-day 모아 보기</AllDdayTitle>
-            <DdayFilter onResult={onResult} />
-            <Spin indicator={antIcon} spinning={useSearch == 'no' ? isLoadingDday : !DdaySearched} tip="D-day 목록을 불러오는 중입니다...">
-                { 
-                    DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                    : DdayList.map((c) => {
-                        return (
-                            <>
-                                {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <tr><th colSpan="3">{c.dueDate}</th></tr>}
-                                <Dday key={c.id} data={c} view="search" />    
-                            </>
-                        )
-                    })  
-                }
-                {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-            </Spin>
-                    
+        <>
+            { pageLoading ? <><Loading logOut={true} /></> :
+                <> 
+                    <AllDdayTitle>D-day 모아 보기</AllDdayTitle>
+                    <DdayFilter onResult={onResult} />
+                    <Spin indicator={antIcon} spinning={useSearch == 'no' ? isLoadingDday : !DdaySearched} tip="D-day 목록을 불러오는 중입니다...">
+                        { 
+                            DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                            : DdayList.map((c) => {
+                                return (
+                                    <>
+                                        {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <tr><th colSpan="3">{c.dueDate}</th></tr>}
+                                        <Dday key={c.id} data={c} view="search" />    
+                                    </>
+                                )
+                            })  
+                        }
+                        {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                    </Spin>
+                            
+                </>
+            }
         </>
     )
 }
