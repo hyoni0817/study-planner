@@ -77,8 +77,8 @@ const AppLayout = ({ children }) => {
                     </Layout>
                 </>                  
             :   <>
-                    <MobileMenu />
                     <Layout>
+                        <MobileMenu />
                         <DesktopSider>
                             <DesktopMenu />
                         </DesktopSider>
