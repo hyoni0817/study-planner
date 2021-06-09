@@ -9,6 +9,12 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SIGN_UP_REQUEST, USER_ID_CHECK_REQUEST, } from '../reducers/user';
 import { SEARCH_TODO_LIST_FAILURE } from '../reducers/todo';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+
+//ssr
+import wrapper from '../store/configureStore';
+import { END } from 'redux-saga';
+import axios from 'axios';
 
 const SignUpTitle = styled.h3`
     text-align: center;
@@ -290,5 +296,21 @@ const SignUp = (props) => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : '';
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch({
+        type: LOAD_USER_REQUEST,
+    });
+
+    context.store.dispatch(END);
+
+    await context.store.sagaTask.toPromise();
+});
 
 export default SignUp;
