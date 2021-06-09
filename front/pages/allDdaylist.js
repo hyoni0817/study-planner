@@ -10,6 +10,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { LOAD_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
 import Loading from '../components/Loading';
+import { LOAD_USER_REQUEST } from '../reducers/user';
+import wrapper from '../store/configureStore';
+import { END } from 'redux-saga';
+import axios from 'axios'; 
 
 const SpinWrapper = styled.div`
     margin: 20px 0;
@@ -64,12 +68,6 @@ const AllDdayList = () => {
             }
         }
     }, [hasMoreDday, DdayList.length])
-
-    useEffect(() => {
-        dispatch({
-            type: LOAD_DDAY_LIST_REQUEST,
-        })
-    }, []);
 
     useEffect(() => {
         window.addEventListener('scroll', onScrollDday);
@@ -135,5 +133,24 @@ const AllDdayList = () => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+    const cookie = context.req ? context.req.headers.cookie : ''; 
+    axios.defaults.headers.Cookie = '';
+    if (context.req && cookie) {
+        axios.defaults.headers.Cookie = cookie;
+    }
+
+    context.store.dispatch({
+        type: LOAD_USER_REQUEST,
+    })
+    context.store.dispatch({
+        type: LOAD_DDAY_LIST_REQUEST,
+    });
+
+    context.store.dispatch(END);
+    
+    await context.store.sagaTask.toPromise();
+});
 
 export default AllDdayList;
