@@ -5,16 +5,17 @@ import { LoadingOutlined } from '@ant-design/icons';
 import TodoFilter from '../containers/TodoFilter';
 import Todo from '../components/Todo';
 import Loading from '../components/Loading';
-
-import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
+//redux
+import { useSelector, useDispatch } from 'react-redux';
 import { LOAD_TODO_LIST_REQUEST, SEARCH_TODO_LIST_REQUEST } from '../reducers/todo';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+
+//ssr
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
 import axios from 'axios';
-
 
 const TodoListWrapper = styled.table`
     margin-top: 20px;

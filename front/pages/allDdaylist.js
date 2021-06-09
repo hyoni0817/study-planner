@@ -5,12 +5,14 @@ import { LoadingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import DdayFilter from '../containers/DdayFilter';
 import Dday from '../components/Dday';
-
-import { useSelector, useDispatch } from 'react-redux';
-
-import { LOAD_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
 import Loading from '../components/Loading';
+
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { LOAD_DDAY_LIST_REQUEST, SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+
+//ssr
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
 import axios from 'axios'; 
