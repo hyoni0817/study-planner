@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Router from 'next/router';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import MobileForm from '../containers/MobileForm';
@@ -33,7 +32,7 @@ const CreatePlan = () => {
     useEffect(() => {
         if(!me) {
             alert('로그인 후 이용해주세요.');
-            Router.push('/');
+            router.push('/');
         }
     }, [me && me.id])
 

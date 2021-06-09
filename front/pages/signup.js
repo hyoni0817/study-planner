@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import Link from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import styled from 'styled-components';
 
@@ -31,6 +31,7 @@ const reponsive = {
 }
 
 const SignUp = (props) => {
+    const router = useRouter();
     const dispatch = useDispatch();
     const { me, isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking } = useSelector(state => state.user);
     
@@ -55,7 +56,7 @@ const SignUp = (props) => {
     useEffect(() => {
         if(me) {
             alert('로그인한 상태로 인해 홈으로 이동합니다.')
-            Router.push('/home');
+            router.push('/home');
         }
     }, [me && me.id])
 
