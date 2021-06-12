@@ -38,6 +38,14 @@ const reponsive = {
     height: 'auto',
 }
 
+const LoginBtn = styled(Button)`
+    &&& {
+        margin: 0 8px;
+        background-color: #7262fd;
+        border-color: #7262fd;
+    } 
+`;
+
 const SignUp = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -162,7 +170,7 @@ const SignUp = (props) => {
                         />
                     </div>
                     <div style={{textAlign: 'center'}}>
-                        <Button type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</Button>
+                        <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</LoginBtn>
                         { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
                         { loginForm && 
                             <MobileLoginPortal selector="#mobile-login">
