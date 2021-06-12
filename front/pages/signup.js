@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
 import styled from 'styled-components';
+import DesktopLogin from '../containers/DesktopLogin';
+import MobileLoginPortal from '../components/MobileLoginPortal';
+import MobileLogin from '../containers/MobileLogin';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,6 +54,7 @@ const SignUp = (props) => {
     const [birthYear, setBirthYear] = useState('');
     const [idBtnClick, setIdBtnClick] = useState(false);
     const [idInputStat, setIdInputStat] = useState(false);
+    const [loginForm, setLoginForm] = useState(false);
 
     useEffect(() => {
         if(idInputStat) {
@@ -140,6 +143,10 @@ const SignUp = (props) => {
         }
       })
 
+    const onHandleOpen = (value) => {
+        setLoginForm(value);
+    };
+
     return (
         <>
             { isSignedUp ? 
@@ -155,7 +162,13 @@ const SignUp = (props) => {
                         />
                     </div>
                     <div style={{textAlign: 'center'}}>
-                        <Button type="primary" size="default"><Link href="/login"><a>로그인 하러 가기</a></Link></Button>
+                        <Button type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</Button>
+                        { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
+                        { loginForm && 
+                            <MobileLoginPortal selector="#mobile-login">
+                                <MobileLogin isOpen={onHandleOpen}/>
+                            </MobileLoginPortal>
+                        }
                     </div>
                 </> : 
                 <> 
