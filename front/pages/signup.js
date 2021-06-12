@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import DesktopLogin from '../containers/DesktopLogin';
 import MobileLoginPortal from '../components/MobileLoginPortal';
 import MobileLogin from '../containers/MobileLogin';
+import Loading from '../components/Loading';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,7 +50,7 @@ const LoginBtn = styled(Button)`
 const SignUp = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { me, isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking } = useSelector(state => state.user);
+    const { me, isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking, isLoggedOut } = useSelector(state => state.user);
     
     const [ form ] = Form.useForm();
     const [username, setUsername] = useState('');
@@ -63,6 +64,7 @@ const SignUp = (props) => {
     const [idBtnClick, setIdBtnClick] = useState(false);
     const [idInputStat, setIdInputStat] = useState(false);
     const [loginForm, setLoginForm] = useState(false);
+    const [ pageLoading, setPageLoading ] = useState(false);
 
     useEffect(() => {
         if(idInputStat) {
@@ -155,164 +157,178 @@ const SignUp = (props) => {
         setLoginForm(value);
     };
 
+    useEffect(()=> {
+        if(me) {
+            const handleStart= ()=> { setPageLoading(true); };
+            const handleComplete= ()=> { setPageLoading(false); };
+            router.events.on('routeChangeStart', handleStart);
+            router.events.on('routeChangeComplete', handleComplete);
+            router.events.on('routeChangeError', handleComplete);
+        }
+    }, [router && me]);
+
     return (
         <>
-            { isSignedUp ? 
+            { pageLoading ? <><Loading logOut={false} /></> : 
                 <>
-                    <div style={{width: '100%', height: 'auto', textAlign: 'center'}}>
-                        <p>회원 가입이 완료되었어요!</p>
-                        <Image
-                            src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/completed.svg"
-                            alt="Picture of the author"
-                            width={400}
-                            height={400}
-                            style={reponsive}
-                        />
-                    </div>
-                    <div style={{textAlign: 'center'}}>
-                        <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</LoginBtn>
-                        { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
-                        { loginForm && 
-                            <MobileLoginPortal selector="#mobile-login">
-                                <MobileLogin isOpen={onHandleOpen}/>
-                            </MobileLoginPortal>
-                        }
-                    </div>
-                </> : 
-                <> 
-                    <SignUpTitle>회원 가입</SignUpTitle>
-                    <section>
-                        <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
-                            <Col>
-                                <Form 
-                                    {...formItemLayout}
-                                    layout="vertical"
-                                    size="large"
-                                    onFinish={ onFinish }
-                                    form={form}
-                                >
-                                    <Form.Item 
-                                        label="이름" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="username"
-                                            noStyle
-                                            rules={[{ required: true, message: '이름을 입력해주세요' }]}
+                    { isSignedUp ? 
+                        <>
+                            <div style={{width: '100%', height: 'auto', textAlign: 'center'}}>
+                                <p>회원 가입이 완료되었어요!</p>
+                                <Image
+                                    src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/completed.svg"
+                                    alt="Picture of the author"
+                                    width={400}
+                                    height={400}
+                                    style={reponsive}
+                                />
+                            </div>
+                            <div style={{textAlign: 'center'}}>
+                                <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</LoginBtn>
+                                { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
+                                { loginForm && 
+                                    <MobileLoginPortal selector="#mobile-login">
+                                        <MobileLogin isOpen={onHandleOpen}/>
+                                    </MobileLoginPortal>
+                                }
+                            </div>
+                        </> : 
+                        <> 
+                            <SignUpTitle>회원 가입</SignUpTitle>
+                            <section>
+                                <Row type="flex" justify="center" align="middle" style={{minHeight: '100vh'}}>
+                                    <Col>
+                                        <Form 
+                                            {...formItemLayout}
+                                            layout="vertical"
+                                            size="large"
+                                            onFinish={ onFinish }
+                                            form={form}
                                         >
-                                            <Input value={username} onChange={onChangeUsername} />
-                                        </Form.Item>                            
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="아이디" 
-                                        colon={false}
-                                    >
-                                        <Form.Item
-                                            name="userId"
-                                            noStyle
-                                            validator
-                                            rules={[{required: true, message: '아이디를 입력해주세요'}, onRuleHandler(idBtnClick)]}
-                                        >
-                                            <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '65%'}}/>
-                                        </Form.Item>
-                                        <Button type="primary" style={{width: '32%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}} onClick={onIdCheck} loading={isUserIdChecking}>
-                                            중복 체크
-                                        </Button>
-                                        { userId && isUserIdChecked && !existingUserId && idBtnClick ? <p>사용 가능한 아이디 입니다.</p> : ''}
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="비밀 번호" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="password"
-                                            hasFeedback
-                                            style={{margin: 0}}
-                                            rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
-                                        >
-                                            <Input.Password value={password} onChange={onChangePassword} />
-                                        </Form.Item>                            
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="비밀 번호 확인" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="passwordCheck"
-                                            hasFeedback
-                                            style={{margin: 0}}
-                                            dependencies={['password']}
-                                            rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }, 
-                                                ({ getFieldValue }) => ({
-                                                    validator(_, value) {
-                                                        if (!value || getFieldValue('password') === value) {
-                                                            return Promise.resolve();
-                                                        }
-                                                        return Promise.reject(new Error('비밀번호가 일치하지 않습니다.'));
-                                                    }
-                                                })    
-                                            ]}
-                                        >
-                                            <Input.Password value={passwordCheck} onChange={onChangePasswordCheck} />
-                                        </Form.Item>                            
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="닉네임" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="nickname"
-                                            noStyle
-                                            rules={[{ required: true, message: '닉네임을 입력해주세요' }]}
-                                        >
-                                            <Input value={nickname} onChange={onChangeNickname} />
-                                        </Form.Item>
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="테어난 년도" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="birthYear"
-                                            noStyle
-                                            rules={[{ required: true, message: '태어난 년도를 입력해주세요' }]}
-                                        >
-                                            <Input value={birthYear} onChange={onChangeBirthYear} />
-                                        </Form.Item>
-                                    </Form.Item>
-                                    <Form.Item 
-                                        label="이메일" 
-                                        colon={false}
-                                    >
-                                        <Form.Item 
-                                            name="email"
-                                            noStyle
-                                            rules={[{ required: true, message: '이메일을 입력해주세요' }]}
-                                        >
-                                            <Input value={email} onChange={onChangeEmail} />
-                                        </Form.Item>
-                                    </Form.Item>
-                                    <Form.Item 
-                                        name="terms" 
-                                        valuePropName="checked"
-                                        rules={[{ validator: (_, value) =>
-                                            value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
-                                    >
-                                        {/* <TermsStyle>
-                                            약관 내용
-                                        </TermsStyle> */}
-                                        <Checkbox onChange={onChangeTerms}>(개인정보 처리 방침_링크 사용하기)약관에 동의합니다.</Checkbox>
-                                    </Form.Item>
-                                    <Form.Item label=" " colon={false}>
-                                        <Button type="primary" htmlType="submit" loading={isSigningUp} style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>
-                                            가입하기
-                                        </Button>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                        </Row>
-                    </section>
-                </> 
+                                            <Form.Item 
+                                                label="이름" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="username"
+                                                    noStyle
+                                                    rules={[{ required: true, message: '이름을 입력해주세요' }]}
+                                                >
+                                                    <Input value={username} onChange={onChangeUsername} />
+                                                </Form.Item>                            
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="아이디" 
+                                                colon={false}
+                                            >
+                                                <Form.Item
+                                                    name="userId"
+                                                    noStyle
+                                                    validator
+                                                    rules={[{required: true, message: '아이디를 입력해주세요'}, onRuleHandler(idBtnClick)]}
+                                                >
+                                                    <Input value={userId} onChange={onChangeUserId} style={{marginRight: '3%', width: '65%'}}/>
+                                                </Form.Item>
+                                                <Button type="primary" style={{width: '32%', backgroundColor: '#7262fd', color: 'white', border: 'none', fontSize: '15px'}} onClick={onIdCheck} loading={isUserIdChecking}>
+                                                    중복 체크
+                                                </Button>
+                                                { userId && isUserIdChecked && !existingUserId && idBtnClick ? <p>사용 가능한 아이디 입니다.</p> : ''}
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="비밀 번호" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="password"
+                                                    hasFeedback
+                                                    style={{margin: 0}}
+                                                    rules={[{ required: true, message: '비밀번호를 입력해주세요' }]}
+                                                >
+                                                    <Input.Password value={password} onChange={onChangePassword} />
+                                                </Form.Item>                            
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="비밀 번호 확인" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="passwordCheck"
+                                                    hasFeedback
+                                                    style={{margin: 0}}
+                                                    dependencies={['password']}
+                                                    rules={[{ required: true, message: '비밀번호를 확인을 위해 다시 입력해주세요' }, 
+                                                        ({ getFieldValue }) => ({
+                                                            validator(_, value) {
+                                                                if (!value || getFieldValue('password') === value) {
+                                                                    return Promise.resolve();
+                                                                }
+                                                                return Promise.reject(new Error('비밀번호가 일치하지 않습니다.'));
+                                                            }
+                                                        })    
+                                                    ]}
+                                                >
+                                                    <Input.Password value={passwordCheck} onChange={onChangePasswordCheck} />
+                                                </Form.Item>                            
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="닉네임" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="nickname"
+                                                    noStyle
+                                                    rules={[{ required: true, message: '닉네임을 입력해주세요' }]}
+                                                >
+                                                    <Input value={nickname} onChange={onChangeNickname} />
+                                                </Form.Item>
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="테어난 년도" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="birthYear"
+                                                    noStyle
+                                                    rules={[{ required: true, message: '태어난 년도를 입력해주세요' }]}
+                                                >
+                                                    <Input value={birthYear} onChange={onChangeBirthYear} />
+                                                </Form.Item>
+                                            </Form.Item>
+                                            <Form.Item 
+                                                label="이메일" 
+                                                colon={false}
+                                            >
+                                                <Form.Item 
+                                                    name="email"
+                                                    noStyle
+                                                    rules={[{ required: true, message: '이메일을 입력해주세요' }]}
+                                                >
+                                                    <Input value={email} onChange={onChangeEmail} />
+                                                </Form.Item>
+                                            </Form.Item>
+                                            <Form.Item 
+                                                name="terms" 
+                                                valuePropName="checked"
+                                                rules={[{ validator: (_, value) =>
+                                                    value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
+                                            >
+                                                {/* <TermsStyle>
+                                                    약관 내용
+                                                </TermsStyle> */}
+                                                <Checkbox onChange={onChangeTerms}>(개인정보 처리 방침_링크 사용하기)약관에 동의합니다.</Checkbox>
+                                            </Form.Item>
+                                            <Form.Item label=" " colon={false}>
+                                                <Button type="primary" htmlType="submit" loading={isSigningUp} style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>
+                                                    가입하기
+                                                </Button>
+                                            </Form.Item>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </section>
+                        </> 
+                    }
+                </>
             }
         </>
     )
