@@ -35,7 +35,7 @@ const AddBtnWrapper = styled.div`
     padding:0 24px;
 `;
 const Logout = styled.div`
-    margin-top: 100%;
+    margin-top: 20%;
     text-decoration: underline;
     text-align: center;
 `

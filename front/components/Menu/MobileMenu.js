@@ -123,7 +123,7 @@ const SiteName = styled.a`
 `
 
 const Logout = styled.div`
-    margin-top: 100%;
+    margin-top: 20%;
     text-decoration: underline;
     text-align: center;
 `;
