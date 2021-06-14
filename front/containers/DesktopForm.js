@@ -39,8 +39,7 @@ const DesktopForm = ({mode, type, data, isOpen}) => {
                 centered
                 onOk={handleOk}
                 onCancel={handleCancel}
-                okButtonProps={{ disabled: true }}
-                cancelButtonProps={{ disabled: true }}
+                footer={null}
                 destroyOnClose={true}
             >
                 {type == 'todo' ? <TodoForm mode="edit" data={data} onSubmit={handleOk} /> : type == 'Dday' ? <DdayForm mode="edit" data={data} onSubmit={handleOk} /> : <SelectForms />}
