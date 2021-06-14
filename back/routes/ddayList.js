@@ -4,8 +4,9 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 const db = require('../models');
+const { isLoggedIn } = require('./middleware');
 
-router.get('/', async (req, res, next) => {
+router.get('/', isLoggedIn, async (req, res, next) => {
     try {
         let where = [{ UserId: req.user.id }];
 
@@ -30,7 +31,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-router.get('/viewable', async(req, res, next) => {
+router.get('/viewable', isLoggedIn, async(req, res, next) => {
     try {
         let where = [{viewState : 1}, {UserId: req.user.id}];
         if (parseInt(req.query.lastId)) {

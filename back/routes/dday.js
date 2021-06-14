@@ -5,8 +5,9 @@ const moment = require('moment');
 
 const router = express.Router();
 const db = require('../models');
+const { isLoggedIn } = require('./middleware');
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedIn, async (req, res, next) => {
     try{
         const newDday = await db.Dday.create({
             title: req.body.title,
@@ -56,7 +57,7 @@ router.get('/search', async (req, res, next) => {
     } 
 });
 
-router.put('/edit', async (req, res, next) => {
+router.put('/edit', isLoggedIn, async (req, res, next) => {
     const id = req.body.id;
     const title = req.body.title;
     const memo = req.body.memo;
@@ -84,7 +85,7 @@ router.put('/edit', async (req, res, next) => {
     }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isLoggedIn, async (req, res, next) => {
     try {
         const deleteDday = await db.Dday.destroy({
             where : [{ id: req.params.id }, { UserId: req.user.id }]

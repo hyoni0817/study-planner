@@ -4,10 +4,10 @@ const { Op } = require('sequelize');
 const moment = require('moment');
 
 const db = require('../models');
-
 const router = express.Router();
+const { isLoggedIn } = require('./middleware');
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedIn, async (req, res, next) => {
     try {
         const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
         const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
@@ -105,7 +105,7 @@ router.get('/search', async (req, res, next) => {
     } 
 })
 
-router.get('/subjects', async (req, res, next) => {
+router.get('/subjects', isLoggedIn, async (req, res, next) => {
     try {
         const subjectList = await db.Todo.findAll({
             where: {UserId: req.user.id},
@@ -182,7 +182,7 @@ router.put('/complete', async (req, res, next) => {
     }
 });
 
-router.put('/edit', async (req, res, next) => {
+router.put('/edit', isLoggedIn, async (req, res, next) => {
     const id = req.body.id;
     const title = req.body.title;
     const subject = req.body.selectSubject;
@@ -224,7 +224,7 @@ router.put('/edit', async (req, res, next) => {
     }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isLoggedIn, async (req, res, next) => {
     try {
         const deleteTodo = await db.Todo.destroy({
             where : { id: req.params.id, UserId: req.user.id }
