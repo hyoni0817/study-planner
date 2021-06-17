@@ -24,7 +24,7 @@ const MobileFormWrapper = styled(MobileForm)`
 const CreatePlan = () => {
     const router = useRouter()
 
-    const { me } = useSelector(state => state.user);
+    const { me, isLoggedOut } = useSelector(state => state.user);
 
     const [pageLoading, setPageLoading] = useState(false);
 
@@ -33,11 +33,13 @@ const CreatePlan = () => {
     }, [])
 
     useEffect(() => {
-        if(!me) {
+        if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
             router.push('/');
+        } else if(!me && isLoggedOut) {
+            router.push('/');
         }
-    }, [me && me.id])
+    }, [me && me.id, isLoggedOut]);
 
     useEffect(() => {
         if(!me) {
