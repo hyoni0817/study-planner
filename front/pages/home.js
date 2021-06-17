@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
 import Router from 'next/router';
 import { Button, Affix, Row, Col, Spin } from 'antd';
 import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
 import SelectForms from '../components/SelectForms';
+import CreatePlan from './createplan'
 import Loading from '../components/Loading';
 import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
@@ -230,8 +232,14 @@ const Home = (props) => {
                         </Spin>
                     </TodayTodoListWrapper>
                     <AddTodoAffix>
-                        <Button type="primary" shape="circle" size="large" onClick={onClickWriteBtn} icon={<FormOutlined />} />
+                        <Link
+                            href={`?addPlan="ok"`}
+                            as={`/createplan`}
+                        >
+                            <Button type="primary" shape="circle" size="large" icon={<FormOutlined />} />
+                        </Link>
                     </AddTodoAffix>
+                    {!!router.query.addPlan && <CreatePlan />}
                 </>
             }
         </>

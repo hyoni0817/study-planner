@@ -14,6 +14,8 @@ import {
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_OUT_REQUEST } from '../../reducers/user';
+import Modal from 'antd/lib/modal/Modal';
+import CreatePlan from '../../pages/createplan';
 
 const { SubMenu } = Menu;
 
@@ -93,17 +95,22 @@ const DesktopMenu = ({ children }) => {
                     <Link href="/analysis"><a>주간/월간 분석</a></Link>
                 </Menu.Item> */}
                 <AddBtnWrapper>
-                    <Button 
-                        type="primary" 
-                        shape="round" 
-                        icon={<PlusOutlined />} 
-                        size={'large'} 
-                        onClick={onClickWriteBtn}
-                        style={{width: '100%',backgroundColor: '#7262fd', color: 'white', border: 'none'}}
-                        >
-                        계획 / D-day 추가
-                    </Button>
+                    <Link
+                        href={'?addPlan="ture"'}
+                        as={'/createplan'}
+                    >
+                        <Button 
+                            type="primary" 
+                            shape="round" 
+                            icon={<PlusOutlined />} 
+                            size={'large'} 
+                            style={{width: '100%',backgroundColor: '#7262fd', color: 'white', border: 'none'}}
+                            >
+                            계획 / D-day 추가
+                        </Button>
+                    </Link>
                 </AddBtnWrapper>     
+                {!!router.query.addPlan && <CreatePlan />}
                 <Logout>
                     <a style={{color: '#9a9494'}} onClick={onClickLogout}>로그아웃</a>
                 </Logout>   
