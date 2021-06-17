@@ -85,7 +85,7 @@ const AppLayout = ({ children }) => {
                     </Layout>
                 </>
             }
-            {children.type === CreatePlan && children}
+            {me && children.type === CreatePlan && children}
         </>
     );
 };
