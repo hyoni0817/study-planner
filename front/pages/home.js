@@ -239,7 +239,7 @@ const Home = (props) => {
                             <Button type="primary" shape="circle" size="large" icon={<FormOutlined />} />
                         </Link>
                     </AddTodoAffix>
-                    {!!router.query.addPlan && <CreatePlan />}
+                    {!!router.query.addPlan && <CreatePlan isRefresh={false} />}
                 </>
             }
         </>

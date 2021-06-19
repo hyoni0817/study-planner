@@ -110,7 +110,7 @@ const DesktopMenu = ({ children }) => {
                         </Button>
                     </Link>
                 </AddBtnWrapper>     
-                {!!router.query.addPlan && <CreatePlan />}
+                {!!router.query.addPlan && <CreatePlan isRefresh={false} />}
                 <Logout>
                     <a style={{color: '#9a9494'}} onClick={onClickLogout}>로그아웃</a>
                 </Logout>   

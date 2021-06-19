@@ -85,7 +85,7 @@ const AppLayout = ({ children }) => {
                     </Layout>
                 </>
             }
-            {me && children.type === CreatePlan && children}
+            {me && children.type === CreatePlan && <CreatePlan isRefresh={true} />}
         </>
     );
 };

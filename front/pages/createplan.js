@@ -21,7 +21,7 @@ const MobileFormWrapper = styled(MobileForm)`
     }
 `;
 
-const CreatePlan = () => {
+const CreatePlan = ({ isRefresh }) => {
     const router = useRouter()
 
     const { me, isLoggedOut } = useSelector(state => state.user);
@@ -56,9 +56,9 @@ const CreatePlan = () => {
             { pageLoading ? <><Loading logOut={true} /></> :
                 <>
                     <MobileFormPortal selector="#mobile-form">
-                        <MobileFormWrapper />
+                        <MobileFormWrapper moveHome={isRefresh} />
                     </MobileFormPortal>
-                    <DesktopForm />
+                    <DesktopForm moveHome={isRefresh} />
                 </>
             }
         </>

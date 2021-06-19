@@ -12,7 +12,7 @@ const ModalWrapper = styled(Modal)`
     }   
 `;
 
-const DesktopForm = ({mode, type, data, isOpen}) => {
+const DesktopForm = ({mode, type, data, isOpen, moveHome}) => {
     const router = useRouter();
     const [ editModal, setEditModal ] = useState(true);
 
@@ -26,7 +26,7 @@ const DesktopForm = ({mode, type, data, isOpen}) => {
             setEditModal(false); 
             isOpen(false);
         } else {
-            router.push('/home');
+            moveHome ? router.push('/home') : router.back();
         }
         console.log(e);
     };
