@@ -136,6 +136,10 @@ const Home = (props) => {
     const onClickWriteBtn = () => {
         router.push('/createplan');
     }
+
+    const addOverflow = () => {
+        document.body.style.overflow = 'auto';
+    }
     
     useEffect(() => {
         window.addEventListener('scroll', onScrollTodo);
@@ -178,6 +182,7 @@ const Home = (props) => {
         <>
             { pageLoading ? <><Loading logOut={true} /></> : 
                 <>
+                    {addOverflow()}
                     <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
                     <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
                         <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">

@@ -25,8 +25,8 @@ const CreatePlan = ({ isRefresh }) => {
     const router = useRouter()
 
     const { me, isLoggedOut } = useSelector(state => state.user);
-
-    const [pageLoading, setPageLoading] = useState(false);
+    
+    const [pageLoading, setPageLoading] = useState(false);    
 
     useEffect(() => {
       router.prefetch('/home')
@@ -41,6 +41,9 @@ const CreatePlan = ({ isRefresh }) => {
         }
     }, [me && me.id, isLoggedOut]);
 
+    const removeOverflow = () => {
+        document.body.style.overflow = 'hidden';
+    }
     useEffect(() => {
         if(!me) {
             const handleStart = () => { setPageLoading(true); };
@@ -55,6 +58,7 @@ const CreatePlan = ({ isRefresh }) => {
         <>
             { pageLoading ? <><Loading logOut={true} /></> :
                 <>
+                    {removeOverflow()}
                     <MobileFormPortal selector="#mobile-form">
                         <MobileFormWrapper moveHome={isRefresh} />
                     </MobileFormPortal>
