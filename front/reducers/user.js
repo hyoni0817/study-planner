@@ -133,6 +133,7 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 me: action.data,
+                isLoggedIn: true,
             };  
         case LOAD_USER_FAILURE: 
             return {
