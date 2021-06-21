@@ -41,9 +41,10 @@ const CreatePlan = ({ isRefresh }) => {
         }
     }, [me && me.id, isLoggedOut]);
 
-    const removeOverflow = () => {
+    useEffect(() => {
         document.body.style.overflow = 'hidden';
-    }
+    }, []);
+    
     useEffect(() => {
         if(!me) {
             const handleStart = () => { setPageLoading(true); };
@@ -58,7 +59,6 @@ const CreatePlan = ({ isRefresh }) => {
         <>
             { pageLoading ? <><Loading logOut={true} /></> :
                 <>
-                    {removeOverflow()}
                     <MobileFormPortal selector="#mobile-form">
                         <MobileFormWrapper moveHome={isRefresh} />
                     </MobileFormPortal>
