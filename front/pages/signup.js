@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
-import { Form, Input, Button, Row, Col, Checkbox } from 'antd';
+import { Form, Input, Button, Row, Col, Checkbox, Modal } from 'antd';
 import styled from 'styled-components';
 import DesktopLogin from '../containers/DesktopLogin';
 import MobileLoginPortal from '../components/MobileLoginPortal';
 import MobileLogin from '../containers/MobileLogin';
 import Loading from '../components/Loading';
+import Terms from '../components/Terms';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,6 +66,7 @@ const SignUp = (props) => {
     const [idInputStat, setIdInputStat] = useState(false);
     const [loginForm, setLoginForm] = useState(false);
     const [ pageLoading, setPageLoading ] = useState(false);
+    const [isTermsModalVisible, setIsTermsModalVisible] = useState(false);
 
     useEffect(() => {
         if(idInputStat) {
@@ -156,6 +158,14 @@ const SignUp = (props) => {
     const onHandleOpen = (value) => {
         setLoginForm(value);
     };
+
+    const showTermsModal = () => {
+        setIsTermsModalVisible(true);
+    }
+
+    const onHandleCancel = () => {
+        setIsTermsModalVisible(false);
+    }
 
     useEffect(()=> {
         if(me) {
@@ -312,10 +322,10 @@ const SignUp = (props) => {
                                                 rules={[{ validator: (_, value) =>
                                                     value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
                                             >
-                                                {/* <TermsStyle>
-                                                    약관 내용
-                                                </TermsStyle> */}
-                                                <Checkbox onChange={onChangeTerms}>(개인정보 처리 방침_링크 사용하기)약관에 동의합니다.</Checkbox>
+                                                <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox>
+                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
+                                                    <Terms />
+                                                </Modal>
                                             </Form.Item>
                                             <Form.Item label=" " colon={false}>
                                                 <Button type="primary" htmlType="submit" loading={isSigningUp} style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>
