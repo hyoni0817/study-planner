@@ -61,7 +61,6 @@ const DesktopMenu = ({ children }) => {
         dispatch({
             type: LOG_OUT_REQUEST,
         });
-        router.push('/');
     };
     
     return (
