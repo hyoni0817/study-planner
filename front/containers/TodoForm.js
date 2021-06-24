@@ -8,11 +8,6 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TODO_REQUEST, LOAD_SUBJECT_LIST_REQUEST, ADD_SUBJECT, EDIT_TODO_REQUEST } from '../reducers/todo';
 
-//ssr
-import wrapper from '../store/configureStore';
-import { END } from 'redux-saga';
-import axios from 'axios';
-
 const { Option } = Select;
 
 let index = 0;
@@ -45,6 +40,12 @@ const TodoForm = ({mode, data, onSubmit}) => {
             form.validateFields(['time']);
         }
     }, [checkTime, timeOrAllDayClickStatus]);
+
+    useEffect(() => {
+        dispatch({
+            type: LOAD_SUBJECT_LIST_REQUEST,
+        })
+    }, []);
 
     const onChangeTitle = (e) => {
         setTitle(e.target.value);
@@ -241,21 +242,5 @@ const TodoForm = ({mode, data, onSubmit}) => {
         </>
     );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-    const cookie = context.req ? context.req.headers.cookie : '';
-    axios.defaults.headers.Cookie = '';
-    if (context.req && coolie) {
-        axios.defaults.headers.Cookie = cookie;
-    }
-
-    context.store.dispatch({
-        type: LOAD_SUBJECT_LIST_REQUEST,
-    });
-
-    context.store.dispatch(END);
-    
-    await context.store.sagaTask.toPromise();
-});
 
 export default TodoForm;
