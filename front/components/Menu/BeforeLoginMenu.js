@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch, Button } from 'antd';
 import DesktopLogin from '../../containers/DesktopLogin';
@@ -11,7 +12,11 @@ const MobileHeader = styled.ul`
     margin: 0;
     padding: 14px 16px;
     overflow: hidden;
-    background-color: #f0f2f5;
+    background-color: #7262fd;
+
+    @media(max-width: 320px) {
+        padding: 10px 12px;
+    }
 `;
 
 const LoginAndSignUpWrapper = styled.span`
@@ -20,17 +25,45 @@ const LoginAndSignUpWrapper = styled.span`
 
 const LoginBtn = styled(Button)`
     &&& {
-        margin: 0 8px;
-        background-color: #7262fd;
-        border-color: #7262fd;
+        color: #7262fd;
+        background-color: #ffffff;
+        border-color: #ffffff;
     } 
+
+    @media(min-width: 768px) {
+        margin: 0 8px;
+    }
+
+    @media(max-width: 767px) {
+        font-size: 13px;
+        margin: 0 4px;
+    }
+
+    @media(max-width: 320px) {
+        font-size: 10px;
+        margin: 0 4px;
+    }
 `;
 
 const SignUpBtn = styled(Button)`
     &&& {
+        color: #7262fd;
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }
+
+    @media(min-width: 768px) {
         margin: 0 8px;
-        background-color: #7262fd;
-        border-color: #7262fd;
+    }
+
+    @media(max-width: 767px) {
+        font-size: 13px;
+        margin: 0 4px;
+    }
+
+    @media(max-width: 320px) {
+        font-size: 10px;
+        margin: 0 4px;
     }
 `;
 
@@ -52,6 +85,22 @@ const SiteName = styled.a`
     }
 `
 
+const LogoWrapper = styled.div`
+    margin-top: 5px;
+    width: 150px; 
+    height: 26px; 
+    display: inline-block;
+
+    @media(max-width: 767px) {
+        width: 130px;
+    }
+`;
+
+const reposive = {
+    width: '100%',
+    height: 'auto'
+}
+
 const BeforeLoginMenu = () => {
     const [loginForm, setLoginForm] = useState(false);
 
@@ -62,7 +111,13 @@ const BeforeLoginMenu = () => {
     return (
         <>
             <MobileHeader>
-                <Link href="/"><SiteName>Study Planner</SiteName></Link>
+                <LogoWrapper>
+                    <Link href="/">
+                        <a>
+                            <Image src="/img/logo.svg" width={150} height={26} style={reposive} />
+                        </a>
+                    </Link>
+                </LogoWrapper>
                 <LoginAndSignUpWrapper>
                     <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>
                         로그인
