@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { Drawer, Avatar, Row, Col, Menu, Switch } from 'antd';
@@ -30,7 +31,7 @@ const MobileHeader = styled.ul`
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #f0f2f5;
+    background-color: #7262fd;
     position: fixed;
     width:100%;
     z-index: 200;
@@ -128,6 +129,18 @@ const Logout = styled.div`
     text-align: center;
 `;
 
+const LogoWrapper = styled.div`
+    margin-top: 5px;
+    width: 150px; 
+    height: 26px; 
+    display: inline-block;
+`;
+
+const reposive = {
+    width: '100%',
+    height: 'auto'
+};
+
 const MobileMenu = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -164,7 +177,13 @@ const MobileMenu = () => {
                         </a>
                     </NavCol>
                     <NavCol span={21}>
-                        <Link href="/home"><SiteName>Study Planner</SiteName></Link>
+                        <LogoWrapper>
+                            <Link href="/home">
+                                <a>
+                                    <Image src="/img/logo.svg" width={150} height={26} style={reposive} />
+                                </a>
+                            </Link>
+                        </LogoWrapper>
                     </NavCol>
                 </Row>
                 {/* <li>
