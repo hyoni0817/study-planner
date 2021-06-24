@@ -28,6 +28,9 @@ const CreatePlan = ({ isRefresh }) => {
     
     const [pageLoading, setPageLoading] = useState(false);    
 
+    // const removeBodyOverflow = () => {
+    //     document.body.style.overflow = 'hidden';
+    // }
     useEffect(() => {
       router.prefetch('/home')
     }, [])
@@ -43,6 +46,9 @@ const CreatePlan = ({ isRefresh }) => {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        }
     }, []);
     
     useEffect(() => {
@@ -59,6 +65,7 @@ const CreatePlan = ({ isRefresh }) => {
         <>
             { pageLoading ? <><Loading logOut={true} /></> :
                 <>
+                    {/* {me && removeBodyOverflow()} */}
                     <MobileFormPortal selector="#mobile-form">
                         <MobileFormWrapper moveHome={isRefresh} />
                     </MobileFormPortal>

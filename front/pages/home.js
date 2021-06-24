@@ -138,10 +138,6 @@ const Home = (props) => {
     }
     
     useEffect(() => {
-        document.body.style.overflow = 'auto';
-    }, []);
-    
-    useEffect(() => {
         window.addEventListener('scroll', onScrollTodo);
         return () => {
             window.removeEventListener('scroll', onScrollTodo);
