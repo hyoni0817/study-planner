@@ -30,7 +30,7 @@ const TodoCompletionStatusCell = styled.td`
   width: 50px;
 `;
 
-const TodoEditAndDeleteCell = styled.td`
+const TodoEditAndDeleteCell = styled.div`
  text-align: right;
 `;
 
@@ -111,25 +111,34 @@ const Todo = ({post, view}) => {
     return (
         <>
           {
-            post === undefined ? '' : view !== 'search' ?
-            <TodoBoxTable view={view}>
-              <tr>
-                <TodoCompletionStatusCell>
-                  <CircleCheckBtn completed={completed} onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
-                </TodoCompletionStatusCell>
-                <td>
-                  <TodoDetailCell>
-                    <TodoTime>
-                      {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
-                      {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
-                    </TodoTime>
-                    <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
-                    분량은 {post.quantity} {post.unit}!
-                  </TodoDetailCell>
-                </td>
-              </tr>
-            </TodoBoxTable> :
-            <SearchTodoView data={post} />
+            post === undefined ? '' : 
+              <>
+                <TodoBoxTable view={view}>
+                  <tr>
+                    <TodoCompletionStatusCell>
+                      <CircleCheckBtn completed={completed} onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
+                    </TodoCompletionStatusCell>
+                    <td>
+                      <TodoDetailCell>
+                        <TodoTime>
+                          {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
+                          {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
+                        </TodoTime>
+                        <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
+                        분량은 {post.quantity} {post.unit}!
+                      </TodoDetailCell>
+                      {
+                        view === 'search' ? <>
+                          <TodoEditAndDeleteCell>
+                            <EditFormButton data={post} type="todo" />
+                            <DeleteButton id={post.id} type="todo" />
+                          </TodoEditAndDeleteCell>
+                        </> : ''
+                      }
+                    </td>
+                  </tr>
+                </TodoBoxTable> 
+              </>
             }  
         </>
     );
