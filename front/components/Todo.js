@@ -21,7 +21,8 @@ const TodoTime = styled.p`
 
 const TodoDetailCell = styled.div`
   text-align: left;
-  
+  padding-top: ${props => props.view === 'now' ? '0' : '10px'};
+  padding-bottom: ${props => props.view === 'search' || props.view === 'now' ? '0' : '10px'};
 `;
 
 const TodoCompletionStatusCell = styled.td`
@@ -119,7 +120,7 @@ const Todo = ({post, view}) => {
                       <CircleCheckBtn completed={completed} onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
                     </TodoCompletionStatusCell>
                     <td>
-                      <TodoDetailCell>
+                      <TodoDetailCell view={view}>
                         <TodoTime>
                           {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
                           {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
