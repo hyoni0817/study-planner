@@ -68,7 +68,6 @@ const DesktopMenu = ({ children }) => {
             <PcWebMenu
                 mode="inline"
                 theme={theme}
-                defaultSelectedKeys={['1']}
             >
                 <Profile>
                     <Avatar
