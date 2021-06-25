@@ -55,25 +55,25 @@ const TodoTitle = styled.p`
   margin-top: 10px;
 `;
 
+const CircleCheckBtn = styled.button`
+  color: #F6BD16;
+  height: 28px;
+  width: 28px;
+  background-color: ${props => props.completed ? 'white' : '#ffffffe8'};
+  border-radius: 50%;
+  display: block;
+  cursor:pointer;
+  border: 2px solid #F6BD16;
+  margin: 10px;
+
+  &: focus {
+    outline: none;
+  }
+`;
+
 const SearchTodoView = ({data}) => {
     const dispatch = useDispatch();
     const completed = data.completion;
-
-    const CircleCheckBtn = styled.button`
-      color: #F6BD16;
-      height: 28px;
-      width: 28px;
-      background-color: ${completed ? 'white' : '#ffffffe8'};
-      border-radius: 50%;
-      display: block;
-      cursor:pointer;
-      border: 2px solid #F6BD16;
-      margin: 10px;
-
-      &: focus {
-        outline: none;
-      }
-    `;
 
     const onClickCheckBtn = useCallback(() => {
       if(!completed) {
@@ -101,7 +101,7 @@ const SearchTodoView = ({data}) => {
         <>
             <TodoRow>
               <Col span={2}>
-                <CircleCheckBtn onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
+                <CircleCheckBtn completed={completed} onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
               </Col>
               <Col span={22}>
                 <TodoDetailCell>

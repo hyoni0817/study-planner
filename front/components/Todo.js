@@ -51,41 +51,40 @@ const TodoTitle = styled.p`
   margin-bottom: 0;
 `;
 
+const CircleCheckBtn = styled.button`
+  color: #F6BD16;
+  height: 28px;
+  width: 28px;
+  background-color: ${props => props.completed ? 'white' : '#ffffffe8'};
+  border-radius: 50%;
+  display: block;
+  cursor:pointer;
+  border: 2px solid #F6BD16;
+  margin: 10px;
+
+  &: focus {
+    outline: none;
+  }
+`;
+
+const TodoBoxTable = styled.table`
+  border-radius: 5px;
+  margin: 1.5% 1.5%;
+  width: ${ props => props.view == `search` || props.view == `now` ? `100%` : `47%`};
+  height: ${ props => props.view == `now` ? `70px` : `100px`};
+  color: ${ props => props.view == `now` ? `black` : `#ffffffe8`};
+  float: left;
+  ${ props => props.view == `now` ? `` : `background: #F6BD16;`}
+  table-layout: fixed;
+  @media screen and (max-width:767px) {
+    width:100%;
+    margin: 1.5% 0;
+  }
+`;
+
 const Todo = ({post, view}) => {
     const dispatch = useDispatch();
     const completed = post.completion;
-
-    const TodoBoxTable = styled.table`
-      border-radius: 5px;
-      margin: 1.5% 1.5%;
-      width: ${ view == `search` || view == `now` ? `100%` : `47%`};
-      height: ${ view == `now` ? `70px` : `100px`};
-      color: ${ view == `now` ? `black` : `#ffffffe8`};
-      float: left;
-      ${ view == `now` ? `` : `background: #F6BD16;`}
-      table-layout: fixed;
-      @media screen and (max-width:767px) {
-        width:100%;
-        margin: 1.5% 0;
-      }
-    }
-    `;
-
-    const CircleCheckBtn = styled.button`
-      color: #F6BD16;
-      height: 28px;
-      width: 28px;
-      background-color: ${completed ? 'white' : '#ffffffe8'};
-      border-radius: 50%;
-      display: block;
-      cursor:pointer;
-      border: 2px solid #F6BD16;
-      margin: 10px;
-
-      &: focus {
-        outline: none;
-      }
-    `;
 
     const onClickCheckBtn = useCallback(() => {
       if(!completed) {
@@ -113,10 +112,10 @@ const Todo = ({post, view}) => {
         <>
           {
             post === undefined ? '' : view !== 'search' ?
-            <TodoBoxTable>
+            <TodoBoxTable view={view}>
               <tr>
                 <TodoCompletionStatusCell>
-                  <CircleCheckBtn onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
+                  <CircleCheckBtn completed={completed} onClick={onClickCheckBtn}>{ completed ? <CheckOutlined /> : '' }</CircleCheckBtn>
                 </TodoCompletionStatusCell>
                 <td>
                   <TodoDetailCell>
