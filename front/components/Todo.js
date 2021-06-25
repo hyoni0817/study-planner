@@ -44,9 +44,7 @@ const TodoImportantStatus = styled.p`
 const TodoTitle = styled.p`
   font-size: 15px;
   margin-bottom: 0;
-  overflow:hidden; 
-  text-overflow:ellipsis; 
-  white-space:nowrap;
+  ${props => props.view === 'search' ? '' : 'overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'}
   font-weight: 600; 
   margin-top: 5px;
   margin-bottom: 0;
@@ -125,7 +123,7 @@ const Todo = ({post, view}) => {
                           {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
                           {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
                         </TodoTime>
-                        <TodoTitle><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
+                        <TodoTitle view={view}><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
                         분량은 {post.quantity} {post.unit}!
                       </TodoDetailCell>
                       {
