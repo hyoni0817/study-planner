@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { Tag } from 'antd';
 import { ExclamationCircleOutlined, CheckOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import SearchTodoView from './SearchTodoView';
 
 //redux
 import { useDispatch } from 'react-redux'
