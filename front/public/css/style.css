@@ -111,3 +111,12 @@
     background-color: #7262fd;
     border-color: #7262fd;
 }
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #7262fd;
+    font-weight: 600;
+}
+
+.ant-tabs-tab:hover {
+    color: #7262fd;
+}
