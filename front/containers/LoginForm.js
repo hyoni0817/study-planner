@@ -9,6 +9,12 @@ const LoginError = styled.div`
     color: red;
 `;
 
+const LoginBtn = styled(Button)`
+    width: 100%;
+    background-color: #7262fd;
+    border: none;
+`;
+
 const LoginForm = ({onClose}) => {
     const dispatch = useDispatch();
     const { loginErrorReason, isLoggedIn } = useSelector(state => state.user);
@@ -84,9 +90,9 @@ const LoginForm = ({onClose}) => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                            <LoginBtn type="primary" htmlType="submit">
                                 로그인 하기
-                            </Button>
+                            </LoginBtn>
                         </Form.Item>
                     </Form>
                 </Col>
