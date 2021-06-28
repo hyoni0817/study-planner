@@ -98,6 +98,8 @@ router.post('/login', (req, res, next) => {
 
         const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
         const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const rememberLogin = req.body.rememberLogin;
+        
         return req.login(user, async (loginErr) => {
             try {
                 if(loginErr) {
@@ -136,6 +138,8 @@ router.post('/login', (req, res, next) => {
                     attributes: ['id', 'nickname', 'userId']
                 });
                 
+                rememberLogin ? req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30 : '';
+
                 return res.json(userInfo);
             } catch (e) {
                 console.error(e);

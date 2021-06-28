@@ -15,6 +15,7 @@ const LoginForm = ({onClose}) => {
 
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberLogin, setRememberLogin] = useState(false);
 
     const onChangeUserId = (e) => {
         setUserId(e.target.value);
@@ -24,13 +25,18 @@ const LoginForm = ({onClose}) => {
         setPassword(e.target.value);
     };
 
+    const onChangeRememberLogin = (e) => {
+        setRememberLogin(e.target.value);
+    }
+
     const onFinish = (values) => {
         console.log('Success:', values);
         dispatch({
             type: LOG_IN_REQUEST,
             data: {
                 userId,
-                password
+                password,
+                rememberLogin,
             }
         });
 
@@ -73,8 +79,8 @@ const LoginForm = ({onClose}) => {
                             <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="비밀 번호" value={password} onChange={onChangePassword} />
                         </Form.Item>
                         <LoginError>{loginErrorReason}</LoginError>
-                        <Form.Item name="remember" valuePropName="checked">
-                            <Checkbox>로그인 상태 유지</Checkbox>
+                        <Form.Item name="remember">
+                            <Checkbox onChange={onChangeRememberLogin}>로그인 상태 유지</Checkbox>
                         </Form.Item>
 
                         <Form.Item>
