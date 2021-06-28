@@ -8,6 +8,8 @@ import MobileLoginPortal from '../components/MobileLoginPortal';
 import MobileLogin from '../containers/MobileLogin';
 import Loading from '../components/Loading';
 import Terms from '../components/Terms';
+import MobileTermsPortal from '../components/MobileTermsPortal';
+import MobileTerms from '../components/MobileTerms';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -67,6 +69,7 @@ const SignUp = (props) => {
     const [loginForm, setLoginForm] = useState(false);
     const [ pageLoading, setPageLoading ] = useState(false);
     const [isTermsModalVisible, setIsTermsModalVisible] = useState(false);
+    const [termsView, setTermsView] = useState(false);
 
     useEffect(() => {
         if(idInputStat) {
@@ -161,11 +164,17 @@ const SignUp = (props) => {
 
     const showTermsModal = () => {
         setIsTermsModalVisible(true);
-    }
+        setTermsView(true);
+    };
 
     const onHandleCancel = () => {
         setIsTermsModalVisible(false);
-    }
+        setTermsView(false);
+    };
+
+    const onHandleTermsOpen = (value) => {
+        setTermsView(value);
+    };
 
     useEffect(()=> {
         if(me) {
@@ -323,9 +332,17 @@ const SignUp = (props) => {
                                                     value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
                                             >
                                                 <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox>
-                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
-                                                    <Terms />
-                                                </Modal>
+                                                { termsView && 
+                                                    <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
+                                                        <Terms />
+                                                    </Modal>
+                                                }
+                                                { termsView && 
+                                                    <MobileTermsPortal selector="#mobile-login">
+                                                        <MobileTerms isOpen={onHandleTermsOpen}/>
+                                                    </MobileTermsPortal>
+                                                }
+                                                
                                             </Form.Item>
                                             <Form.Item label=" " colon={false}>
                                                 <Button type="primary" htmlType="submit" loading={isSigningUp} style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>

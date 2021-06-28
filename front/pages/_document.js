@@ -41,7 +41,8 @@ class MyDocument extends Document {
                     {/* Portal을 사용한 모바일 폼을 Main 컴포넌트 위에 겹쳐서 보여주기 위해 div 추가  */}
                     <div id="mobile-form"></div>
                     <div id="mobile-login"></div>
-
+                    <div id="mobile-terms"></div>
+                    
                     {/* ie 에서의 실행을 위해 폴리필 사용 */}
                     {process.env.NODE_ENV === 'production'
                     && <script src="https://polyfill.io/v3/polyfill.min.js?features=es6,es7,es8,es9,NodeList.prototype.forEach&flags=gated" />}
