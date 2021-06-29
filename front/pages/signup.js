@@ -331,19 +331,18 @@ const SignUp = (props) => {
                                                 rules={[{ validator: (_, value) =>
                                                     value ? Promise.resolve() : Promise.reject(new Error('약관 동의를 체크해주세요.')), }]}
                                             >
-                                                <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox>
-                                                { termsView && 
-                                                    <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
-                                                        <Terms />
-                                                    </Modal>
-                                                }
-                                                { termsView && 
-                                                    <MobileTermsPortal selector="#mobile-login">
-                                                        <MobileTerms isOpen={onHandleTermsOpen}/>
-                                                    </MobileTermsPortal>
-                                                }
-                                                
+                                                <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox> 
                                             </Form.Item>
+                                            { termsView && 
+                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
+                                                    <Terms />
+                                                </Modal>
+                                            }
+                                            { termsView && 
+                                                <MobileTermsPortal selector="#mobile-login">
+                                                    <MobileTerms isOpen={onHandleTermsOpen}/>
+                                                </MobileTermsPortal>
+                                            }
                                             <Form.Item label=" " colon={false}>
                                                 <Button type="primary" htmlType="submit" loading={isSigningUp} style={{backgroundColor: '#7262fd', color: 'white', border: 'none', width: '100%'}}>
                                                     가입하기
