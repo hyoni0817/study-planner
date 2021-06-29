@@ -158,7 +158,7 @@ const SignUp = (props) => {
         }
       })
 
-    const onHandleOpen = (value) => {
+    const onHandleLoginOpen = (value) => {
         setLoginForm(value);
     };
 
@@ -167,7 +167,7 @@ const SignUp = (props) => {
         setTermsView(true);
     };
 
-    const onHandleCancel = () => {
+    const onHandleTermsCancel = () => {
         setIsTermsModalVisible(false);
         setTermsView(false);
     };
@@ -204,10 +204,10 @@ const SignUp = (props) => {
                             </div>
                             <div style={{textAlign: 'center'}}>
                                 <LoginBtn type="primary" size="default" onClick={() => setLoginForm(true)}>로그인 하러 가기</LoginBtn>
-                                { loginForm && <DesktopLogin isOpen={onHandleOpen} />}
+                                { loginForm && <DesktopLogin isOpen={onHandleLoginOpen} />}
                                 { loginForm && 
                                     <MobileLoginPortal selector="#mobile-login">
-                                        <MobileLogin isOpen={onHandleOpen}/>
+                                        <MobileLogin isOpen={onHandleLoginOpen}/>
                                     </MobileLoginPortal>
                                 }
                             </div>
@@ -334,7 +334,7 @@ const SignUp = (props) => {
                                                 <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox> 
                                             </Form.Item>
                                             { termsView && 
-                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleCancel}>
+                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleTermsCancel}>
                                                     <Terms />
                                                 </Modal>
                                             }
