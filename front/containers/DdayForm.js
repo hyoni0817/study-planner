@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, DatePicker, Input, Button } from 'antd';
 import { useRouter } from 'next/router';
+import useInput from '../hooks/useInput';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,17 +14,11 @@ const DdayForm = ({mode, data, onSubmit}) => {
     const moment = require('moment');
     const dateDefaultValue = mode == 'edit' ? {defaultValue : moment(data.dueDate, 'YYYY-MM-DD')} : {};
 
-    const [ title, setTitle ] = useState(mode == 'edit' ? data.title : '');
-    const [ memo, setMemo ] = useState(mode == 'edit' ? data.memo : '');
     const [ dueDate, setDueDate ] = useState(mode == 'edit' ? data.dueDate :'');
-
-    const onChangeTitle = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const onChangeContent = (e) => {
-        setMemo(e.target.value);
-    };
+    
+    //useInput
+    const [ title, onChangeTitle ] = useInput(mode == 'edit' ? data.title : '');
+    const [ memo, onChangeContent ] = useInput(mode == 'edit' ? data.memo : '');
 
     const onChangeDueDate = (date, dateString) => {
         setDueDate(dateString);

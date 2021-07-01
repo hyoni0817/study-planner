@@ -3,6 +3,7 @@ import { Form, Select, Divider, Input, Checkbox, Button, TimePicker } from 'antd
 import { PlusOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import useInput from '../hooks/useInput';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,10 +23,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const [ form ] = Form.useForm();
     const subjectDefaultValue = mode == 'edit' ? {defaultValue: data.subject} : {} ;
     const timeDefaultValue = mode == 'edit' ? {defaultValue : [moment(data.startTime, format), moment(data.endTime, format)]} : {};
-    const [ title, setTitle ] = useState(mode == 'edit' ? data.title : '');
     const [ subjects, setSubjects ] = useState([]);
-    const [ subjectName, setSubjectName ] = useState(mode == 'edit' ? data.subject : '');
-    const [ quantity, setQuantity ] = useState(mode == 'edit' ? data.quantity : '');
     const [ unit, setUnit ] = useState(mode == 'edit' ? data.unit : '개');
     const [ important, setImporant ] = useState(mode == 'edit' ? data.important : false);
     const [ selectSubject, setSelectSubject ] = useState('');
@@ -34,6 +32,11 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const [ allDayStatus, setAllDayStatus ] = useState(mode == 'edit' ? data.allDayStatus : false);
     const [ checkTime, setCheckTime ] = useState(true);
     const [ timeOrAllDayClickStatus, setTimeOrAllDayClickStatus ] = useState(false);
+
+    //useInput
+    const [ title, onChangeTitle ] = useInput(mode == 'edit' ? data.title : '');
+    const [ subjectName, onChangeSubjectName ] = useInput(mode == 'edit' ? data.subject : '');
+    const [ quantity, onChangeQuantity ] = useInput(mode == 'edit' ? data.quantity : '');
 
     useEffect(() => {
         if(timeOrAllDayClickStatus) { 
@@ -47,24 +50,12 @@ const TodoForm = ({mode, data, onSubmit}) => {
         })
     }, []);
 
-    const onChangeTitle = (e) => {
-        setTitle(e.target.value);
-    }
-
-    const onChangeSubjectName = (e) => {
-        setSubjectName(e.target.value);
-    };
-
     const addSubject = () => {
         dispatch({
             type: ADD_SUBJECT,
             data: {subject: subjectName},
         })
         setSubjectName('');
-    };
-
-    const onChangeQuantity = (e) => {
-        setQuantity(e.target.value);
     }
     
     const onChangeUnit = (value) => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Select, Form, Button } from 'antd';
 import moment from 'moment';
+import useInput from '../hooks/useInput';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +19,7 @@ const TodoFilter = ({onResult}) => {
     const { subjectList } = useSelector(state => state.todo);
 
 
-    const [ todoTitle, setTodoTitle ] = useState('');
+    const [ todoTitle, onChangeTodoTitle ] = useInput('');
     const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
     const [ endDate, setEndDate ] = useState(moment(todayDate).format(dateFormat));
     const [ subjects, setSubjects ] = useState([]);
@@ -44,9 +45,6 @@ const TodoFilter = ({onResult}) => {
         })
     }, [checkDate, dateOrAllDateClickState]);
 
-    const onChangeTodoTitle = (e) => {
-        setTodoTitle(e.target.value);
-    };
 
     const onChangeDate = (value) => {
         setDateOrAllDateClickState(true)

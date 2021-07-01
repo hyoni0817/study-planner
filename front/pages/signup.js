@@ -10,6 +10,7 @@ import Loading from '../components/Loading';
 import Terms from '../components/Terms';
 import MobileTermsPortal from '../components/MobileTermsPortal';
 import MobileTerms from '../components/MobileTerms';
+import useInput from '../hooks/useInput';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,20 +57,22 @@ const SignUp = (props) => {
     const { me, isSignedUp, isSigningUp, isUserIdChecked, existingUserId, isUserIdChecking, isLoggedOut } = useSelector(state => state.user);
     
     const [ form ] = Form.useForm();
-    const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordCheck, setPasswordCheck] = useState('');
-    const [nickname, setNickname] = useState('');
-    const [email, setEmail] = useState('');
     const [terms, setTerms] = useState(false);
-    const [birthYear, setBirthYear] = useState('');
     const [idBtnClick, setIdBtnClick] = useState(false);
     const [idInputStat, setIdInputStat] = useState(false);
     const [loginForm, setLoginForm] = useState(false);
     const [ pageLoading, setPageLoading ] = useState(false);
     const [isTermsModalVisible, setIsTermsModalVisible] = useState(false);
     const [termsView, setTermsView] = useState(false);
+    
+    //useInput
+    const [username, onChangeUsername] = useInput('');
+    const [password, onChangePassword] = useInput('');
+    const [passwordCheck, onChangePasswordCheck] = useInput('');
+    const [nickname, onChangeNickname] = useInput('');
+    const [email, onChangeEmail] = useInput('');
+    const [birthYear, onChangeBirthYear] = useInput('');
 
     useEffect(() => {
         if(idInputStat) {
@@ -84,37 +87,15 @@ const SignUp = (props) => {
         }
     }, [me && me.id])
 
-    const onChangeUsername = (e) => {
-        setUsername(e.target.value);
-    }
     const onChangeUserId = (e) => {
         setIdInputStat(true);
         setUserId(e.target.value);
     };
 
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const onChangePasswordCheck = (e) => {
-        setPasswordCheck(e.target.value);
-    };
-
-    const onChangeNickname = (e) => {
-        setNickname(e.target.value);
-    };
-
-    const onChangeBirthYear = (e) => {
-        setBirthYear(e.target.value);
-    }
 
     const onChangeTerms = (e) => {
         setTerms(e.target.checked);
     }
-
-    const onChangeEmail = (e) => {
-        setEmail(e.target.value);
-    };
 
     const onFinish = (values) => {
         console.log('Success:', values);

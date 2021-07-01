@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Form, Button } from 'antd';
 import moment from 'moment';
+import useInput from '../hooks/useInput';
 
 import { useDispatch } from 'react-redux';
 import { SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
@@ -13,13 +14,15 @@ const DdayFilter = ({onResult}) => {
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     const [ form ] = Form.useForm();
 
-    const [ DdayTitle, setDdayTitle ] = useState('');
     const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
     const [ endDate, setEndDate ] = useState(moment(todayDate).format(dateFormat));
-    const [ memo, setMemo ] = useState('');
     const [ checkDate, setCheckDate ] = useState(false);
     const [ allDateCheckState, setllDateCheckState ] = useState(false);
     const [ dateOrAllDateClickState, setDateOrAllDateClickState ] = useState(false);
+
+    //useInput
+    const [ DdayTitle, onChangeDdayTitle ] = useInput('');
+    const [ memo, onChangeMemo ] = useInput('');
 
     useEffect(() => {
         if(dateOrAllDateClickState) {
@@ -35,10 +38,6 @@ const DdayFilter = ({onResult}) => {
             span: 16,
         }
     }
-
-    const onChangeDdayTitle = (e) => {
-        setDdayTitle(e.target.value);
-    };
 
     const onChangeDate = (value) => {
         setDateOrAllDateClickState(true)
@@ -60,10 +59,6 @@ const DdayFilter = ({onResult}) => {
         console.log(`checked = ${e.target.checked}`);
         setllDateCheckState(e.target.checked);
         e.target.checked ? setCheckDate(false) : ( startDate && endDate ? setCheckDate(false) : setCheckDate(true));
-    };
-
-    const onChangeMemo = (e) => {
-        setMemo(e.target.value);
     };
 
     const onFinish = (values) => {

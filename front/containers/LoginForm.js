@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Modal, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import useInput from '../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../reducers/user';
 
@@ -19,21 +20,9 @@ const LoginForm = ({onClose}) => {
     const dispatch = useDispatch();
     const { loginErrorReason, isLoggedIn } = useSelector(state => state.user);
 
-    const [userId, setUserId] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberLogin, setRememberLogin] = useState(false);
-
-    const onChangeUserId = (e) => {
-        setUserId(e.target.value);
-    };
-
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const onChangeRememberLogin = (e) => {
-        setRememberLogin(e.target.value);
-    }
+    const [userId, onChangeUserId] = useInput('');
+    const [password, onChangePassword] = useInput('');
+    const [rememberLogin, onChangeRememberLogin] = useInput(false);
 
     const onFinish = (values) => {
         console.log('Success:', values);
