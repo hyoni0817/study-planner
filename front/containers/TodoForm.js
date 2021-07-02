@@ -26,7 +26,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const [ subjects, setSubjects ] = useState([]);
     const [ unit, setUnit ] = useState(mode == 'edit' ? data.unit : '개');
     const [ important, setImporant ] = useState(mode == 'edit' ? data.important : false);
-    const [ selectSubject, setSelectSubject ] = useState('');
+    const [ selectSubject, setSelectSubject ] = useState(mode == 'edit' ? data.subject : '');
     const [ startTime, setStartTime ] = useState(mode == 'edit' ? data.startTime : '');
     const [ endTime, setEndTime ] = useState(mode == 'edit' ? data.endTime : '');
     const [ allDayStatus, setAllDayStatus ] = useState(mode == 'edit' ? data.allDayStatus : false);
