@@ -50,6 +50,24 @@ const TodoForm = ({mode, data, onSubmit}) => {
         })
     }, []);
 
+    useEffect(() => {
+        if(mode == "edit" && !title) {
+            form.validateFields(['todoTitle']);
+        }
+    }, [title]);
+
+    useEffect(() => {
+        if(mode == "edit" && !selectSubject) {
+            form.validateFields(['subject']);
+        }
+    }, [selectSubject]);
+    
+    useEffect(() => {
+        if(mode == "edit" && !quantity) {
+            form.validateFields(['quantity']);
+        }
+    }, [quantity]);
+    
     const addSubject = () => {
         dispatch({
             type: ADD_SUBJECT,
@@ -146,7 +164,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     <Form.Item
                     name="todoTitle"
                     noStyle
-                    rules={[{ required: true, message: '내용을 입력해주세요' }]}
+                    rules={[{ required: mode == 'edit' ? !title : true, message: '내용을 입력해주세요' }]}
                     >
                         <Input style={{ width: 320 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
@@ -155,7 +173,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     <Form.Item
                         name="subject"
                         noStyle
-                        rules={[{ required: true, message: '과목을 선택해주세요' }]}
+                        rules={[{ required: mode == 'edit' ? !subjectName : true, message: '과목을 선택해주세요' }]}
                     >
                         <Select
                             style={{ width: 240 }}
@@ -189,7 +207,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                 <Form.Item label="분량" colon={false} style={{ marginBottom: 0 }}>
                     <Form.Item
                     name="quantity"
-                    rules={[{ required: true, message: '분량을 입력해주세요' }]}
+                    rules={[{ required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                     >
                         <Input value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" />

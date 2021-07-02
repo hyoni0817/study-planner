@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, DatePicker, Input, Button } from 'antd';
 import { useRouter } from 'next/router';
 import useInput from '../hooks/useInput';
@@ -13,6 +13,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
     const dispatch = useDispatch();
     const moment = require('moment');
     const dateDefaultValue = mode == 'edit' ? {defaultValue : moment(data.dueDate, 'YYYY-MM-DD')} : {};
+    const [ form ] = Form.useForm();
 
     const [ dueDate, setDueDate ] = useState(mode == 'edit' ? data.dueDate :'');
     
@@ -51,6 +52,18 @@ const DdayForm = ({mode, data, onSubmit}) => {
         onSubmit(false);
     };
 
+    useEffect(() => {
+        if(mode == "edit" && !dueDate) {
+            form.validateFields(['ddaydate']);
+        }
+    }, [dueDate]);
+
+    useEffect(() => {
+        if(mode == "edit" && !title) {
+            form.validateFields(['ddaytitle']);
+        }
+    }, [title]);
+
     return (
         <>
             <Form 
@@ -63,12 +76,14 @@ const DdayForm = ({mode, data, onSubmit}) => {
                 }}
                 size="default"
                 onFinish={ mode == 'edit' ? onEditFinish : onFinish}
+                form={form}
             >
                 <Form.Item label="제목" colon={false}>
                     <Form.Item
                     name="ddaytitle"
                     noStyle
-                    rules={[{ required: true, message: '제목을 입력해주세요' }]}
+                    valuePropName="value"
+                    rules={[{ required: mode == 'edit' ? !title : true, message: '제목을 입력해주세요' }]}
                     >
                         <Input style={{ width: 320 }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} />
                     </Form.Item>
@@ -85,7 +100,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                     <Form.Item
                         name="ddaydate"
                         noStyle
-                        rules={[{ required: true, message: '날짜를 입력해주세요' }]}
+                        rules={[{ required: mode == 'edit' ? !dueDate : true, message: '날짜를 입력해주세요' }]}
                     >
                         <DatePicker {...dateDefaultValue} onChange={onChangeDueDate} />
                     </Form.Item>
