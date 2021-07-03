@@ -120,3 +120,7 @@
 .ant-tabs-tab:hover {
     color: #7262fd;
 }
+
+body {
+    overflow-x: hidden;
+}

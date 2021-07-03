@@ -47,7 +47,7 @@ const CreatePlan = ({ isRefresh }) => {
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {
-            document.body.style.overflow = 'auto';
+            document.body.style.overflowY = 'visible';
         }
     }, []);
     
