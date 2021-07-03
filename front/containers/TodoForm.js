@@ -143,7 +143,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                 allDayStatus,
             },
         });
-        onSubmit(false);
+        onSubmit();
     };
 
     return (

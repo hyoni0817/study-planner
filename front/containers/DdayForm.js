@@ -49,7 +49,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                 dueDate,
             },
         });
-        onSubmit(false);
+        onSubmit();
     };
 
     useEffect(() => {
