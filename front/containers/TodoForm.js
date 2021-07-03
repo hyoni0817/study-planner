@@ -125,7 +125,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
             },
         });
 
-        return router.push('/home')
+        return router.back();
     };
 
     const onEditFinish = values => {
