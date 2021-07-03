@@ -84,18 +84,13 @@ router.get('/search', async (req, res, next) => {
         const subject = req.query.subjects.length === 0 ? '' :  where.push({subject:{
             [Op.in]: [req.query.subjects]
         }})
-        if (parseInt(req.query.lastId)) {
-            where.push({
-                id: {
-                    [Op.gt]: parseInt(req.query.lastId),
-                }
-            })
-        }
+        const offset = 10 * (req.query.page - 1);
         
         const searchCondition = await db.Todo.findAll({
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'], 
             limit: parseInt(req.query.limit),
+            offset,
             order: [['createdAt', 'DESC'],['startTime', 'ASC']]
         });
         return res.json(searchCondition);

@@ -46,6 +46,8 @@ const AllTodoList = () => {
     const countRef = useRef([]);
     const [ searchData, setSearchData ] = useState({});
     const [ pageLoading, setPageLoading ] = useState(false);
+    const [ searchPage, setSearchPage] = useState(2);
+    const [ allTodoPage, setAllTodoPage] = useState(2);
 
     const { todoList, isLoadingTodo, hasMoreTodo, isLoadingMoreTodo, todoSearched, useSearch, } = useSelector( state => state.todo );
     const { me, isLoggedOut } = useSelector(state => state.user);
@@ -60,13 +62,17 @@ const AllTodoList = () => {
                         dispatch({
                             type: SEARCH_TODO_LIST_REQUEST,
                             data: searchData,
+                            page: searchPage,
                             lastId,
                         })
+                        setSearchPage(prevCount => prevCount + 1)
                     } else {
                         dispatch({
                             type: LOAD_TODO_LIST_REQUEST,
+                            page: allTodoPage,
                             lastId,
                         });
+                        setAllTodoPage(prevCount => prevCount + 1)
                     }
                 }
                 countRef.current.push(lastId);

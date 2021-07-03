@@ -10,18 +10,13 @@ const { isLoggedIn } = require('./middleware');
 router.get('/', isLoggedIn, async (req, res, next) => {
     try {
         let where = [{ UserId: req.user.id }];
-        if (parseInt(req.query.lastId)) {
-            where[1] = {
-                id: {
-                    [Op.gt]: parseInt(req.query.lastId),
-                }
-            }
-        }
+        const offset = 10 * (req.query.page - 1);
 
         const todoList = await db.Todo.findAll({
             where,
             attributes: ['id', 'title', 'subject', 'quantity', 'unit', 'important', 'startTime', 'endTime', 'allDayStatus', 'completion', 'createdAt'],
             limit: parseInt(req.query.limit),
+            offset,
             order: [['createdAt', 'DESC'], ['startTime', 'ASC']]
         });
         res.json(todoList);
