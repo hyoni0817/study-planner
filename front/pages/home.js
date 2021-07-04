@@ -83,6 +83,7 @@ const Home = (props) => {
     const { isLoadingDday, hasMoreDday, isLoadingMoreDday, viewableDdayList } = useSelector( state => state.dday )
     const { me, isLoggedOut } = useSelector(state => state.user);
     const [pageLoading, setPageLoading] = useState(false);
+    const [pageCount, setPageCount] = useState(2);
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
@@ -98,8 +99,6 @@ const Home = (props) => {
         completionCount = totalCompletedTodo ? totalCompletedTodo : me.CompletedTodos.length;
         progressValue = totalTodo ? +(completionCount / totalTodo * 100).toFixed(2) : +(completionCount / me.Todos.length * 100).toFixed(2);    
     } 
-
-    let page = 2;
     
     const onScrollTodo = useCallback(() => {
         if(window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
@@ -108,9 +107,10 @@ const Home = (props) => {
                 if(hasMoreTodo) {    
                     dispatch({
                         type: LOAD_TODAY_TODO_LIST_REQUEST,
-                        page: page++,
+                        page: pageCount,
                         lastId,
                     });
+                    setPageCount(prevCount => prevCount + 1);
                 }
                 countRef.current.push(lastId);
             }
