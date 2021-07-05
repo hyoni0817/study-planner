@@ -85,6 +85,9 @@ const AllTodoList = () => {
 
         return () => {
             window.removeEventListener('scroll', onScrollTodo);
+            countRef.current = [];
+            setSearchPage(2);
+            setAllTodoPage(2);
         }
     }, [hasMoreTodo, todoList.length]);
 

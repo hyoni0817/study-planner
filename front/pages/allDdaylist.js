@@ -76,6 +76,7 @@ const AllDdayList = () => {
 
         return () => {
             window.removeEventListener('scroll', onScrollDday);
+            countRef.current = [];
         }
     }, [hasMoreDday, DdayList.length])
 

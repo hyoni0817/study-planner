@@ -141,6 +141,8 @@ const Home = (props) => {
         window.addEventListener('scroll', onScrollTodo);
         return () => {
             window.removeEventListener('scroll', onScrollTodo);
+            countRef.current = [];
+            setPageCount(2);
         }
         
     }, [hasMoreTodo, todayTodoList.length]);
