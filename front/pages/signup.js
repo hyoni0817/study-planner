@@ -320,7 +320,7 @@ const SignUp = (props) => {
                                                 </Modal>
                                             }
                                             { termsView && 
-                                                <MobileTermsPortal selector="#mobile-login">
+                                                <MobileTermsPortal selector="#mobile-terms">
                                                     <MobileTerms isOpen={onHandleTermsOpen}/>
                                                 </MobileTermsPortal>
                                             }

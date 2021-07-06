@@ -15,6 +15,9 @@
     #mobile-login {
         display: none;
     }
+    #mobile-terms {
+        display: none;
+    }
 }
 
 .ant-layout-sider {
