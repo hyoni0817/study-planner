@@ -184,7 +184,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                                     {menu}
                                     <Divider style={{ margin: '4px 0' }} />
                                     <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-                                        <Input style={{ flex: 'auto' }} value={subjectName} onChange={setSubjectName} />
+                                        <Input style={{ flex: 'auto' }} value={subjectName} onChange={(e) => setSubjectName(e.target.value)} />
                                         <a
                                             style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
                                             onClick={addSubject}
