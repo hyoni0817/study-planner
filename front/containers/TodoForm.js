@@ -166,7 +166,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     noStyle
                     rules={[{ required: mode == 'edit' ? !title : true, message: '내용을 입력해주세요' }]}
                     >
-                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} />
+                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="과목" colon={false}>
@@ -184,7 +184,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                                     {menu}
                                     <Divider style={{ margin: '4px 0' }} />
                                     <div style={{ display: 'flex', flexWrap: 'nowrap', padding: 8 }}>
-                                        <Input style={{ flex: 'auto' }} value={subjectName} onChange={(e) => setSubjectName(e.target.value)} />
+                                        <Input style={{ flex: 'auto' }} value={subjectName} onChange={(e) => setSubjectName(e.target.value)} autocomplete="off" />
                                         <a
                                             style={{ flex: 'none', padding: '8px', display: 'block', cursor: 'pointer' }}
                                             onClick={addSubject}
@@ -210,7 +210,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                     rules={[{ required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' }]}
                     style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                     >
-                        <Input value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" />
+                        <Input value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" autocomplete="off" />
                     </Form.Item>
                     <Form.Item
                     name="unit"

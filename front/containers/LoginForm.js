@@ -59,7 +59,7 @@ const LoginForm = ({onClose}) => {
                             },
                             ]}
                         >
-                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="아이디" value={userId} onChange={onChangeUserId} />
+                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="아이디" value={userId} onChange={onChangeUserId} autocomplete="off" />
                         </Form.Item>
 
                         <Form.Item

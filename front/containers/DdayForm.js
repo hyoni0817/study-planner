@@ -85,7 +85,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                     valuePropName="value"
                     rules={[{ required: mode == 'edit' ? !title : true, message: '제목을 입력해주세요' }]}
                     >
-                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} />
+                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="메모" colon={false}>
@@ -93,7 +93,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                     name="ddaymemo"
                     noStyle
                     >
-                        <Input style={{ width: 320 }} defaultValue={ memo } placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} />
+                        <Input style={{ width: 320 }} defaultValue={ memo } placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} autocomplete="off" />
                     </Form.Item>
                 </Form.Item>
                 <Form.Item label="날짜" colon={false}>
