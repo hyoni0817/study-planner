@@ -45,7 +45,7 @@ router.get('/search', async (req, res, next) => {
 
         const searchCondition = await db.Dday.findAll({
             where,
-            attributes: ['id', 'title', 'dueDate', 'memo'], 
+            attributes: ['id', 'title', 'dueDate', 'memo', 'viewState'], 
             limit: parseInt(req.query.limit),
             order: [['dueDate', 'ASC']]
         });
