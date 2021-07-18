@@ -61,6 +61,15 @@ const DdayFilter = ({onResult}) => {
         e.target.checked ? setCheckDate(false) : ( startDate && endDate ? setCheckDate(false) : setCheckDate(true));
     };
 
+    const onRuleHandler = () => ({
+        validator(_, value) {
+            if (value !== undefined && value.length === 1) {
+                return Promise.reject(new Error('검색어를 2글자 이상 입력해주세요'));
+            }
+            return Promise.resolve();
+        }
+    })
+
     const onFinish = (values) => {
         const data = {
             DdayTitle,
@@ -105,7 +114,7 @@ const DdayFilter = ({onResult}) => {
                 </Form.Item>
                 <Form.Item
                     name="DdayMemo"
-                    rules={[{ required: true, min:2, message: '검색어를 2글자 이상 입력해주세요'}]}
+                    rules={[onRuleHandler]}
                 >
                     <Input placeholder="메모한 내용을 입력해주세요" onChange={onChangeMemo} />
                 </Form.Item>
