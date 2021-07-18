@@ -98,7 +98,7 @@ const DdayFilter = ({onResult}) => {
                     name="DdayTitle"
                     rules={[{ required: true, min:2, message: '검색어를 2글자 이상 입력해주세요'}]}
                 >
-                    <Input placeholder="제목을 입력해주세요" onChange={onChangeDdayTitle} />
+                    <Input placeholder="제목을 입력해주세요" onChange={onChangeDdayTitle} autoComplete="off" />
                 </Form.Item>
                 <Form.Item
                     name="date"
@@ -116,7 +116,7 @@ const DdayFilter = ({onResult}) => {
                     name="DdayMemo"
                     rules={[onRuleHandler]}
                 >
-                    <Input placeholder="메모한 내용을 입력해주세요" onChange={onChangeMemo} />
+                    <Input placeholder="메모한 내용을 입력해주세요" onChange={onChangeMemo} autoComplete="off" />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
