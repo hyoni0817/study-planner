@@ -6,6 +6,7 @@ front/.env
 #back
 back/node_modules
 back/.env
+back/config
 
 #ect
 ect
