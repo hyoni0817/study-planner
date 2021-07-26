@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/node.js-14.15.0-green?style=flat-square"></img>
   <img src="https://img.shields.io/badge/react-17.0.0-blue?style=flat-square"></img>
   <img src="https://img.shields.io/badge/next.js-10.0.9-orange?style=flat-square"></img>
+  <img src="https://img.shields.io/badge/mysql-8.0.19-1c40a7?style=flat-square"></img>
 </p>
 
 <!-- GIF 추가하기 -->
@@ -21,7 +22,7 @@
 <!-- 설치 방법 -->
 
 ## 개발 일지
-[개발일지 보러 바로 가기](https://www.notion.so/Study-planner-6df9506c9f7e450db691946545580c57)   
+✨ [개발일지 보러 바로 가기](https://www.notion.so/Study-planner-6df9506c9f7e450db691946545580c57)   
 개발일지에는 아래의 내용이 담겨 있습니다.
 - 해야 하는 일
 - 내 생각
