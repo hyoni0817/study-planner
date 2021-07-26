@@ -1,14 +1,14 @@
 <h1 align="center">📝Study-Planner</h1>
-<p align="center">
+<div align="center">
   Study-Planner는 D-day 및 공부 계획을 관리할 수 있는 Single Page Application 입니다.<br />
   D-day와 공부 계획을 한 눈에 확인할 수 있고, 오늘 얼마나 공부했는지도 확인할 수 있습니다.
-</p>
-<p align="center">
+</div>
+<div align="center">
   <img src="https://img.shields.io/badge/node.js-14.15.0-green?style=flat-square"></img>
   <img src="https://img.shields.io/badge/react-17.0.0-blue?style=flat-square"></img>
   <img src="https://img.shields.io/badge/next.js-10.0.9-orange?style=flat-square"></img>
   <img src="https://img.shields.io/badge/mysql-8.0.19-1c40a7?style=flat-square"></img>
-</p>
+</div>
 
 <!-- GIF 추가하기 -->
 ## 기능
