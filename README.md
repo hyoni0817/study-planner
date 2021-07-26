@@ -10,7 +10,11 @@
   <img src="https://img.shields.io/badge/mysql-8.0.19-1c40a7?style=flat-square"></img>
 </div>
 
-<!-- GIF 추가하기 -->
+<div align="center">
+  <img src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/markdown/study-planner/study-planner.gif"></img>
+  <img src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/markdown/study-planner/study-planner-search.gif"></img>
+</div>
+
 ## 기능
 📃 회원가입만 하면 Study-Planner의 모든 기능을 사용할 수 있습니다   
 👀 한 페이지에 D-day와 Todo를 같이 볼 수 있습니다    
