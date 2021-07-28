@@ -40,7 +40,7 @@ app.prepare().then(() => {
         return handle(req, res);
     });
 
-    server.listen(3000, () => {
-        console.log('next-express running on port 3000');
+    server.listen(4050, () => {
+        console.log('next-express running on port 4050');
     });
 })
