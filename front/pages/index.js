@@ -80,7 +80,7 @@ const Welcome = () => {
                                 오늘의 공부 계획을<br />
                                 한 눈에 확인할 수 있어요<br />
                                 <Image
-                                    src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/confirm.svg"
+                                    src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/confirm.svg"
                                     alt="Picture of the author"
                                     width={300}
                                     height={300}
@@ -94,7 +94,7 @@ const Welcome = () => {
                                 공부 계획을 완료했는지도<br />
                                 알 수 있어요<br />
                                 <Image
-                                    src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/achivement.svg"
+                                    src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/achivement.svg"
                                     alt="Picture of the author"
                                     width={300}
                                     height={300}
@@ -107,7 +107,7 @@ const Welcome = () => {
                                 더 효율적으로 공부할 수 있게<br />
                                 도와드려요<br />
                                 <Image
-                                    src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/join.svg"
+                                    src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/join.svg"
                                     alt="Picture of the author"
                                     width={300}
                                     height={300}

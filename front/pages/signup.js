@@ -176,7 +176,7 @@ const SignUp = (props) => {
                             <div style={{width: '100%', height: 'auto', textAlign: 'center'}}>
                                 <p>회원 가입이 완료되었어요!</p>
                                 <Image
-                                    src="https://devwebdata2020.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/completed.svg"
+                                    src="https://devwebdata2021.s3.ap-northeast-2.amazonaws.com/StudyPlanner/main/completed.svg"
                                     alt="Picture of the author"
                                     width={400}
                                     height={400}
