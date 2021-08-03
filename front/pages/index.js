@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Loading from '../components/Loading';
-import { LOAD_USER_REQUEST } from '../reducers/user';
+import { LOAD_USER_REQUEST, LOG_IN_REQUEST } from '../reducers/user';
 
 //SSR
 import wrapper from '../store/configureStore';
@@ -35,6 +35,15 @@ const SignUpBtn = styled(Button)`
     }
 `;
 
+const ExperienceBtn = styled(Button)`
+    &&& {
+        margin: 0 8px;
+        background-color: #7262fd;
+        border-color: #7262fd;
+        color: #ffffff;
+    }
+`;
+
 const reponsive = {
 
     width: '100%',
@@ -49,6 +58,7 @@ const Welcome = () => {
     //         Router.push('/home')
     //     }
     // });
+    const dispatch = useDispatch();
     const router = useRouter();
     const { me, isLoggedIn } = useSelector(state => state.user);
     const [ pageLoading, setPageLoading ] = useState(false);
@@ -68,6 +78,16 @@ const Welcome = () => {
             router.events.on('routeChangeError', handleComplete);
         }
     }, [router && me]);
+
+    const onMoveHome = () => {
+        dispatch({
+            type: LOG_IN_REQUEST,
+            data: {
+                userId: 'studyplanner',
+                password: '0000',
+            }
+        })
+    };
 
     return (
         <>
@@ -119,6 +139,9 @@ const Welcome = () => {
                         <SignUpBtn type="primary" size="default">
                             <Link href="/signup"><a>회원 가입</a></Link>
                         </SignUpBtn>
+                        <ExperienceBtn type="primary" size="default" onClick={onMoveHome}>
+                            체험하기
+                        </ExperienceBtn>
                     </div>
                 </>
             }
