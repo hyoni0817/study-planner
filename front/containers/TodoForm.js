@@ -22,7 +22,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const format = 'HH:mm';
     const [ form ] = Form.useForm();
     const subjectDefaultValue = mode == 'edit' ? {defaultValue: data.subject} : {} ;
-    const timeDefaultValue = mode == 'edit' ? {defaultValue : [moment(data.startTime, format), moment(data.endTime, format)]} : {};
+    const timeDefaultValue = mode == 'edit' && data.startTime !== 'none' ? {defaultValue : [moment(data.startTime, format), moment(data.endTime, format)]} : {};
     const [ subjects, setSubjects ] = useState([]);
     const [ unit, setUnit ] = useState(mode == 'edit' ? data.unit : '개');
     const [ important, setImporant ] = useState(mode == 'edit' ? data.important : false);
