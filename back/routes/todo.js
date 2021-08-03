@@ -62,7 +62,6 @@ router.post('/', isLoggedIn, async (req, res, next) => {
                 CompletedTodos: todoAndCompletedCount.CompletedTodos.length,
             },
         }
-        console.log(newTodo);
 
         return res.status(200).json(result);
     } catch (e) {

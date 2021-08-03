@@ -54,7 +54,6 @@ const AppLayout = ({ children }) => {
     const dispatch = useDispatch();
     const { me } = useSelector(state => state.user);
 
-    console.log("children:", children);
     return (
         <>
             { !me ? 

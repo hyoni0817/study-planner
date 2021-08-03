@@ -56,7 +56,6 @@ const DdayFilter = ({onResult}) => {
 
     const onChangeAllDateCheckBox = (e) => {
         setDateOrAllDateClickState(true);
-        console.log(`checked = ${e.target.checked}`);
         setllDateCheckState(e.target.checked);
         e.target.checked ? setCheckDate(false) : ( startDate && endDate ? setCheckDate(false) : setCheckDate(true));
     };

@@ -8,7 +8,6 @@ function addTodoAPI(todoData) {
     });
 }
 function* addTodo(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(addTodoAPI, action.data);
         yield put({
@@ -110,7 +109,6 @@ function* watchLoadTodayTodo() {
 }
 
 function searchTodoAPI(conditionData, lastId=0, page=1, limit=10) {
-    console.log("conditionData:", conditionData);
     return axios.get(`/todo/search?todoTitle=${conditionData.todoTitle}&allDateCheckState=${conditionData.allDateCheckState}&startDate=${conditionData.startDate}&endDate=${conditionData.endDate}&subjects=${conditionData.subjects}&lastId=${lastId}&limit=${limit}&page=${page}`, {
         withCredentials: true,
     });
@@ -121,7 +119,6 @@ function searchTodoAPI(conditionData, lastId=0, page=1, limit=10) {
 function* searchTodo(action) {
     try {
         const result = yield call(searchTodoAPI, action.data, action.lastId, action.page);
-        console.log("result.data:", result.data);
         yield put({
             type: SEARCH_TODO_LIST_SUCCESS,
             data: result.data,
@@ -173,7 +170,6 @@ function completeTodoAPI(todoData) {
     });
 }
 function* completeTodo(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(completeTodoAPI, action.data);
         yield put({

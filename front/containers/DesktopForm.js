@@ -28,7 +28,6 @@ const DesktopForm = ({mode, type, data, isOpen, moveHome}) => {
         } else {
             moveHome ? router.push('/home') : router.back();
         }
-        console.log(e);
     };
 
     return (

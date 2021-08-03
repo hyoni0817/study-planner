@@ -121,7 +121,6 @@ const Home = (props) => {
         if(document.querySelector('.DdayListView').scrollLeft + document.querySelector('.DdayListView').clientWidth > document.querySelector('.DdayListView').scrollWidth - 50) {
             const lastId = viewableDdayList[viewableDdayList.length - 1] && viewableDdayList[viewableDdayList.length - 1].id;
             if(!countRef.current.includes(lastId)) {
-                console.log("hasMoreDday:", hasMoreDday);
                 if(hasMoreDday) {    
                     dispatch({
                         type: LOAD_VIEWABLE_DDAY_LIST_REQUEST,
@@ -187,7 +186,6 @@ const Home = (props) => {
                                 { 
                                     viewableDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
                                     : viewableDdayList.map((c) => {
-                                        console.log("c:", c)
                                         return (
                                             <Col xs={12} sm={6} md={10} lg={6}>
                                                 <Dday key={c.id} data={c} view="home"/>    
@@ -248,8 +246,6 @@ const Home = (props) => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-    console.log('getServerSideProps start');
-    console.log(context.req.headers);
     const cookie = context.req ? context.req.headers.cookie : '';
     axios.defaults.headers.Cookie = '';
     if (context.req && cookie) {
@@ -269,7 +265,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
         type: LOAD_NOW_TODO_LIST_REQUEST,
     });
     context.store.dispatch(END);
-    console.log('getServerSideProps end');
+    // console.log('getServerSideProps end');
     await context.store.sagaTask.toPromise();
 });
 

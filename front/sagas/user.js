@@ -7,7 +7,6 @@ function signUpAPI(userData) {
 }
 
 function* signUp(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(signUpAPI, action.data);
         yield put({
@@ -32,7 +31,6 @@ function userIdCheckAPI(userData) {
 }
 
 function* userIdCheck(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(userIdCheckAPI, action.data);
         yield put({
@@ -59,7 +57,6 @@ function loginAPI(loginData) {
 }
 
 function* login(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(loginAPI, action.data);
         yield put({

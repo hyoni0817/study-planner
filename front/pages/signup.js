@@ -98,7 +98,6 @@ const SignUp = (props) => {
     }
 
     const onFinish = (values) => {
-        console.log('Success:', values);
         dispatch({
             type: SIGN_UP_REQUEST,
             data: {

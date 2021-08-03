@@ -78,7 +78,7 @@ router.post('/signup', async (req, res, next) => {
             email: req.body.email,
             terms: req.body.terms,
         });
-        console.log(newUser);
+
         return res.status(200).json(newUser);
     } catch(e) {
         console.error(e);

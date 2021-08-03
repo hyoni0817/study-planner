@@ -39,7 +39,6 @@ const DdayForm = ({mode, data, onSubmit}) => {
     };
 
     const onEditFinish = values => {
-        console.log({data});
         dispatch({
             type: EDIT_DDAY_REQUEST,
             data: {

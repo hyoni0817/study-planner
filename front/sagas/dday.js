@@ -164,7 +164,6 @@ function showDdayAPI(DdayData) {
 }
 
 function* showDday(action) {
-    console.log("action.data:", action.data);
     try {
         const result = yield call(showDdayAPI, action.data);
         yield put({

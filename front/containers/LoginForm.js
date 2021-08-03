@@ -25,7 +25,6 @@ const LoginForm = ({onClose}) => {
     const [rememberLogin, onChangeRememberLogin] = useInput(false);
 
     const onFinish = (values) => {
-        console.log('Success:', values);
         dispatch({
             type: LOG_IN_REQUEST,
             data: {

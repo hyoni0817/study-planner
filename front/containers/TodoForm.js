@@ -96,7 +96,6 @@ const TodoForm = ({mode, data, onSubmit}) => {
     }
     function onChangeAllDayCheckBox(e) {
         setTimeOrAllDayClickStatus(true);
-        console.log(`checked = ${e.target.checked}`);
         setAllDayStatus(e.target.checked);
         e.target.checked ? setCheckTime(false) : ( startTime && endTime ? setCheckTime(false) : setCheckTime(true));
     }
@@ -106,7 +105,6 @@ const TodoForm = ({mode, data, onSubmit}) => {
     }
 
     const onChangeSelectValue = value => {
-        console.log("selectValue:", value);
         setSelectSubject(value);
     }
 
