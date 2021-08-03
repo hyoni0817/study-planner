@@ -25,8 +25,8 @@ const LoginAndSignUpWrapper = styled.span`
 
 const LoginBtn = styled(Button)`
     &&& {
-        color: #7262fd;
-        background-color: #ffffff;
+        color: #ffffff;
+        background-color: #ffffff00;
         border-color: #ffffff;
     } 
 
