@@ -137,21 +137,25 @@ const Home = (props) => {
     }
     
     useEffect(() => {
-        window.addEventListener('scroll', onScrollTodo);
-        return () => {
-            window.removeEventListener('scroll', onScrollTodo);
-            countRef.current = [];
-            setPageCount(2);
+        if (me) {
+            window.addEventListener('scroll', onScrollTodo);
+            return () => {
+                window.removeEventListener('scroll', onScrollTodo);
+                countRef.current = [];
+                setPageCount(2);
+            }
         }
         
     }, [hasMoreTodo, todayTodoList.length]);
 
     useEffect(() => {
-        let DdayListView = document.querySelector('.DdayListView');
-        DdayListView.addEventListener('scroll', onScrollDday);
-        return () => {
-            DdayListView.removeEventListener('scroll', onScrollDday);
-            DdayListView = null;
+        if (me) {
+            let DdayListView = document.querySelector('.DdayListView');
+            DdayListView.addEventListener('scroll', onScrollDday);
+            return () => {
+                DdayListView.removeEventListener('scroll', onScrollDday);
+                DdayListView = null;
+            }
         }
         
     }, [hasMoreDday, viewableDdayList.length]);
@@ -179,7 +183,7 @@ const Home = (props) => {
 
     return (
         <>
-            { pageLoading ? <><Loading logOut={true} /></> : 
+            { !me || pageLoading ? <><Loading logOut={true} /></> : 
                 <>
                     <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
                     <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>

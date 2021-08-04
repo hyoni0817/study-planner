@@ -65,7 +65,7 @@ const CreatePlan = ({ isRefresh }) => {
 
     return (
         <>
-            { pageLoading ? <><Loading logOut={true} /></> :
+            { !me || pageLoading ? <><Loading logOut={true} /></> :
                 <>
                     {/* {me && removeBodyOverflow()} */}
                     <MobileFormPortal selector="#mobile-form">

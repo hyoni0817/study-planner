@@ -81,13 +81,15 @@ const AllTodoList = () => {
     }, [hasMoreTodo, todoList.length])
 
     useEffect(() => {
-        window.addEventListener('scroll', onScrollTodo);
-
-        return () => {
-            window.removeEventListener('scroll', onScrollTodo);
-            countRef.current = [];
-            setSearchPage(2);
-            setAllTodoPage(2);
+        if(me) {
+            window.addEventListener('scroll', onScrollTodo);
+    
+            return () => {
+                window.removeEventListener('scroll', onScrollTodo);
+                countRef.current = [];
+                setSearchPage(2);
+                setAllTodoPage(2);
+            }
         }
     }, [hasMoreTodo, todoList.length]);
 
@@ -125,7 +127,7 @@ const AllTodoList = () => {
     
     return (
         <>
-            { pageLoading ? <><Loading logOut={true} /></> : 
+            { !me || pageLoading ? <><Loading logOut={true} /></> : 
                 <>
                     <AllTodoTitle>공부 계획 모아 보기</AllTodoTitle>
                     <TodoFilter onResult={onResult} />

@@ -72,11 +72,13 @@ const AllDdayList = () => {
     }, [hasMoreDday, DdayList.length])
 
     useEffect(() => {
-        window.addEventListener('scroll', onScrollDday);
-
-        return () => {
-            window.removeEventListener('scroll', onScrollDday);
-            countRef.current = [];
+        if (me) {
+            window.addEventListener('scroll', onScrollDday);
+    
+            return () => {
+                window.removeEventListener('scroll', onScrollDday);
+                countRef.current = [];
+            }
         }
     }, [hasMoreDday, DdayList.length])
 
@@ -114,7 +116,7 @@ const AllDdayList = () => {
     
     return (
         <>
-            { pageLoading ? <><Loading logOut={true} /></> :
+            { !me || pageLoading ? <><Loading logOut={true} /></> :
                 <> 
                     <AllDdayTitle>D-day 모아 보기</AllDdayTitle>
                     <DdayFilter onResult={onResult} />
