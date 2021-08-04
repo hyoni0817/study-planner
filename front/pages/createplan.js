@@ -38,8 +38,10 @@ const CreatePlan = ({ isRefresh }) => {
     useEffect(() => {
         if(!me && !isLoggedOut) {
             alert('로그인 후 이용해주세요.');
+            setPageLoading(true);
             router.push('/');
         } else if(!me && isLoggedOut) {
+            setPageLoading(true);
             router.push('/');
         }
     }, [me && me.id, isLoggedOut]);
