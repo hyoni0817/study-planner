@@ -18,7 +18,7 @@ const LoginBtn = styled(Button)`
 
 const LoginForm = ({onClose}) => {
     const dispatch = useDispatch();
-    const { loginErrorReason, isLoggedIn } = useSelector(state => state.user);
+    const { loginErrorReason, isLoggedIn, isLoggingIn } = useSelector(state => state.user);
 
     const [userId, onChangeUserId] = useInput('');
     const [password, onChangePassword] = useInput('');
@@ -78,7 +78,7 @@ const LoginForm = ({onClose}) => {
                         </Form.Item>
 
                         <Form.Item>
-                            <LoginBtn type="primary" htmlType="submit">
+                            <LoginBtn type="primary" loading={isLoggingIn} htmlType="submit">
                                 로그인 하기
                             </LoginBtn>
                         </Form.Item>
