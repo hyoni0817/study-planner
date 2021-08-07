@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, DatePicker, Input, Button } from 'antd';
+import { Form, DatePicker, Input, Button, Row, Col } from 'antd';
 import { useRouter } from 'next/router';
 import useInput from '../hooks/useInput';
 
@@ -65,51 +65,55 @@ const DdayForm = ({mode, data, onSubmit}) => {
 
     return (
         <>
-            <Form 
-                labelCol={{
-                    span: 4,
-                }}
-                layout="horizontal"
-                initialValues={{
-                    size: 'default',
-                }}
-                size="default"
-                onFinish={ mode == 'edit' ? onEditFinish : onFinish}
-                form={form}
-            >
-                <Form.Item label="제목" colon={false}>
-                    <Form.Item
-                    name="ddaytitle"
-                    noStyle
-                    valuePropName="value"
-                    rules={[{ required: mode == 'edit' ? !title : true, message: '제목을 입력해주세요' }]}
+            <Row>
+               <Col>
+                    <Form 
+                        labelCol={{
+                            span: 4,
+                        }}
+                        layout="horizontal"
+                        initialValues={{
+                            size: 'default',
+                        }}
+                        size="default"
+                        onFinish={ mode == 'edit' ? onEditFinish : onFinish}
+                        form={form}
                     >
-                        <Input style={{ width: 320 }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
-                    </Form.Item>
-                </Form.Item>
-                <Form.Item label="메모" colon={false}>
-                    <Form.Item
-                    name="ddaymemo"
-                    noStyle
-                    >
-                        <Input style={{ width: 320 }} defaultValue={ memo } placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} autocomplete="off" />
-                    </Form.Item>
-                </Form.Item>
-                <Form.Item label="날짜" colon={false}>
-                    <Form.Item
-                        name="ddaydate"
-                        noStyle
-                        rules={[{ required: mode == 'edit' ? !dueDate : true, message: '날짜를 입력해주세요' }]}
-                    >
-                        <DatePicker {...dateDefaultValue} onChange={onChangeDueDate} />
-                    </Form.Item>
-                </Form.Item>
-                <Form.Item label=" " colon={false}>
-                    <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
-                        완료
-                    </Button>
-                </Form.Item>
-            </Form>
+                        <Form.Item label="제목" colon={false}>
+                            <Form.Item
+                            name="ddaytitle"
+                            noStyle
+                            valuePropName="value"
+                            rules={[{ required: mode == 'edit' ? !title : true, message: '제목을 입력해주세요' }]}
+                            >
+                                <Input style={{ width: '100%' }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
+                            </Form.Item>
+                        </Form.Item>
+                        <Form.Item label="메모" colon={false}>
+                            <Form.Item
+                            name="ddaymemo"
+                            noStyle
+                            >
+                                <Input style={{ width: '100%' }} defaultValue={ memo } placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} autocomplete="off" />
+                            </Form.Item>
+                        </Form.Item>
+                        <Form.Item label="날짜" colon={false}>
+                            <Form.Item
+                                name="ddaydate"
+                                noStyle
+                                rules={[{ required: mode == 'edit' ? !dueDate : true, message: '날짜를 입력해주세요' }]}
+                            >
+                                <DatePicker {...dateDefaultValue} onChange={onChangeDueDate} style={{ width: '100%' }} />
+                            </Form.Item>
+                        </Form.Item>
+                        <Form.Item label=" " colon={false}>
+                            <Button type="primary" htmlType="submit" style={{backgroundColor: '#7262fd', color: 'white', border: 'none'}}>
+                                완료
+                            </Button>
+                        </Form.Item>
+                    </Form>
+               </Col> 
+            </Row>
         </>
     );
 };
