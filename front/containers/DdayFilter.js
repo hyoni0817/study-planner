@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Form, Button } from 'antd';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import useInput from '../hooks/useInput';
 
 import { useDispatch } from 'react-redux';
@@ -14,8 +14,8 @@ const DdayFilter = ({onResult}) => {
     const todayDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
     const [ form ] = Form.useForm();
 
-    const [ startDate, setStartDate ] = useState(moment(todayDate).format(dateFormat));
-    const [ endDate, setEndDate ] = useState(moment(todayDate).format(dateFormat));
+    const [ startDate, setStartDate ] = useState(moment(todayDate).tz('Asia/Seoul').format(dateFormat));
+    const [ endDate, setEndDate ] = useState(moment(todayDate).tz('Asia/Seoul').format(dateFormat));
     const [ checkDate, setCheckDate ] = useState(false);
     const [ allDateCheckState, setllDateCheckState ] = useState(false);
     const [ dateOrAllDateClickState, setDateOrAllDateClickState ] = useState(false);

@@ -29,9 +29,9 @@ router.get('/', isLoggedIn, async (req, res, next) => {
 router.get('/now', isLoggedIn, async (req, res, next) => {
     try {  
         const timeFormat = 'HH:mm'; 
-        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
-        const nowTime = moment().format(timeFormat);
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const nowTime = moment().tz('Asia/Seoul').format(timeFormat);
 
         let where = [{
             UserId: req.user.id,
@@ -68,8 +68,8 @@ router.get('/now', isLoggedIn, async (req, res, next) => {
 
 router.get('/today', isLoggedIn, async (req, res, next) => {
     try {
-        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         let where = [{
             UserId: req.user.id,
             createdAt: { 

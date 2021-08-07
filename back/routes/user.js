@@ -13,8 +13,8 @@ router.get('/', async (req, res) => {
         return res.status(401).send('로그인이 필요합니다');
     }
 
-    const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-    const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+    const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+    const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
     
     const user = await db.User.findOne({
         where: { id: req.user.id },
@@ -96,8 +96,8 @@ router.post('/login', (req, res, next) => {
             return res.status(401).send(info.reason);
         }
 
-        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         const rememberLogin = req.body.rememberLogin;
         
         return req.login(user, async (loginErr) => {

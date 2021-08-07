@@ -11,7 +11,7 @@ import Loading from '../components/Loading';
 import {useRouter} from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
 import axios from 'axios';
@@ -87,9 +87,9 @@ const Home = (props) => {
 
     const date = new Date();
     const days = ["일", "월", "화", "수", "목", "금", "토"];
-    const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+    const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
     const timeFormat = 'HH:mm'; 
-    const nowTime = moment(moment().format(timeFormat), timeFormat);
+    const nowTime = moment(moment().tz('Asia/Seoul').format(timeFormat), timeFormat);
     const antIcon = <LoadingOutlined style={{ fontSize: 24, color: '#7262fd' }} spin />
 
     let completionCount = 0;

@@ -9,8 +9,8 @@ const { isLoggedIn } = require('./middleware');
 
 router.post('/', isLoggedIn, async (req, res, next) => {
     try {
-        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         
         const newTodo = await db.Todo.create({
             title: req.body.title,
@@ -120,8 +120,8 @@ router.get('/subjects', isLoggedIn, async (req, res, next) => {
 
 router.put('/complete', async (req, res, next) => {
     try {
-        const todayDate = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
         
         const updateCompletion = await db.Todo.update({
             completion: req.body.checkBtnState,

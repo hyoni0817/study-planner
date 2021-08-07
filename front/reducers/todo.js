@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 export const initialState = {
     todoList : [],
@@ -86,9 +86,9 @@ const reducer = ( state = initialState, action ) => {
             }; 
         case ADD_TODO_SUCCESS:
             const timeFormat = 'HH:mm'; 
-            const nowTime = moment(moment().format(timeFormat), timeFormat);
+            const nowTime = moment(moment().tz('Asia/Seoul').format(timeFormat), timeFormat);
             const addNowTodoList =  
-                nowTime.isSameOrAfter(moment(action.data.newTodo.startTime, timeFormat)) && nowTime.isSameOrBefore(moment(action.data.newTodo.endTime, timeFormat)) || action.data.newTodo.allDayStatus ?
+                nowTime.isSameOrAfter(moment(action.data.newTodo.startTime, timeFormat).tz('Asia/Seoul')) && nowTime.isSameOrBefore(moment(action.data.newTodo.endTime, timeFormat).tz('Asia/Seoul')) || action.data.newTodo.allDayStatus ?
                 [action.data.newTodo, ...state.nowTodoList] : [...state.nowTodoList];
             
             return {
