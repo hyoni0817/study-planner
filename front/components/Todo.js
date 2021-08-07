@@ -34,8 +34,9 @@ const TodoEditAndDeleteCell = styled.div`
  text-align: right;
 `;
 
-const TodoImportantStatus = styled.p`
+const TodoImportantStatus = styled.span`
   color: red;
+  margin-right: 8px;
   margin-bottom: 0;
 `;
 
