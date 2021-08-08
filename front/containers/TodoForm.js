@@ -35,8 +35,7 @@ const AllDayCheckBox = styled(Checkbox)`
     }
 `
 const QuantityInput = styled(Input)`
-    // iPhone 5/se
-    @media(max-width: 320px) {
+    @media(max-width: 768px) {
         width: 120px;
     }
 `
