@@ -236,7 +236,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                             rules={[{ required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' }]}
                             style={{ display: 'inline-block', marginRight: '10px' }}
                             >
-                                <QuantityInput value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" autocomplete="off" />
+                                <QuantityInput inputMode="numeric" value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" autocomplete="off" />
                             </Form.Item>
                             <Form.Item
                             name="unit"
