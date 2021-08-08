@@ -65,7 +65,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
 
     return (
         <>
-            <Row>
+            <Row type="flex" justify="center" align="middle">
                <Col>
                     <Form 
                         labelCol={{
