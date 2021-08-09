@@ -103,7 +103,7 @@ const Dday = ({data, view}) => {
                     {data.dueDate} 까지
                 </DdayDate>
                 { view == 'search' ? <SearchModeDdayTitle>{data.title}</SearchModeDdayTitle> : <HomeModeDdayTitle>{data.title}</HomeModeDdayTitle> }
-                { view === 'search' ? <DdayMemo><FileTextOutlined style={{fontSize: '15px', marginRight: '5px', marginTop: '5px'}}/>{data.memo}</DdayMemo> : ''}
+                { view === 'search' ? <DdayMemo><FileTextOutlined style={{fontSize: '15px', marginRight: '5px', marginTop: '5px'}}/>{ !!data.memo ? data.memo : '없음' }</DdayMemo> : ''}
                 <DdayContent>
                     D{ calculateDday(data.dueDate) }
                     { view == 'search' ? 
