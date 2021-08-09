@@ -56,7 +56,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const [ startTime, setStartTime ] = useState(mode == 'edit' && data.startTime !== 'none' ? data.startTime : '');
     const [ endTime, setEndTime ] = useState(mode == 'edit' && data.endTime !== 'none' ? data.endTime : '');
     const [ allDayStatus, setAllDayStatus ] = useState(mode == 'edit' ? data.allDayStatus : false);
-    const [ checkTime, setCheckTime ] = useState(true);
+    const [ checkTime, setCheckTime ] = useState(mode == 'edit' && (!!data.startTime && data.startTime !== 'none' || data.allDayStatus) ? false : true);
     const [ timeOrAllDayClickStatus, setTimeOrAllDayClickStatus ] = useState(false);
     const [ subjectName, setSubjectName ] = useState(mode == 'edit' ? data.subject : '');
 
