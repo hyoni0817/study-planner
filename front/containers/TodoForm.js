@@ -192,7 +192,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                             noStyle
                             rules={[{ required: mode == 'edit' ? !title : true, message: '내용을 입력해주세요' }]}
                             >
-                                <Input style={{ width: '100%' }} defaultValue={ title } placeholder="계획명을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
+                                <Input style={{ width: '100%' }} defaultValue={ title } value={title} onChange={onChangeTitle} autocomplete="off" />
                             </Form.Item>
                         </Form.Item>
                         <Form.Item label="과목" colon={false}>
@@ -236,7 +236,7 @@ const TodoForm = ({mode, data, onSubmit}) => {
                             rules={[{ required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' }]}
                             style={{ display: 'inline-block', marginRight: '10px' }}
                             >
-                                <QuantityInput inputMode="numeric" value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } placeholder="분량을 입력해주세요" autocomplete="off" />
+                                <QuantityInput inputMode="numeric" value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } autocomplete="off" />
                             </Form.Item>
                             <Form.Item
                             name="unit"

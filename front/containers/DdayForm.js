@@ -86,7 +86,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                             valuePropName="value"
                             rules={[{ required: mode == 'edit' ? !title : true, message: '제목을 입력해주세요' }]}
                             >
-                                <Input style={{ width: '100%' }} defaultValue={ title } placeholder="D-day 제목을 입력해주세요" value={title} onChange={onChangeTitle} autocomplete="off" />
+                                <Input style={{ width: '100%' }} defaultValue={ title } value={title} onChange={onChangeTitle} autocomplete="off" />
                             </Form.Item>
                         </Form.Item>
                         <Form.Item label="메모" colon={false}>
@@ -94,7 +94,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                             name="ddaymemo"
                             noStyle
                             >
-                                <Input style={{ width: '100%' }} defaultValue={ memo } placeholder="추가하고 싶은 메모가 있다면 입력해주세요" value={memo} onChange={onChangeContent} autocomplete="off" />
+                                <Input style={{ width: '100%' }} defaultValue={ memo } placeholder="필수 입력은 아니에요." value={memo} onChange={onChangeContent} autocomplete="off" />
                             </Form.Item>
                         </Form.Item>
                         <Form.Item label="날짜" colon={false}>
@@ -103,7 +103,7 @@ const DdayForm = ({mode, data, onSubmit}) => {
                                 noStyle
                                 rules={[{ required: mode == 'edit' ? !dueDate : true, message: '날짜를 입력해주세요' }]}
                             >
-                                <DatePicker {...dateDefaultValue} onChange={onChangeDueDate} style={{ width: '100%' }} />
+                                <DatePicker {...dateDefaultValue} placeholder="날짜 선택" onChange={onChangeDueDate} style={{ width: '100%' }} />
                             </Form.Item>
                         </Form.Item>
                         <Form.Item label=" " colon={false}>
