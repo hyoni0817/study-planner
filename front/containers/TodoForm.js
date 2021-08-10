@@ -64,6 +64,9 @@ const TodoForm = ({mode, data, onSubmit}) => {
     const [ title, onChangeTitle ] = useInput(mode == 'edit' ? data.title : '');
     const [ quantity, onChangeQuantity ] = useInput(mode == 'edit' ? data.quantity : '');
 
+    //regExp
+    const checkNumberRegExp = /\d/;
+
     useEffect(() => {
         if(timeOrAllDayClickStatus) { 
             form.validateFields(['time']);
@@ -233,7 +236,10 @@ const TodoForm = ({mode, data, onSubmit}) => {
                         <Form.Item label="분량" colon={false} style={{ marginBottom: 0 }}>
                             <Form.Item
                             name="quantity"
-                            rules={[{ required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' }]}
+                            rules={[
+                                { required: mode == 'edit' ? !quantity : true, message: '분량을 입력해주세요' },
+                                { validator: (_, value) => checkNumberRegExp.test(value) || !value ? Promise.resolve() : Promise.reject(new Error('숫자만 입력해주세요!'))},
+                            ]}
                             style={{ display: 'inline-block', marginRight: '10px' }}
                             >
                                 <QuantityInput inputMode="numeric" value={ quantity } defaultValue={ quantity } onChange={ onChangeQuantity } autocomplete="off" />
