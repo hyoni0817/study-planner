@@ -122,7 +122,7 @@ const Todo = ({post, view}) => {
                       <TodoDetailCell view={view}>
                         <TodoTime>
                           {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
-                          {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
+                          {view === 'now' ? '' : post.allDayStatus ? '🌞 하루 종일' : `✨ ${post.startTime} - ${post.endTime}`}
                         </TodoTime>
                         <TodoTitle view={view}><Tag>{post.subject}</Tag>{post.title}</TodoTitle>
                         분량은 {post.quantity} {post.unit}!
