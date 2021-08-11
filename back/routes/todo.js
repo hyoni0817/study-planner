@@ -74,7 +74,7 @@ router.get('/search', async (req, res, next) => {
     try {
         let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`), {UserId: req.user.id}];
         const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
-        const createdAt = req.query.allDateCheckState === true ? '' : where.push({createdAt: {
+        const createdAt = req.query.allDateCheckState == 'true' ? '' : where.push({createdAt: {
             [Op.and]: {
                 [Op.gte] : req.query.startDate,
                 [Op.lt] : endDate
