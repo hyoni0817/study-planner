@@ -21,7 +21,7 @@ const TodoListWrapper = styled.table`
     margin-top: 20px;
     margin-bottom: 30px;
     width: 100%;
-    border-spacing: 12px 20px;
+    border-spacing: 20px 0;
     border-collapse: initial;
 `;
 
@@ -38,6 +38,13 @@ const AllTodoTitle = styled.h2`
     @media(max-width: 767px) {
         margin-top: 60px;
     }
+`;
+
+const SeperateTodayDate = styled.p`
+    display: inline-block;
+    margin-top: 14px;
+    width: 100%;
+    font-weight: bold;
 `
 
 const AllTodoList = () => {
@@ -117,7 +124,7 @@ const AllTodoList = () => {
     const separateDate = (id, createdAt, list) => {
         const prevCreatedAt = list[list.findIndex(v => v.id == id) - 1].createdAt || '';
 
-        return prevCreatedAt == createdAt ? '' : <tr><th colSpan="3">{createdAt}</th></tr>;
+        return prevCreatedAt == createdAt ? '' : <SeperateTodayDate>{createdAt}</SeperateTodayDate>;
     };
     
     const onResult = (data) => {
@@ -138,7 +145,7 @@ const AllTodoList = () => {
                                 : todoList.map((c) => {
                                     return (
                                         <>
-                                            {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <tr><th colSpan="3">{c.createdAt}</th></tr>}
+                                            {todoList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.createdAt, todoList) : <SeperateTodayDate>{c.createdAt}</SeperateTodayDate>}
                                             <Todo key={c.id} post={c} view="search"/>
                                         </>
                                     )

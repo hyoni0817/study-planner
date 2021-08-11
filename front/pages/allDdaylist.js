@@ -36,6 +36,15 @@ const AllDdayTitle = styled.h2`
     }
 `
 
+const SeparateDdayDate = styled.p`
+    margin-top: 14px;
+    font-weight: bold;
+`;
+
+const DdayListWrapper = styled.div`
+    margin: 40px 20px;
+`;
+
 const AllDdayList = () => {   
     const router = useRouter();
     const dispatch = useDispatch();
@@ -106,7 +115,7 @@ const AllDdayList = () => {
     const separateDate = (id, dueDate, list) => {
         const prevDueDate = list[list.findIndex(v => v.id == id) - 1].dueDate || '';
 
-        return prevDueDate == dueDate ? '' : <tr><th colSpan="3">{dueDate}</th></tr>;
+        return prevDueDate == dueDate ? '' : <SeparateDdayDate>{dueDate}</SeparateDdayDate>;
     };
 
     const onResult = (data) => {
@@ -120,21 +129,22 @@ const AllDdayList = () => {
                 <> 
                     <AllDdayTitle>D-day 모아 보기</AllDdayTitle>
                     <DdayFilter onResult={onResult} />
-                    <Spin indicator={antIcon} spinning={useSearch == 'no' ? isLoadingDday : !DdaySearched} tip="D-day 목록을 불러오는 중입니다...">
-                        { 
-                            DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
-                            : DdayList.map((c) => {
-                                return (
-                                    <>
-                                        {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <tr><th colSpan="3">{c.dueDate}</th></tr>}
-                                        <Dday key={c.id} data={c} view="search" />    
-                                    </>
-                                )
-                            })  
-                        }
-                        {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-                    </Spin>
-                            
+                    <DdayListWrapper>
+                        <Spin indicator={antIcon} spinning={useSearch == 'no' ? isLoadingDday : !DdaySearched} tip="D-day 목록을 불러오는 중입니다...">
+                            { 
+                                DdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
+                                : DdayList.map((c) => {
+                                    return (
+                                        <>
+                                            {DdayList.findIndex(v => v.id == c.id) > 0 ? separateDate(c.id, c.dueDate, DdayList) : <SeparateDdayDate>{c.dueDate}</SeparateDdayDate>}
+                                            <Dday key={c.id} data={c} view="search" />    
+                                        </>
+                                    )
+                                })  
+                            }
+                            {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
+                        </Spin>
+                    </DdayListWrapper>
                 </>
             }
         </>

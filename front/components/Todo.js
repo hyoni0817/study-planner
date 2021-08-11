@@ -68,7 +68,7 @@ const CircleCheckBtn = styled.button`
 
 const TodoBoxTable = styled.table`
   border-radius: 5px;
-  margin: 1.5% 1.5%;
+  margin: 1.5% 0;
   width: ${ props => props.view == `search` || props.view == `now` ? `100%` : `47%`};
   height: ${ props => props.view == `now` ? `70px` : `100px`};
   color: ${ props => props.view == `now` ? `black` : `#ffffffe8`};
