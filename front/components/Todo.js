@@ -51,14 +51,14 @@ const TodoTitle = styled.p`
 `;
 
 const CircleCheckBtn = styled.button`
-  color: #F6BD16;
+  color: #7262fd;
   height: 28px;
   width: 28px;
-  background-color: ${props => props.completed ? 'white' : '#ffffffe8'};
+  background-color: white;
   border-radius: 50%;
   display: block;
   cursor:pointer;
-  border: 2px solid #F6BD16;
+  border: 2px solid #7262fd;
   margin: 10px;
 
   &: focus {
@@ -68,13 +68,14 @@ const CircleCheckBtn = styled.button`
 
 const TodoBoxTable = styled.table`
   border-radius: 5px;
+  border: ${ props => props.view == `now` ? `` : `1px #7262fd solid` };
   margin: 1.5% 0;
   width: ${ props => props.view == `search` || props.view == `now` ? `100%` : `47%`};
   height: ${ props => props.view == `now` ? `70px` : `100px`};
-  color: ${ props => props.view == `now` ? `black` : `#ffffffe8`};
+  color: black;
   float: left;
-  ${ props => props.view == `now` ? `` : `background: #F6BD16;`}
   table-layout: fixed;
+  border-collapse: separate;
   @media screen and (max-width:767px) {
     width:100%;
     margin: 1.5% 0;
@@ -123,7 +124,7 @@ const Todo = ({post, view}) => {
                           {post.important ? <TodoImportantStatus><ExclamationCircleOutlined />중요</TodoImportantStatus> : ''}
                           {view === 'now' ? '' : post.allDayStatus ? '하루 종일' : `${post.startTime} - ${post.endTime}`}
                         </TodoTime>
-                        <TodoTitle view={view}><Tag color="magenta">{post.subject}</Tag>{post.title}</TodoTitle>
+                        <TodoTitle view={view}><Tag>{post.subject}</Tag>{post.title}</TodoTitle>
                         분량은 {post.quantity} {post.unit}!
                       </TodoDetailCell>
                       {

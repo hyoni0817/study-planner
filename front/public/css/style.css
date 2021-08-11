@@ -129,3 +129,13 @@
 body {
     overflow-x: hidden;
 }
+
+.ant-tag {
+    color: #7262fd;
+    background: #f0f2f5;
+    border-color: #7262fd;
+}
+
+.ant-switch-checked {
+    background-color: #78e073;
+}

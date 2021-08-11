@@ -12,6 +12,14 @@ const MobileFormWrapper = styled(MobileForm)`
     }
 `;
 
+const EditBtn = styled(Button)`
+    background-color: ${ props => props.category == `todo` ? `#7262fd` : `white` };
+    color: ${ props => props.category == `todo` ? `white` : `#7262fd` };
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 10px 0;
+`
+
 const EditFormButton = ({data, type}) => {
     const [ editForm, setEditForm ] = useState(false);
 
@@ -20,9 +28,9 @@ const EditFormButton = ({data, type}) => {
     }
     return (
         <>
-            <Button type="primary" onClick={() => setEditForm(true)} style={{backgroundColor: '#F6BD16', color: 'white', border: '1px solid white', borderRadius: '5px', margin: '10px 0',}} >
+            <EditBtn type="primary" onClick={() => setEditForm(true)} category={type} >
                 <EditOutlined />
-            </Button>
+            </EditBtn>
             { editForm && <DesktopForm mode="edit" type={type} data={data} isOpen={onHandleOpen} /> }
             { editForm &&  
                 <MobileFormPortal selector="#mobile-form">
