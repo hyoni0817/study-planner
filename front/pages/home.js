@@ -33,8 +33,9 @@ const TodoNowWrapper = styled.div`
 `;
 
 const TodayTodoListWrapper = styled.div`
+    display: inline-block;
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     width: 100%;
     border-spacing: 12px 20px;
 `;
