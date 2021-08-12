@@ -1,6 +1,6 @@
 import React, {useState, useRef, useCallback, useEffect} from 'react';
 import { useRouter } from 'next/router';
-import { Tabs, Spin } from 'antd';
+import { Tabs, Spin, Divider } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import TodoFilter from '../containers/TodoFilter';
 import Todo from '../components/Todo';
@@ -42,7 +42,8 @@ const AllTodoTitle = styled.h2`
 
 const SeperateTodayDate = styled.p`
     display: inline-block;
-    margin-top: 14px;
+    margin-top: 25px;
+    margin-bottom: 5px;
     width: 100%;
     font-weight: bold;
 `

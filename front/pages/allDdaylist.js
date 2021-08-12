@@ -37,7 +37,8 @@ const AllDdayTitle = styled.h2`
 `
 
 const SeparateDdayDate = styled.p`
-    margin-top: 14px;
+    margin-top: 25px;
+    margin-bottom: 5px;
     font-weight: bold;
 `;
 
