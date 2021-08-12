@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Modal } from 'antd';
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 //redux
@@ -18,18 +18,30 @@ const DeleteBtn = styled(Button)`
 
 const DeleteButton = ({id, type}) => {
     const dispatch = useDispatch();
+    const { confirm } = Modal;
 
-    const onHandleDelete = () => {
-        dispatch({
-            type: type == "todo" ? DELETE_TODO_REQUEST : DELETE_DDAY_REQUEST,
-            data: {
-                id: id,
-            } 
-        })
-    }
+    const showDeleteConfirm = () => {
+        confirm({
+            title: '삭제하시겠습니까?',
+            icon: <ExclamationCircleOutlined />,
+            content: `삭제한 ${type == "todo" ? '계획은' : 'D-day는'} 복구하실 수 없습니다.`,
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            onOk() {
+                dispatch({
+                    type: type == "todo" ? DELETE_TODO_REQUEST : DELETE_DDAY_REQUEST,
+                    data: {
+                        id: id,
+                    } 
+                })
+            }
+        });
+    };
+
     return (
         <>
-            <DeleteBtn type="primary" onClick={onHandleDelete} category={type}>
+            <DeleteBtn type="primary" onClick={showDeleteConfirm} category={type}>
                 <DeleteOutlined />
             </DeleteBtn>
         </>
