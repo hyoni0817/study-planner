@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Select, Form, Button } from 'antd';
 import moment from 'moment-timezone';
 import useInput from '../hooks/useInput';
+import styled from 'styled-components';
 
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { SEARCH_TODO_LIST_REQUEST, LOAD_SUBJECT_LIST_REQUEST } from '../reducers/todo';
+
+const AllDateCheckBox = styled(Checkbox)`
+    @media(max-width: 767px) {
+        margin-top: 10px;
+    }
+`;
 
 const TodoFilter = ({onResult}) => {
     const dispatch = useDispatch();
@@ -110,8 +117,9 @@ const TodoFilter = ({onResult}) => {
                         format={dateFormat}
                         onChange={onChangeDate}
                         disabled={allDateCheckState}
+                        style={{ marginRight: '10px', }}
                     />      
-                    <Checkbox onChange={onChangeAllDateCheckBox} style={{ marginLeft: '10px', }}>전체</Checkbox>
+                    <AllDateCheckBox onChange={onChangeAllDateCheckBox}>전체</AllDateCheckBox>
                 </Form.Item>
                 <Form.Item
                     name="subjects"

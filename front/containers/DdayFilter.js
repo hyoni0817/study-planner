@@ -2,9 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Input, DatePicker, Checkbox, Form, Button } from 'antd';
 import moment from 'moment-timezone';
 import useInput from '../hooks/useInput';
+import styled from 'styled-components';
 
 import { useDispatch } from 'react-redux';
 import { SEARCH_DDAY_LIST_REQUEST } from '../reducers/dday';
+
+const AllDateCheckBox = styled(Checkbox)`
+    @media(max-width: 767px) {
+        margin-top: 10px;
+    }
+`;
 
 const DdayFilter = ({onResult}) => {
     const dispatch = useDispatch();
@@ -108,8 +115,9 @@ const DdayFilter = ({onResult}) => {
                         format={dateFormat}
                         onChange={onChangeDate}
                         disabled={allDateCheckState}
+                        style={{ marginRight: '10px', }}
                     />      
-                    <Checkbox onChange={onChangeAllDateCheckBox} style={{ marginLeft: '10px', }}>전체</Checkbox>
+                    <AllDateCheckBox onChange={onChangeAllDateCheckBox}>전체</AllDateCheckBox>
                 </Form.Item>
                 <Form.Item
                     name="DdayMemo"
