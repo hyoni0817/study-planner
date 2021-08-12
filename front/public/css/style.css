@@ -2,12 +2,6 @@
     padding: 24px 0;
 }
 
-@media(max-width: 767px) {
-    .ant-modal-mask, .ant-modal-wrap {
-        display: none;
-    }   
-}
-
 @media(min-width: 768px) {
     #mobile-form {
         display: none;
