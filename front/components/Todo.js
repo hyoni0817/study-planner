@@ -82,6 +82,10 @@ const TodoBoxTable = styled.table`
   }
 `;
 
+const TodoQuantiry = styled.p`
+  margin-top: 10px;
+`;
+
 const Todo = ({post, view}) => {
     const dispatch = useDispatch();
     const completed = post.completion;
@@ -125,7 +129,7 @@ const Todo = ({post, view}) => {
                           {view === 'now' ? '' : post.allDayStatus ? '🌞 하루 종일' : `✨ ${post.startTime} - ${post.endTime}`}
                         </TodoTime>
                         <TodoTitle view={view}><Tag>{post.subject}</Tag>{post.title}</TodoTitle>
-                        분량은 {post.quantity} {post.unit}!
+                        <TodoQuantiry>분량은 {post.quantity} {post.unit}!</TodoQuantiry>
                       </TodoDetailCell>
                       {
                         view === 'search' ? <>
