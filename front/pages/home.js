@@ -75,6 +75,13 @@ const Title = styled.p`
     font-weight: 600;
 `
 
+const WriteButton = styled(Button)`
+    border: 1px #7262fd solid;
+    background-color: #7262fd;
+    min-width: 60px !important; 
+    min-height: 60px;
+`
+
 const Home = (props) => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -242,7 +249,7 @@ const Home = (props) => {
                             href={`?addPlan="ok"`}
                             as={`/createplan`}
                         >
-                            <Button type="primary" shape="circle" size="large" icon={<FormOutlined />} />
+                            <WriteButton type="primary" shape="circle" size="large" icon={<FormOutlined />} />
                         </Link>
                     </AddTodoAffix>
                 </>
