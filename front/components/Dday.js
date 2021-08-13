@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Switch } from 'antd';
-import { FileTextOutlined } from '@ant-design/icons'
+import { Switch, Modal } from 'antd';
+import { FileTextOutlined, PushpinTwoTone } from '@ant-design/icons'
 import styled from 'styled-components';
 import EditFormButton from  './EditFormButton';
 import DeleteButton from '../containers/DeleteButton';
@@ -14,6 +14,7 @@ const DdayBox = styled.div`
     color: #ffffffe8;
     padding: 12px;
     margin-bottom: 20px;
+    cursor: ${props => props.view == 'search' ? 'default' : 'pointer'}
 `;
 
 const DdayContent = styled.p`
@@ -58,6 +59,11 @@ const DdayEditAndDeleteCell = styled.span`
     float: right;
 `;
 
+const Item = styled.span`
+  font-weight: bold;
+  color: #7262fd;
+`;
+
 const Dday = ({data, view}) => {
     const viewState = data.viewState;
 
@@ -95,9 +101,27 @@ const Dday = ({data, view}) => {
       }
     }, [data && data.id, viewState])
 
+    const showDdayConfirm = () => {
+      Modal.info({
+        title: <span style={{fontWeight: 'bold'}}>{data.title}</span>,
+        icon: <PushpinTwoTone twoToneColor="#7262fd" />,
+        content: (
+          <div style={{marginTop: '1em'}}>
+            <p><Item>목표 날짜</Item> {data.dueDate} 까지</p>
+            <p><Item>남은 기한</Item > D{ calculateDday(data.dueDate) }</p>
+            <p><Item>메모</Item> { !!data.memo ? data.memo : '없음' }</p>
+          </div>
+        ),
+        centered: true,
+        onOk() {},
+      });
+    }
+
+    const DdayBoxProps = view == 'search' ? {} : {onClick: showDdayConfirm};
+
     return (
         <>
-            <DdayBox bordered={false}>
+            <DdayBox bordered={false} view={view} {...DdayBoxProps}>
                 <DdayDate>
                     { view == 'search' ? <span style={{float: 'left'}}>홈 화면에 나타내기 <Switch defaultChecked={data.viewState} onChange={onChangeView} /></span> : ''}
                     {data.dueDate} 까지
