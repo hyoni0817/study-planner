@@ -28,6 +28,7 @@ const DeleteButton = ({id, type}) => {
             okText: '네',
             okType: 'danger',
             cancelText: '아니요',
+            centered: true,
             onOk() {
                 dispatch({
                     type: type == "todo" ? DELETE_TODO_REQUEST : DELETE_DDAY_REQUEST,
