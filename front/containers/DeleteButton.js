@@ -25,9 +25,9 @@ const DeleteButton = ({id, type}) => {
             title: '삭제하시겠습니까?',
             icon: <ExclamationCircleOutlined />,
             content: `삭제한 ${type == "todo" ? '계획은' : 'D-day는'} 복구하실 수 없습니다.`,
-            okText: 'Yes',
+            okText: '네',
             okType: 'danger',
-            cancelText: 'No',
+            cancelText: '아니요',
             onOk() {
                 dispatch({
                     type: type == "todo" ? DELETE_TODO_REQUEST : DELETE_DDAY_REQUEST,
