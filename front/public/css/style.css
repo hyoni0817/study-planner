@@ -133,3 +133,28 @@ body {
 .ant-switch-checked {
     background-color: #78e073;
 }
+
+.ant-btn-dangerous {
+    color: #ff4d4f !important;
+    background: #fff;
+    border-color: #ff4d4f !important;    
+}
+
+.ant-modal-confirm-btns > .ant-btn {
+    background: white !important;
+    color: #7262fd;
+    border-color: #7262fd;
+}
+
+.ant-modal-confirm-btns > .ant-btn:focus, .ant-modal-confirm-btns > .ant-btn:hover {
+    background: white !important;
+    color: #7262fd;
+    border-color: #7262fd;
+}
+
+/* 글쓰기, 수정 및 삭제 버튼에 적용됨*/
+.ant-btn:focus, .ant-btn:hover {
+    color: white;
+    background: #7262fd;
+    border-color: #7262fd;
+}
