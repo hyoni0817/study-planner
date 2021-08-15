@@ -314,7 +314,7 @@ const SignUp = (props) => {
                                                 <Checkbox onChange={onChangeTerms}><a onClick={showTermsModal}>개인정보 처리 방침</a> 약관에 동의합니다.</Checkbox> 
                                             </Form.Item>
                                             { termsView && 
-                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleTermsCancel}>
+                                                <Modal title="개인정보 처리 방침" visible={isTermsModalVisible} footer={null} onCancel={onHandleTermsCancel} wrapClassName={"desktop-modal"}>
                                                     <Terms />
                                                 </Modal>
                                             }

@@ -113,6 +113,7 @@ const Dday = ({data, view}) => {
           </div>
         ),
         centered: true,
+        maskStyle: {display: 'block'},
         onOk() {},
       });
     }

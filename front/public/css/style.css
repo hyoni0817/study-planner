@@ -158,3 +158,12 @@ body {
     background: #7262fd;
     border-color: #7262fd;
 }
+
+@media(max-width: 767px) {
+    .ant-modal-mask {
+        display: none;
+    }
+    .desktop-modal {
+        display: none !important;
+    }
+}

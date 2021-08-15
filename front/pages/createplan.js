@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import MobileForm from '../containers/MobileForm';
 import MobileFormPortal from '../components/MobileFormPortal';
@@ -14,12 +13,6 @@ import { LOAD_USER_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
 import axios from 'axios';
-
-const MobileFormWrapper = styled(MobileForm)`
-    @media(min-width: 768px) {
-        display: none;
-    }
-`;
 
 const CreatePlan = ({ isRefresh }) => {
     const router = useRouter()
@@ -69,7 +62,7 @@ const CreatePlan = ({ isRefresh }) => {
                 <>
                     {/* {me && removeBodyOverflow()} */}
                     <MobileFormPortal selector="#mobile-form">
-                        <MobileFormWrapper moveHome={isRefresh} />
+                        <MobileForm moveHome={isRefresh} />
                     </MobileFormPortal>
                     <DesktopForm moveHome={isRefresh} />
                 </>

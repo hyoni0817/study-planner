@@ -10,11 +10,6 @@ const MobileTermsPortal = ({ children, selector }) => {
         setMounted(true);
     });
 
-    useEffect(() => {
-        document.getElementsByClassName("ant-modal-mask")[0].style.display = "none";
-        document.getElementsByClassName("ant-modal-wrap")[0].style.display = "none";
-    }, []);
-
     return mounted ? ReactDOM.createPortal(children, ref.current) : null;
 };
 

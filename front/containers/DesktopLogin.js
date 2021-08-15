@@ -32,6 +32,7 @@ const DesktopLogin = ({isOpen}) => {
                 okButtonProps={{ disabled: true }}
                 cancelButtonProps={{ disabled: true }}
                 width={400}
+                wrapClassName={"desktop-modal"}
             >
                 <LoginForm onClose={onHandleCancel}/>
             </Modal>
