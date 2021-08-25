@@ -167,3 +167,7 @@ body {
         display: none !important;
     }
 }
+
+.ant-picker-time-panel-column {
+    overflow-y: auto;
+}
