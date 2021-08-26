@@ -25,7 +25,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.DdayTitle}*' in boolean mode)`), {UserId: req.user.id}];
-        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours').add(1, 'days'); 
         const dueDate = req.query.allDateCheckState === 'true' ? '' : where.push({dueDate: {
             [Op.and]: {
                 [Op.gte] : req.query.startDate,

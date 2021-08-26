@@ -9,8 +9,8 @@ const { isLoggedIn } = require('./middleware');
 
 router.post('/', isLoggedIn, async (req, res, next) => {
     try {
-        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours').add(1, 'days'); 
         
         const newTodo = await db.Todo.create({
             title: req.body.title,
@@ -73,7 +73,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
 router.get('/search', async (req, res, next) => {
     try {
         let where = [Sequelize.literal(`MATCH (title) AGAINST ('+${req.query.todoTitle}*' in boolean mode)`), {UserId: req.user.id}];
-        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const endDate = moment(moment(req.query.endDate).format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours').add(1, 'days'); 
         const createdAt = req.query.allDateCheckState == 'true' ? '' : where.push({createdAt: {
             [Op.and]: {
                 [Op.gte] : req.query.startDate,
@@ -120,8 +120,8 @@ router.get('/subjects', isLoggedIn, async (req, res, next) => {
 
 router.put('/complete', async (req, res, next) => {
     try {
-        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD'); 
-        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').add(1, 'days'); 
+        const todayDate = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours'); 
+        const addOneDay = moment(moment().tz('Asia/Seoul').format('YYYY-MM-DD'), 'YYYY-MM-DD').subtract(9, 'hours').add(1, 'days'); 
         
         const updateCompletion = await db.Todo.update({
             completion: req.body.checkBtnState,
