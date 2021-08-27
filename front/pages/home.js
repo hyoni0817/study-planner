@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { Button, Affix, Row, Col, Spin } from 'antd';
+import { Button, Affix, Spin } from 'antd';
 import { FormOutlined, LoadingOutlined } from '@ant-design/icons';
 import Todo from '../components/Todo';
 import Dday from '../components/Dday';
@@ -82,6 +82,29 @@ const WriteButton = styled(Button)`
     min-width: 60px !important; 
     min-height: 60px;
 `
+
+const DdayListWrapper = styled.div`
+    white-space: nowrap;
+`;
+
+const DdayBoxWrapper = styled.div`
+    display: inline-block;
+    width: 46%; 
+    margin-right: 10px;
+
+    @media screen and (min-width: 992px) {
+        width: 25%;
+    }
+    @media screen and (min-width: 768px) {
+        width: 41.66666667%;
+    }
+    @media screen and (min-width: 576px) {
+        width: 32%;
+    }
+    @media screen and (min-width: 1201px) {
+        width: 28%;
+    }
+`;
 
 const Home = (props) => {
     const router = useRouter();
@@ -196,19 +219,18 @@ const Home = (props) => {
                     <TodayDate>{date.getFullYear()}년 {date.getMonth()+1}월 {date.getDate()}일 {days[date.getDay()]}요일</TodayDate>
                     <div className="DdayListView" style={{ padding: isLoadingDday ? '50px 15px 50px 0' : '15px 15px 15px 0', textAlign: 'center', overflowX: 'auto', overflowY: 'none' }}>
                         <Spin indicator={antIcon} spinning={isLoadingDday} tip="D-day 목록을 불러오는 중입니다...">
-                            <Row gutter={16} justify="center" style={{ marginRight: '0', }}>
+                            <DdayListWrapper>
                                 { 
                                     viewableDdayList.length == 0 ? <p style={{textAlign: 'center'}}>아직 D-day가 등록되지 않았습니다.</p> 
                                     : viewableDdayList.map((c) => {
                                         return (
-                                            <Col xs={12} sm={6} md={10} lg={6}>
+                                            <DdayBoxWrapper>
                                                 <Dday key={c.id} data={c} view="home"/>    
-                                            </Col>
+                                            </DdayBoxWrapper>
                                         )
                                     })  
                                 }   
-                                {isLoadingMoreDday ? <SpinWrapper><Spin indicator={antIcon} /></SpinWrapper> : ''}
-                            </Row>
+                            </DdayListWrapper>
                         </Spin>             
                     </div> 
                     <TodayAchivementRateWrapper>
